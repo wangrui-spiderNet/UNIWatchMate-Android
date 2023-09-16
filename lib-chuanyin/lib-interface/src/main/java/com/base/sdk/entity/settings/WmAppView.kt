@@ -1,6 +1,6 @@
 package com.base.sdk.entity.settings
 
-data class AppView(
+data class WmAppView(
     var total: Int = 0,
     var list: List<ListBean>? = null
 ){

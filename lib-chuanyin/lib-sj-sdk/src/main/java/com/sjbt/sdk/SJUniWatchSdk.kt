@@ -7,8 +7,9 @@ import com.base.sdk.entity.DeviceInfo
 import com.base.sdk.entity.DeviceMode
 import com.base.sdk.entity.ScanDeviceInfo
 import com.sjbt.sdk.app.SJAbApps
+import com.sjbt.sdk.dfu.SJTransferFile
 import com.sjbt.sdk.settings.SJSettings
-import com.sjbt.sdk.sync.SJSyncDatas
+import com.sjbt.sdk.sync.SJSyncData
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableEmitter
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
@@ -24,8 +25,9 @@ object SJUniWatchSdk : AbUniWatch() {
 
         wmSettings = SJSettings()
         wmAbApps = SJAbApps()
-        wmSync = SJSyncDatas()
-        wmConnect = SjConnect()
+        wmSync = SJSyncData()
+        wmConnect = SJConnect()
+        wmTransferFile = SJTransferFile()
     }
 
     override fun scanQr(address: String): ScanDeviceInfo {

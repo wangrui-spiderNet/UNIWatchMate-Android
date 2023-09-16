@@ -1,6 +1,8 @@
 package com.base.sdk.`interface`.sync
 
 import com.base.sdk.entity.data.*
+import com.base.sdk.entity.settings.WmDeviceInfo
+
 abstract class AbWmSyncs {
 
     abstract var syncStepData: AbSyncData<WmStepData>?
@@ -12,5 +14,6 @@ abstract class AbWmSyncs {
     abstract var syncDistanceData: AbSyncData<WmDistanceData>?
     abstract var syncActivityData: AbSyncData<WmActivityData>?
     abstract var syncSportSummaryData: AbSyncData<WmSportSummaryData>?
+    abstract var syncDeviceInfoData: AbSyncData<WmDeviceInfo>?
 
 }

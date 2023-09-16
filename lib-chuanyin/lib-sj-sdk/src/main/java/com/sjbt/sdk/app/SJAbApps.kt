@@ -19,4 +19,11 @@ class SJAbApps : WmAbApps() {
     override var appWeather: AbAppWeather
         get() = TODO("Not yet implemented")
         set(value) {}
+    override var appSport: AbAppSport
+        get() = TODO("Not yet implemented")
+        set(value) {}
+
+    override var appNotification: AbAppNotification
+        get() = TODO("Not yet implemented")
+        set(value) {}
 }

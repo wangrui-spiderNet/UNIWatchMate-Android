@@ -6,6 +6,7 @@ import com.base.sdk.entity.DeviceInfo
 import com.base.sdk.entity.DeviceMode
 import com.base.sdk.entity.ScanDeviceInfo
 import com.base.sdk.`interface`.AbWmConnect
+import com.base.sdk.`interface`.WmTransferFile
 import com.base.sdk.`interface`.app.WmAbApps
 import com.base.sdk.`interface`.setting.WmSettings
 import com.base.sdk.`interface`.sync.AbWmSyncs
@@ -17,6 +18,7 @@ abstract class AbUniWatch {
     var wmAbApps : WmAbApps? = null
     var wmSync : AbWmSyncs? = null
     var wmConnect : AbWmConnect? = null
+    var wmTransferFile : WmTransferFile? = null
 
     abstract fun init(context: Context?, msgTimeOut: Int)
     abstract fun scanQr(address: String): ScanDeviceInfo

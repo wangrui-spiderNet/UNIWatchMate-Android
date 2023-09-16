@@ -6,7 +6,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableEmitter
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
 
-class SjConnect : AbWmConnect() {
+class SJConnect : AbWmConnect() {
 
     private var connectEmitter: ObservableEmitter<Boolean>? = null
 

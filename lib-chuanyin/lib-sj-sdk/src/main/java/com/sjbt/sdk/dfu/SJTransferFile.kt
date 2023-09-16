@@ -1,0 +1,30 @@
+package com.sjbt.sdk.dfu
+
+import android.database.Observable
+import com.base.sdk.entity.apps.WmTransferState
+import com.base.sdk.`interface`.FileType
+import com.base.sdk.`interface`.WmTransferFile
+import io.reactivex.rxjava3.core.Single
+import java.io.File
+
+class SJTransferFile : WmTransferFile() {
+    override fun isSupport(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun isSupportMultiple(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun cancelTransfer(): Single<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override fun start(fileType: FileType, file: File): Observable<WmTransferState> {
+        TODO("Not yet implemented")
+    }
+
+    override fun startMultiple(fileType: FileType, file: List<File>): Observable<WmTransferState> {
+        TODO("Not yet implemented")
+    }
+}

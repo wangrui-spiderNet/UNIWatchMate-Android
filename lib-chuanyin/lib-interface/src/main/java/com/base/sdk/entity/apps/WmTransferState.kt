@@ -7,10 +7,17 @@ import java.io.File
  */
 open class WmTransferState(
     progress: Double,
-    state: TransferState,//pre:1 transferring finish
+    state: TransferState,
     success: Boolean,
     reason: Int,
     index: Int,
     total: Int,
     sending: File
 )
+
+enum class TransferState {
+    PRE_TRANSFER,
+    TRANSFERRING,
+    FINISH
+}
+

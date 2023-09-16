@@ -1,10 +1,11 @@
 package com.sjbt.sdk.sync
 
 import com.base.sdk.entity.data.*
+import com.base.sdk.entity.settings.WmDeviceInfo
 import com.base.sdk.`interface`.sync.AbSyncData
 import com.base.sdk.`interface`.sync.AbWmSyncs
 
-class SJSyncDatas : AbWmSyncs(){
+class SJSyncData : AbWmSyncs(){
      override var syncStepData: AbSyncData<WmStepData>?
           get() = SyncStepData()
           set(value) {}
@@ -30,6 +31,9 @@ class SJSyncDatas : AbWmSyncs(){
           get() = TODO("Not yet implemented")
           set(value) {}
      override var syncSportSummaryData: AbSyncData<WmSportSummaryData>?
+          get() = TODO("Not yet implemented")
+          set(value) {}
+     override var syncDeviceInfoData: AbSyncData<WmDeviceInfo>?
           get() = TODO("Not yet implemented")
           set(value) {}
 }

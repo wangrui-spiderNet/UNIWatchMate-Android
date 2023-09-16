@@ -3,7 +3,7 @@ package com.base.sdk.entity.apps
 /**
  * Contact(联系人)
  */
-class WmContacts internal constructor(
+class WmContact internal constructor(
     val name: String,
     val number: String
 ) {
@@ -18,7 +18,7 @@ class WmContacts internal constructor(
          * @param number Contact phone number
          * @return
          */
-        fun create(name: String?, number: String?): WmContacts? {
+        fun create(name: String?, number: String?): WmContact? {
             if (name == null || number == null) return null
             //去掉number中的空格
 
@@ -27,7 +27,7 @@ class WmContacts internal constructor(
             return if (resultName.isNullOrEmpty() || resultNumber.isNullOrEmpty()) {
                 null
             } else {
-                WmContacts(name, number)
+                WmContact(name, number)
             }
         }
 
@@ -54,8 +54,8 @@ class WmContacts internal constructor(
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is WmContacts) return false
-        val that = other as WmContacts
+        if (other !is WmContact) return false
+        val that = other as WmContact
         return name.trim { it <= ' ' } == that.name.trim { it <= ' ' } && number.trim { it <= ' ' } == that.number.trim { it <= ' ' }
     }
 }
