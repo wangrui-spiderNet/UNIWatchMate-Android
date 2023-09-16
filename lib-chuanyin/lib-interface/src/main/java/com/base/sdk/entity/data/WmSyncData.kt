@@ -1,7 +1,5 @@
 package com.base.sdk.entity.data
 
-import com.base.sdk.entity.common.Sport
-
 /**
  * Sync data(同步数据)
  */
@@ -24,7 +22,10 @@ abstract class WmBaseSyncData(
     val intervalTime: Long
 )
 
-class WmHeartRateData(
+/**
+ * 运动小结
+ */
+class WmSportSummaryData(
     timestamp: Long,
     intervalTime: Long,
     /**
@@ -184,6 +185,23 @@ class WmGameData(
 ) : WmBaseSyncData(timestamp, intervalTime)
 
 /**
+ * 活动时长
+ */
+class WmActivityData(
+    timestamp: Long,
+    intervalTime:Long,
+    /**
+     * activity Type
+     */
+    val type: Int,
+    val duration: Int
+) : WmBaseSyncData(timestamp, intervalTime){
+    override fun toString(): String {
+        return "WmActivityData(type=$type, duration=$duration, timestamp=$timestamp, intervalTime=$intervalTime)"
+    }
+}
+
+/**
  * The ecg data.
  *
  * If [WmDeviceInfo.Feature.TI_ECG] is supported, you can adjust the speed and amplitude of ECG data.
@@ -205,5 +223,6 @@ class WmEcgData(
     companion object {
         const val DEFAULT_SAMPLING_RATE = 100
     }
+
 }
 

@@ -10,5 +10,7 @@ abstract class AbWmSyncs {
     abstract var syncRealtimeRateData: AbSyncData<WmRealtimeRateData>?
     abstract var syncAvgHeartRateData: AbSyncData<WmAvgHeartRateData>?
     abstract var syncDistanceData: AbSyncData<WmDistanceData>?
+    abstract var syncActivityData: AbSyncData<WmActivityData>?
+    abstract var syncSportSummaryData: AbSyncData<WmSportSummaryData>?
 
 }

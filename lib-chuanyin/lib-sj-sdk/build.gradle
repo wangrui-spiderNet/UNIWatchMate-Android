@@ -1,8 +1,7 @@
 plugins {
     id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
 }
-apply plugin: 'kotlin-android' // apply plugin
-apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion compile_sdk_version
@@ -76,9 +75,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':lib-chuanyin:lib-interface')
 
-    implementation "com.google.code.gson:gson:$gson_version"
     implementation 'com.guolindev.permissionx:permissionx:1.6.4'
+    implementation "com.google.code.gson:gson:$gson_version"
 
+    implementation 'androidx.core:core-ktx:+'
     implementation "io.reactivex.rxjava3:rxjava:$rx_java_version"
     implementation "io.reactivex.rxjava3:rxandroid:$rx_android_version"
 

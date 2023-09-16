@@ -26,4 +26,10 @@ class SJSyncDatas : AbWmSyncs(){
      override var syncDistanceData: AbSyncData<WmDistanceData>?
           get() = TODO("Not yet implemented")
           set(value) {}
+     override var syncActivityData: AbSyncData<WmActivityData>?
+          get() = TODO("Not yet implemented")
+          set(value) {}
+     override var syncSportSummaryData: AbSyncData<WmSportSummaryData>?
+          get() = TODO("Not yet implemented")
+          set(value) {}
 }
