@@ -2,16 +2,15 @@ package com.base.sdk.entity.data
 
 class WmGpsData(
     timestamp: Long,
-
+    intervalTime: Long,
     /**
      * Which [FcSportData] belongs to
      */
     val sportId: String,
     val items: List<WmGpsItem>
-) : WmBaseSyncData(timestamp)
+) : WmBaseSyncData(timestamp, intervalTime)
 
 class WmGpsItem(
-
     /**
      * The duration(unit seconds) of sport at which this item is generated
      */
@@ -24,7 +23,6 @@ class WmGpsItem(
      * The number of satellites represents the strength of the signal at this time
      */
     val satellites: Int,
-
     /**
      * Is it the first point after resuming sport?
      * True for yes, false for not.

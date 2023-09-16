@@ -7,15 +7,15 @@ import com.base.sdk.entity.DeviceMode
 import com.base.sdk.entity.ScanDeviceInfo
 import com.base.sdk.`interface`.AbWmConnect
 import com.base.sdk.`interface`.WmTransferFile
-import com.base.sdk.`interface`.app.WmAbApps
-import com.base.sdk.`interface`.setting.WmSettings
+import com.base.sdk.`interface`.app.AbWmAbApps
+import com.base.sdk.`interface`.setting.AbWmSettings
 import com.base.sdk.`interface`.sync.AbWmSyncs
 import io.reactivex.rxjava3.core.Observable
 
 abstract class AbUniWatch {
 
-    var wmSettings : WmSettings? = null
-    var wmAbApps : WmAbApps? = null
+    var abWmSettings : AbWmSettings? = null
+    var abWmAbApps : AbWmAbApps? = null
     var wmSync : AbWmSyncs? = null
     var wmConnect : AbWmConnect? = null
     var wmTransferFile : WmTransferFile? = null

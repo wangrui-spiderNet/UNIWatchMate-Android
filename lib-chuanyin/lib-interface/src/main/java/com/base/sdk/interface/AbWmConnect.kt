@@ -2,7 +2,6 @@ package com.base.sdk.`interface`
 
 import io.reactivex.rxjava3.core.Observable
 
-
 abstract class AbWmConnect {
     abstract fun connect(address: String)
     abstract fun disconnect(): Boolean

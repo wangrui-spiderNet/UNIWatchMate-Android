@@ -15,7 +15,6 @@ abstract class AbAppCamera :IWmSupport {
     abstract fun observeCameraFrontBack(): Observable<Boolean>
     abstract fun cameraBackSwitch(isBack: Boolean): Observable<Boolean>
 
-
     /**
      * camera preview
      */

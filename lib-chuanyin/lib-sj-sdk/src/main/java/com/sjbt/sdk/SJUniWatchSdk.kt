@@ -23,8 +23,8 @@ object SJUniWatchSdk : AbUniWatch() {
         this.context = context
         this.msgTimeOut = msgTimeOut
 
-        wmSettings = SJSettings()
-        wmAbApps = SJAbApps()
+        abWmSettings = SJSettings()
+        abWmAbApps = SJAbApps()
         wmSync = SJSyncData()
         wmConnect = SJConnect()
         wmTransferFile = SJTransferFile()

@@ -3,7 +3,7 @@ package com.base.sdk.`interface`.setting
 import com.base.sdk.entity.common.WmLanguage
 import com.base.sdk.entity.settings.*
 
-abstract class WmSettings {
+abstract class AbWmSettings {
     abstract var sportGoalSetting: AbWmSetting<WmSportGoal>?
     abstract var dateTimeSetting: AbWmSetting<WmDateTime>?
     abstract var personalInfoSetting: AbWmSetting<WmPersonalInfo>?

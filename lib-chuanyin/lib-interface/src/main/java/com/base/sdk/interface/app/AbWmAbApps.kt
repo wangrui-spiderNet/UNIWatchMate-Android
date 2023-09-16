@@ -1,6 +1,6 @@
 package com.base.sdk.`interface`.app
 
-abstract class WmAbApps {
+abstract class AbWmAbApps {
     abstract var appAlarm: AbAppAlarm
     abstract var appCamera: AbAppCamera
     abstract var appContact: AbAppContact
@@ -8,4 +8,5 @@ abstract class WmAbApps {
     abstract var appWeather: AbAppWeather
     abstract var appSport: AbAppSport
     abstract var appNotification: AbAppNotification
+    abstract var appDial: AbAppDial
 }

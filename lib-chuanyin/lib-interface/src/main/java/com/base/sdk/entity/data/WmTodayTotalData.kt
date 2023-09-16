@@ -17,7 +17,6 @@ class WmTodayTotalData(
      */
     val distance: Int,//总数据，单位米
 
-
     /**
      *Total calorie. (unit calorie, not kCal)
      */

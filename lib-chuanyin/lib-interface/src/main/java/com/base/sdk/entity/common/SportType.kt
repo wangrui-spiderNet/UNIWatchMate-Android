@@ -1,155 +1,225 @@
 package com.base.sdk.entity.common
 
 enum class SportType {
-    WMActivityTypeOutdoorRunning,      // 户外跑步
-    WMActivityTypeOutdoorWalking,      // 户外健走
-    WMActivityTypeMountainClimbing,    // 登山
-    WMActivityTypeCrossCountry,        // 越野
-    WMActivityTypeOutdoorHiking,       // 户外徒步
-    WMActivityTypeIndoorRunning,       // 室内跑步
-    WMActivityTypeOutdoorCycling,      // 户外骑行
-    WMActivityTypeSmallWheelBike,      // 小轮车
-    WMActivityTypeHunting,             // 打猎
-    WMActivityTypeSailing,             // 帆船运动
-    WMActivityTypeSkateboarding,       // 滑板
-    WMActivityTypeRollerSkating,       // 轮滑
-    WMActivityTypeOutdoorIceSkating,   // 户外滑冰
-    WMActivityTypeHorsebackRiding,     // 马术
-    WMActivityTypeMountainBiking,      // 山地自行车
-    WMActivityTypeIndoorCycling,       // 室内骑行
-    WMActivityTypeFreeTraining,        // 自由训练
-    WMActivityTypeBasketball,          // 篮球
-    WMActivityTypeSoccer,              // 足球
-    WMActivityTypePingPong,            // 乒乓球
-    WMActivityTypeBadminton,           // 羽毛球
-    WMActivityTypeTennis,              // 网球
-    WMActivityTypeStrengthTraining,    // 力量训练
-    WMActivityTypePilates,             // 普拉提
-    WMActivityTypeIndoorWalking,       // 室内走路
-    WMActivityTypeTreadmill,           // 跑步机
-    WMActivityTypeGymnastics,          // 体操
-    WMActivityTypeRowing,              // 划船
-    WMActivityTypeJumpingJack,         // 开合跳
-    WMActivityTypeElliptical,          // 椭圆机
-    WMActivityTypeStepping,            // 踏步
-    WMActivityTypeRiding,              // 骑马
-    WMActivityTypeYoga,                // 瑜伽
-    WMActivityTypeCricket,             // 板球
-    WMActivityTypeBaseball,            // 棒球
-    WMActivityTypeBowling,             // 保龄球
-    WMActivityTypeSquash,              // 壁球
-    WMActivityTypeSoftball,            // 垒球
-    WMActivityTypeVolleyball,          // 排球
-    WMActivityTypeBallet,              // 芭蕾
-    WMActivityTypeStreetDance,         // 街舞
-    WMActivityTypeDance,               // 舞蹈
-    WMActivityTypeFencing,             // 击剑
-    WMActivityTypeKarate,              // 空手道
-    WMActivityTypeBoxing,              // 拳击
-    WMActivityTypeJudo,                // 柔道
-    WMActivityTypeWrestling,           // 摔跤
-    WMActivityTypeTaiChi,              // 太极
-    WMActivityTypeShuttlecock,         // 毽球
-    WMActivityTypeTaekwondo,           // 跆拳道
-    WMActivityTypeCrossTraining,       // 交叉训练
-    WMActivityTypeSitups,              // 仰卧起坐
-    WMActivityTypeAbdominalTraining,   // 腰腹训练
-    WMActivityTypeLatinDance,          // 拉丁舞
-    WMActivityTypeRugby,               // 橄榄球
-    WMActivityTypeFieldHockey,         // 曲棍球
-    WMActivityTypeRowingMachine,       // 划船机
-    WMActivityTypeSkiing,              // 滑雪
-    WMActivityTypeIceHockey,           // 冰球
-    WMActivityTypeVO2Max,              // 最大摄氧量
-    WMActivityTypeWalkingMachine,      // 漫步机
-    WMActivityTypeTrackAndField,       // 田径
-    WMActivityTypeRelaxation,          // 整理放松
-    WMActivityTypeCrossFit,            // 交叉配合
-    WMActivityTypeFunctionalTraining,  // 功能性训练
-    WMActivityTypeFitnessTraining,     // 体能训练
-    WMActivityTypeArchery,             // 射箭
-    WMActivityTypeFlexibility,         // 柔韧度
-    WMActivityTypeMixedAerobics,       // 混合有氧
-    WMActivityTypeKickboxing,          // 自由搏击
-    WMActivityTypeAustralianFootball,  // 澳式足球
-    WMActivityTypeMartialArts,         // 武术
-    WMActivityTypeBuildingClimbing,    // 爬楼
-    WMActivityTypeHandball,            // 手球
-    WMActivityTypeCurling,             // 冰壶
-    WMActivityTypeSnowboarding,        // 单板滑雪
-    WMActivityTypeLeisureSports,       // 休闲运动
-    WMActivityTypeAmericanFootball,    // 美式橄榄球
-    WMActivityTypeHandCrankedBike,     // 手摇车
-    WMActivityTypeFishing,             // 钓鱼
-    WMActivityTypeFrisbee,             // 飞盘
-    WMActivityTypeGolf,                // 高尔夫
-    WMActivityTypeFolkDance,           // 民族舞
-    WMActivityTypeAlpineSkiing,        // 高山滑雪
-    WMActivityTypeSnowSports,          // 雪上运动
-    WMActivityTypeRelaxationMeditation,// 舒缓冥想类运动
-    WMActivityTypeCoreTraining,        // 核心训练
-    WMActivityTypeFitnessGame,         // 健身游戏
-    WMActivityTypeFitnessDance,        // 健身操
-    WMActivityTypeGroupGymnastics,     // 团体操
-    WMActivityTypeBoxingDance,         // 搏击操
-    WMActivityTypeLongFieldHockey,     // 长曲棍球
-    WMActivityTypeFoamRollerRelaxation,// 泡沫轴筋膜放松
-    WMActivityTypeHorizontalBar,       // 单杠
-    WMActivityTypeParallelBars,        // 双杠
-    WMActivityTypeHulaHoop,            // 呼啦圈
-    WMActivityTypeDarts,               // 飞镖
-    WMActivityTypePickleball,          // 匹克球
-    WMActivityTypeHIIT,                // HIIT
-    WMActivityTypeShooting,            // 射击
-    WMActivityTypeTrampoline,          // 蹦床
-    WMActivityTypeBalanceBike,         // 平衡车
-    WMActivityTypeRollerblading,       // 溜旱冰
-    WMActivityTypeParkour,             // 跑酷
-    WMActivityTypePullUps,             // 引体向上
-    WMActivityTypePushUps,             // 俯卧撑
-    WMActivityTypePlank,               // 平板支撑
-    WMActivityTypeRockClimbing,        // 攀岩
-    WMActivityTypeHighJump,            // 跳高
-    WMActivityTypeBungeeJumping,       // 蹦极
-    WMActivityTypeLongJump,            // 跳远
-    WMActivityTypeMarathon,            // 马拉松
-    WMActivityTypeJumpRope             // 跳绳
-}
 
-enum class SportParamType {
-    /**
-     * 户外带步数运动
-     */
-    SPT_OUTDOOR_WITH_STEP,
-    /**
-     * 户外带距离运动
-     */
-    SPT_OUTDOOR_WITH_DISTANCE,
-    /**
-     * 室内带步数运动
-     */
-    SPT_INDOOR_WITH_STEP,
-    /**
-     * 基础数据运动
-     */
-    SPT_BASIC_DATA,
-    /**
-     * 跳绳运动
-     */
-    SPT_JUMP_ROPE,
-    /**
-     * 泳池游泳
-     */
-    SPT_SWIMMING_IN_POOL,
-    /**
-     * 开放水域游泳
-     */
-    SPT_SWIMMING_IN_OPEN,
-    /**
-     * 户外足球
-     */
-    SPT_OUTDOOR_FOOTBALL
+    OutdoorRunning,      // 户外跑步
 
+    OutdoorWalking,      // 户外健走
+
+    MountainClimbing,    // 登山
+
+    CrossCountry,        // 越野
+
+    OutdoorHiking,       // 户外徒步
+
+    IndoorRunning,       // 室内跑步
+
+    OutdoorCycling,      // 户外骑行
+
+    SmallWheelBike,      // 小轮车
+
+    Hunting,             // 打猎
+
+    Sailing,             // 帆船运动
+
+    Skateboarding,       // 滑板
+
+    RollerSkating,       // 轮滑
+
+    OutdoorIceSkating,   // 户外滑冰
+
+    HorsebackRiding,     // 马术
+
+    MountainBiking,      // 山地自行车
+
+    IndoorCycling,       // 室内骑行
+
+    FreeTraining,        // 自由训练
+
+    Basketball,          // 篮球
+
+    Soccer,              // 足球
+
+    PingPong,            // 乒乓球
+
+    Badminton,           // 羽毛球
+
+    Tennis,              // 网球
+
+    StrengthTraining,    // 力量训练
+
+    Pilates,             // 普拉提
+
+    IndoorWalking,       // 室内走路
+
+    Treadmill,           // 跑步机
+
+    Gymnastics,          // 体操
+
+    Rowing,              // 划船
+
+    JumpingJack,         // 开合跳
+
+    Elliptical,          // 椭圆机
+
+    Stepping,            // 踏步
+
+    Riding,              // 骑马
+
+    Yoga,                // 瑜伽
+
+    Cricket,             // 板球
+
+    Baseball,            // 棒球
+
+    Bowling,             // 保龄球
+
+    Squash,              // 壁球
+
+    Softball,            // 垒球
+
+    Volleyball,          // 排球
+
+    Ballet,              // 芭蕾
+
+    StreetDance,         // 街舞
+
+    Dance,               // 舞蹈
+
+    Fencing,             // 击剑
+
+    Karate,              // 空手道
+
+    Boxing,              // 拳击
+
+    Judo,                // 柔道
+
+    Wrestling,           // 摔跤
+
+    TaiChi,              // 太极
+
+    Shuttlecock,         // 毽球
+
+    Taekwondo,           // 跆拳道
+
+    CrossTraining,       // 交叉训练
+
+    Situps,              // 仰卧起坐
+
+    AbdominalTraining,   // 腰腹训练
+
+    LatinDance,          // 拉丁舞
+
+    Rugby,               // 橄榄球
+
+    FieldHockey,         // 曲棍球
+
+    RowingMachine,       // 划船机
+
+    Skiing,              // 滑雪
+
+    IceHockey,           // 冰球
+
+    VO2Max,              // 最大摄氧量
+
+    WalkingMachine,      // 漫步机
+
+    TrackAndField,       // 田径
+
+    Relaxation,          // 整理放松
+
+    CrossFit,            // 交叉配合
+
+    FunctionalTraining,  // 功能性训练
+
+    FitnessTraining,     // 体能训练
+
+    Archery,             // 射箭
+
+    Flexibility,         // 柔韧度
+
+    MixedAerobics,       // 混合有氧
+
+    Kickboxing,          // 自由搏击
+
+    AustralianFootball,  // 澳式足球
+
+    MartialArts,         // 武术
+
+    BuildingClimbing,    // 爬楼
+
+    Handball,            // 手球
+
+    Curling,             // 冰壶
+
+    Snowboarding,        // 单板滑雪
+
+    LeisureSports,       // 休闲运动
+
+    AmericanFootball,    // 美式橄榄球
+
+    HandCrankedBike,     // 手摇车
+
+    Fishing,             // 钓鱼
+
+    Frisbee,             // 飞盘
+
+    Golf,                // 高尔夫
+
+    FolkDance,           // 民族舞
+
+    AlpineSkiing,        // 高山滑雪
+
+    SnowSports,          // 雪上运动
+
+    RelaxationMeditation,// 舒缓冥想类运动
+
+    CoreTraining,        // 核心训练
+
+    FitnessGame,         // 健身游戏
+
+    FitnessDance,        // 健身操
+
+    GroupGymnastics,     // 团体操
+
+    BoxingDance,         // 搏击操
+
+    LongFieldHockey,     // 长曲棍球
+
+    FoamRollerRelaxation,// 泡沫轴筋膜放松
+
+    HorizontalBar,       // 单杠
+
+    ParallelBars,        // 双杠
+
+    HulaHoop,            // 呼啦圈
+
+    Darts,               // 飞镖
+
+    Pickleball,          // 匹克球
+
+    HIIT,                // HIIT
+
+    Shooting,            // 射击
+
+    Trampoline,          // 蹦床
+
+    BalanceBike,         // 平衡车
+
+    Rollerblading,       // 溜旱冰
+
+    Parkour,             // 跑酷
+
+    PullUps,             // 引体向上
+
+    PushUps,             // 俯卧撑
+    Plank,               // 平板支撑
+    RockClimbing,        // 攀岩
+    HighJump,            // 跳高
+    BungeeJumping,       // 蹦极
+    LongJump,            // 跳远
+    Marathon,            // 马拉松
+    JumpRope             // 跳绳
 }
 
 enum class Sport(val id: Int){

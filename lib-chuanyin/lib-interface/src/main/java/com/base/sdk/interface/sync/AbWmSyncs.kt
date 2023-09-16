@@ -4,7 +4,6 @@ import com.base.sdk.entity.data.*
 import com.base.sdk.entity.settings.WmDeviceInfo
 
 abstract class AbWmSyncs {
-
     abstract var syncStepData: AbSyncData<WmStepData>?
     abstract var syncOxygenData: AbSyncData<WmOxygenData>?
     abstract var syncCaloriesData: AbSyncData<WmCaloriesData>?
@@ -15,5 +14,5 @@ abstract class AbWmSyncs {
     abstract var syncActivityData: AbSyncData<WmActivityData>?
     abstract var syncSportSummaryData: AbSyncData<WmSportSummaryData>?
     abstract var syncDeviceInfoData: AbSyncData<WmDeviceInfo>?
-
+    abstract var syncTodayInfoData: AbSyncData<WmTodayTotalData>?
 }

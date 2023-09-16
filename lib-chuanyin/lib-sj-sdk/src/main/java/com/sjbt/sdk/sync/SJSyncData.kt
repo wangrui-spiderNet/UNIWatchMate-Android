@@ -36,4 +36,7 @@ class SJSyncData : AbWmSyncs(){
      override var syncDeviceInfoData: AbSyncData<WmDeviceInfo>?
           get() = TODO("Not yet implemented")
           set(value) {}
+     override var syncTodayInfoData: AbSyncData<WmTodayTotalData>?
+          get() = TODO("Not yet implemented")
+          set(value) {}
 }

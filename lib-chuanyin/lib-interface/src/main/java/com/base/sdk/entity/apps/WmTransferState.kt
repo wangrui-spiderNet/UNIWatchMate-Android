@@ -3,21 +3,21 @@ package com.base.sdk.entity.apps
 import java.io.File
 
 /**
- * Alarm clock(闹钟)
+ * 传输状态
  */
 open class WmTransferState(
     progress: Double,
-    state: TransferState,
+    state: State,
     success: Boolean,
-    reason: Int,
+    errReason: Int,
     index: Int,
     total: Int,
-    sending: File
+    sendingFile: File
 )
 
-enum class TransferState {
+enum class State {
     PRE_TRANSFER,
     TRANSFERRING,
-    FINISH
+    ALL_FINISH
 }
 
