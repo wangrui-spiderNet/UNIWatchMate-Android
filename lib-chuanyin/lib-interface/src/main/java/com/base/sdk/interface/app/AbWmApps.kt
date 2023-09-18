@@ -43,4 +43,10 @@ abstract class AbWmApps {
      * 表盘
      */
     abstract var appDial: AbAppDial
+
+    /**
+     * 语言
+     */
+    abstract var appLanguage: AbAppLanguage
+
 }

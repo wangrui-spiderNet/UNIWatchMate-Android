@@ -1,6 +1,5 @@
 package com.sjbt.sdk.settings
 
-import com.base.sdk.entity.common.WmLanguage
 import com.base.sdk.entity.settings.*
 import com.base.sdk.`interface`.setting.AbWmSetting
 import com.base.sdk.`interface`.setting.AbWmSettings
@@ -40,10 +39,6 @@ class SJSettings : AbWmSettings() {
         set(value) {}
 
     override var drinkWaterSetting: AbWmSetting<WmSedentaryReminder>?
-        get() = TODO("Not yet implemented")
-        set(value) {}
-
-    override var languageSetting: AbWmSetting<WmLanguage>?
         get() = TODO("Not yet implemented")
         set(value) {}
 

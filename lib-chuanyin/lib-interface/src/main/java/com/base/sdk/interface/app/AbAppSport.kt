@@ -4,6 +4,7 @@ import com.base.sdk.entity.common.WmSportType
 import com.base.sdk.`interface`.IWmSupport
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+
 /**
  * 应用模块-运动
  */

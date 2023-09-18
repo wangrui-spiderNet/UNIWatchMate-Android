@@ -1,6 +1,5 @@
 package com.base.sdk.`interface`.setting
 
-import com.base.sdk.entity.common.WmLanguage
 import com.base.sdk.entity.settings.*
 
 abstract class AbWmSettings {
@@ -48,11 +47,6 @@ abstract class AbWmSettings {
      * drinkWaterSetting 喝水提醒设置
      */
     abstract var drinkWaterSetting: AbWmSetting<WmSedentaryReminder>?
-
-    /**
-     * languageSetting 语言设置
-     */
-    abstract var languageSetting: AbWmSetting<WmLanguage>?
 
     /**
      * rateSetting 心率提醒设置

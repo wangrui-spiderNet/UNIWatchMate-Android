@@ -17,5 +17,5 @@ abstract class AbAppDial : IWmSupport {
     /**
      * 删除表盘
      */
-    abstract fun deleteDial(alarm: DialItem): Observable<DialItem>
+    abstract fun deleteDial(dialItem: DialItem): Observable<DialItem>
 }

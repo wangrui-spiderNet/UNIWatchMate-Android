@@ -35,4 +35,8 @@ class SJAbWmApps : AbWmApps() {
     override var appDial: AbAppDial
         get() = TODO("Not yet implemented")
         set(value) {}
+
+    override var appLanguage: AbAppLanguage
+        get() = TODO("Not yet implemented")
+        set(value) {}
 }
