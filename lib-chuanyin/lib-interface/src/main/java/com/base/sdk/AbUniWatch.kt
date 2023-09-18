@@ -2,9 +2,8 @@ package com.base.sdk
 
 import android.bluetooth.BluetoothDevice
 import android.content.Context
-import com.base.sdk.entity.WmDeviceInfo
+import com.base.sdk.entity.WmDevice
 import com.base.sdk.entity.WmDeviceMode
-import com.base.sdk.entity.WmScanDeviceInfo
 import com.base.sdk.`interface`.AbWmConnect
 import com.base.sdk.`interface`.WmTransferFile
 import com.base.sdk.`interface`.app.AbWmApps
@@ -28,27 +27,27 @@ abstract class AbUniWatch {
     /**
      * 设置模块
      */
-    var abWmSettings : AbWmSettings? = null
+    var wmSettings: AbWmSettings? = null
 
     /**
      * A应用模块
      */
-    var abWmApps : AbWmApps? = null
+    var wmApps: AbWmApps? = null
 
     /**
      * 同步模块
      */
-    var wmSync : AbWmSyncs? = null
+    var wmSync: AbWmSyncs? = null
 
     /**
      * 连接模块
      */
-    var wmConnect : AbWmConnect? = null
+    var wmConnect: AbWmConnect? = null
 
     /**
      * 文件传输
      */
-    var wmTransferFile : WmTransferFile? = null
+    var wmTransferFile: WmTransferFile? = null
 
     /**
      * 初始化方法，需要在所有方法执行前调用,建议在application执行
@@ -56,14 +55,9 @@ abstract class AbUniWatch {
     abstract fun init(context: Context?, msgTimeOut: Int)
 
     /**
-     * 扫描二维码连接
-     */
-    abstract fun scanQr(qrString: String): WmScanDeviceInfo
-
-    /**
      * 根据设备类型返回设备信息
      */
-    abstract fun getDeviceInfo(wmDeviceMode: WmDeviceMode, address: String?): WmDeviceInfo?
+    abstract fun getDevice(wmDeviceMode: WmDeviceMode, address: String?): WmDevice?
 
     /**
      * 开始扫描设备
@@ -75,9 +69,5 @@ abstract class AbUniWatch {
      */
     abstract fun stopDiscovery()
 
-    /**
-     * 连接方法
-     */
-    abstract fun connect(address: String)
 
 }

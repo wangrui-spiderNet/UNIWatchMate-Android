@@ -34,6 +34,6 @@ data class WmDeviceInfo(
     val deviceName: String
 ) {
     override fun toString(): String {
-        return "WmDeviceInfo(model='$model', macAddress='$macAddress', version='$version', batteryPercentage=$batteryPercentage, deviceId='$deviceId', bluetoothName='$bluetoothName', deviceName='$deviceName')"
+        return "WmDevice(model='$model', macAddress='$macAddress', version='$version', batteryPercentage=$batteryPercentage, deviceId='$deviceId', bluetoothName='$bluetoothName', deviceName='$deviceName')"
     }
 }
