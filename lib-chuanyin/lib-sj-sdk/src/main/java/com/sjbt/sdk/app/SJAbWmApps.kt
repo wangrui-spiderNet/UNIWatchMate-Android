@@ -2,7 +2,7 @@ package com.sjbt.sdk.app
 
 import com.base.sdk.`interface`.app.*
 
-class SJAbApps : AbWmAbApps() {
+class SJAbWmApps : AbWmApps() {
 
     override var appAlarm: AbAppAlarm
         get() = AppAlarm()

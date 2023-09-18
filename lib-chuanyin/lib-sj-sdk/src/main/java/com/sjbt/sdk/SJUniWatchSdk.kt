@@ -3,10 +3,10 @@ package com.sjbt.sdk
 import android.bluetooth.BluetoothDevice
 import android.content.Context
 import com.base.sdk.AbUniWatch
-import com.base.sdk.entity.DeviceInfo
-import com.base.sdk.entity.DeviceMode
-import com.base.sdk.entity.ScanDeviceInfo
-import com.sjbt.sdk.app.SJAbApps
+import com.base.sdk.entity.WmDeviceInfo
+import com.base.sdk.entity.WmDeviceMode
+import com.base.sdk.entity.WmScanDeviceInfo
+import com.sjbt.sdk.app.SJAbWmApps
 import com.sjbt.sdk.dfu.SJTransferFile
 import com.sjbt.sdk.settings.SJSettings
 import com.sjbt.sdk.sync.SJSyncData
@@ -24,13 +24,13 @@ object SJUniWatchSdk : AbUniWatch() {
         this.msgTimeOut = msgTimeOut
 
         abWmSettings = SJSettings()
-        abWmAbApps = SJAbApps()
+        abWmApps = SJAbWmApps()
         wmSync = SJSyncData()
         wmConnect = SJConnect()
         wmTransferFile = SJTransferFile()
     }
 
-    override fun scanQr(address: String): ScanDeviceInfo {
+    override fun scanQr(address: String): WmScanDeviceInfo {
         TODO("Not yet implemented")
     }
 
@@ -50,7 +50,7 @@ object SJUniWatchSdk : AbUniWatch() {
         wmConnect?.connect(address)
     }
 
-    override fun getDeviceInfo(deviceMode: DeviceMode, address: String?): DeviceInfo? {
+    override fun getDeviceInfo(wmDeviceMode: WmDeviceMode, address: String?): WmDeviceInfo? {
         TODO("Not yet implemented")
     }
 

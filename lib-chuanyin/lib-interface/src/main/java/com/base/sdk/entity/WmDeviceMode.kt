@@ -1,5 +1,5 @@
 package com.base.sdk.entity
 
-enum class DeviceMode {
+enum class WmDeviceMode {
     SJ_WATCH, ST_WATCH
 }
