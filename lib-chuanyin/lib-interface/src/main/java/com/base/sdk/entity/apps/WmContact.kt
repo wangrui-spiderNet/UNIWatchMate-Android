@@ -5,7 +5,8 @@ package com.base.sdk.entity.apps
  */
 class WmContact internal constructor(
     val name: String,
-    val number: String
+    val number: String,
+    val isEmergency: Boolean
 ) {
     companion object {
         internal const val NAME_BYTES_LIMIT = 32
@@ -18,7 +19,7 @@ class WmContact internal constructor(
          * @param number Contact phone number
          * @return
          */
-        fun create(name: String?, number: String?): WmContact? {
+        fun create(name: String?, number: String?, isEmergency: Boolean): WmContact? {
             if (name == null || number == null) return null
             //去掉number中的空格
 
@@ -27,7 +28,7 @@ class WmContact internal constructor(
             return if (resultName.isNullOrEmpty() || resultNumber.isNullOrEmpty()) {
                 null
             } else {
-                WmContact(name, number)
+                WmContact(name, number, isEmergency)
             }
         }
 

@@ -1,6 +1,6 @@
 package com.base.sdk.entity.data
 
-import com.base.sdk.entity.common.SportType
+import com.base.sdk.entity.common.WmSportType
 
 /**
  * Sync data(同步数据)
@@ -30,19 +30,17 @@ abstract class WmBaseSyncData(
 class WmSportSummaryData(
     timestamp: Long,
     intervalTime: Long,
-    /**
-     * heart rate value (beats per minute)
-     */
-//    val rateRangeId: Int,
-//    val timeDuration: Int,
-    val sportType: SportType,
+    val wmSportType: WmSportType,
     val valueType: List<WmValueTypeData>
 
 ) : WmBaseSyncData(timestamp, intervalTime){
 
 }
 
-class WmAvgHeartRateData(
+/**
+ * 平均 value 血氧数据
+ */
+class WmHeartRateData(
     timestamp: Long,
     intervalTime: Long,
     /**
@@ -59,6 +57,9 @@ class WmAvgHeartRateData(
 
 ) : WmBaseSyncData(timestamp, intervalTime)
 
+/**
+ * Oxygen value 血氧数据
+ */
 class WmOxygenData(
     timestamp: Long,
     intervalTime: Long,
@@ -68,6 +69,9 @@ class WmOxygenData(
     val oxygen: Int
 ) : WmBaseSyncData(timestamp, intervalTime)
 
+/**
+ * Step value 步数数据
+ */
 class WmStepData(
     timestamp: Long,
     intervalTime: Long,
@@ -78,23 +82,29 @@ class WmStepData(
 
     ) : WmBaseSyncData(timestamp, intervalTime)
 
+/**
+ * distance value 距离数据
+ */
 class WmDistanceData(
     timestamp: Long,
     intervalTime: Long,
     /**
-     * Step value
+     * distance value
      */
     val distance: Int,
 
     ) : WmBaseSyncData(timestamp, intervalTime)
 
+/**
+ * calorie value 卡路里数据
+ */
 class WmCaloriesData(
     timestamp: Long,
     intervalTime: Long,
     /**
-     * Step value
+     * calorie value
      */
-    val distance: Int,
+    val calorie: Int,
 
     ) : WmBaseSyncData(timestamp, intervalTime)
 

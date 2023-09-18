@@ -21,7 +21,7 @@ class SJSyncData : AbWmSyncs(){
      override var syncRealtimeRateData: AbSyncData<WmRealtimeRateData>?
           get() = TODO("Not yet implemented")
           set(value) {}
-     override var syncAvgHeartRateData: AbSyncData<WmAvgHeartRateData>?
+     override var syncAvgHeartRateData: AbSyncData<WmHeartRateData>?
           get() = TODO("Not yet implemented")
           set(value) {}
      override var syncDistanceData: AbSyncData<WmDistanceData>?

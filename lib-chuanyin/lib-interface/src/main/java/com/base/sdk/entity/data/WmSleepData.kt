@@ -32,6 +32,10 @@ class WmSleepItem(
          * Sleep status of sober sleep
          */
         const val STATUS_SOBER = 3 //清醒
+
+        /**
+         * Sleep status of REM sleep
+         */
         const val STATUS_REM = 4 //快速眼动
 
     }

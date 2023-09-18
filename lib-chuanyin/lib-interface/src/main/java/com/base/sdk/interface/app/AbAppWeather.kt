@@ -4,12 +4,19 @@ import com.base.sdk.entity.apps.WmWeatherForecast
 import com.base.sdk.`interface`.IWmSupport
 import io.reactivex.rxjava3.core.Observable
 
+/**
+ * 应用模块 - 天气同步
+ */
 abstract class AbAppWeather :IWmSupport {
 
     /**
-     * Weather
+     * pushWeather 为设备推送天气信息
      */
     abstract fun pushWeather(weather: WmWeatherForecast): Observable<Boolean>
+
+    /**
+     * observeWeather 监听设备端天气请求
+     */
     abstract fun observeWeather(): Observable<Boolean>
 
 }

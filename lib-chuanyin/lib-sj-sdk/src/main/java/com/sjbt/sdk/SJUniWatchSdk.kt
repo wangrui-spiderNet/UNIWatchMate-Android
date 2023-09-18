@@ -30,7 +30,7 @@ object SJUniWatchSdk : AbUniWatch() {
         wmTransferFile = SJTransferFile()
     }
 
-    override fun scanQr(address: String): WmScanDeviceInfo {
+    override fun scanQr(qrString: String): WmScanDeviceInfo {
         TODO("Not yet implemented")
     }
 

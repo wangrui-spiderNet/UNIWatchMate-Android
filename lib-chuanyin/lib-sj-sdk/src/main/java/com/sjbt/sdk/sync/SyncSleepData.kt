@@ -14,7 +14,7 @@ class SyncSleepData : AbSyncData<WmSleepData>() {
         TODO("Not yet implemented")
     }
 
-    override fun syncStepData(startTime: Long): Observable<List<WmSleepData>> {
+    override fun syncData(startTime: Long): Observable<List<WmSleepData>> {
         TODO("Not yet implemented")
     }
 }

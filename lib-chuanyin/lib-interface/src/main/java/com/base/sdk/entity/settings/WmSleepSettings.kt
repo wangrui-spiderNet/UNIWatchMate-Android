@@ -7,5 +7,9 @@ package com.base.sdk.entity.settings
 data class WmSleepSettings(
    var open:Boolean,
    var startTime:Long,
-   var endTime:Long)
+   var endTime:Long){
+   override fun toString(): String {
+      return "WmSleepSettings(open=$open, startTime=$startTime, endTime=$endTime)"
+   }
+}
 

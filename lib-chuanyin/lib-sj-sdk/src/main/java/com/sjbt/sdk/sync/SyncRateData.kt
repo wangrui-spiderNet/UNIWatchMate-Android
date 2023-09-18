@@ -1,10 +1,10 @@
 package com.sjbt.sdk.sync
 
 import android.database.Observable
-import com.base.sdk.entity.data.WmAvgHeartRateData
+import com.base.sdk.entity.data.WmHeartRateData
 import com.base.sdk.`interface`.sync.AbSyncData
 
-class SyncRateData : AbSyncData<WmAvgHeartRateData>() {
+class SyncRateData : AbSyncData<WmHeartRateData>() {
 
      override fun isSupport(): Boolean {
          TODO("Not yet implemented")
@@ -14,7 +14,7 @@ class SyncRateData : AbSyncData<WmAvgHeartRateData>() {
          TODO("Not yet implemented")
      }
 
-     override fun syncStepData(startTime: Long): Observable<List<WmAvgHeartRateData>> {
+     override fun syncData(startTime: Long): Observable<List<WmHeartRateData>> {
          TODO("Not yet implemented")
      }
  }

@@ -57,7 +57,12 @@ data class WmWeatherForecast(
      * 星期（week）
      * */
     val week: WmWeek,
-)
+
+) {
+    override fun toString(): String {
+        return "WmWeatherForecast(lowTemp=$lowTemp, highTemp=$highTemp, curTemp=$curTemp, tempUnit=$tempUnit, humidity=$humidity, uvIndex=$uvIndex, dayCode=$dayCode, nightCode=$nightCode, dayDesc='$dayDesc', nightDesc='$nightDesc', date=$date, week=$week)"
+    }
+}
 
 data class TodayWeather(
     /**
@@ -95,7 +100,13 @@ data class TodayWeather(
      * */
     val hour: Int
 
-)
+
+
+) {
+    override fun toString(): String {
+        return "TodayWeather(curTemp=$curTemp, tempUnit=$tempUnit, humidity=$humidity, uvIndex=$uvIndex, weatheCode=$weatheCode, weatherDesc='$weatherDesc', date=$date, hour=$hour)"
+    }
+}
 
 data class WmLocation (
     /**
@@ -120,7 +131,9 @@ data class WmLocation (
      */
     val latitude: Double,
 ) {
-
+    override fun toString(): String {
+        return "WmLocation(country='$country', city='$city', district='$district', longitude=$longitude, latitude=$latitude)"
+    }
 }
 
 data class WmWeather(

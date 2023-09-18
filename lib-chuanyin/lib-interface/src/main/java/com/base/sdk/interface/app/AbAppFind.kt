@@ -3,6 +3,9 @@ package com.base.sdk.`interface`.app
 import com.base.sdk.`interface`.IWmSupport
 import io.reactivex.rxjava3.core.Observable
 
+/**
+ * (app-find)应用模块-查找功能
+ */
 abstract class AbAppFind :IWmSupport {
 
     /**

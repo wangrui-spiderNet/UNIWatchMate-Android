@@ -1,10 +1,13 @@
 package com.base.sdk.entity.apps
 
+/**
+ * AlarmData structure 闹钟数据结构
+ */
 class WmAlarm(
-    var alarmId: Int,
-    var alarmName: String,
-    var alarmTime: Long,
-    var repeatOptions: Set<AlarmRepeatOption>
+    var alarmId: Int,//闹钟Id
+    var alarmName: String,//闹钟名称
+    var alarmTime: Long,//闹钟时间
+    var repeatOptions: Set<AlarmRepeatOption>//重复模式
 ) {
     var isOn: Boolean = false
 
@@ -25,6 +28,9 @@ class WmAlarm(
     }
 }
 
+/**
+ * 重复模式
+ */
 enum class AlarmRepeatOption(val value: Int) {
     NONE(0),
     SUNDAY(1 shl 0),
