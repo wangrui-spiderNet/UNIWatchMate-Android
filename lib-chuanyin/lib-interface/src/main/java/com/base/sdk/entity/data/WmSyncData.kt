@@ -1,20 +1,7 @@
 package com.base.sdk.entity.data
 
-import com.base.sdk.entity.common.WmSportType
-
-/**
- * Sync data(同步数据)
- */
-data class WmSyncData(
-    /**
-     * Data type(数据类型)
-     */
-    @WmSyncDataType val type: Int,
-    /**
-     * Data(数据)
-     */
-    val data: WmBaseSyncData,
-)
+import com.base.sdk.entity.common.WmActivity
+import com.base.sdk.entity.common.WmValueTypeData
 
 abstract class WmBaseSyncData(
     /**
@@ -30,10 +17,11 @@ abstract class WmBaseSyncData(
 class WmSportSummaryData(
     timestamp: Long,
     intervalTime: Long,
-    val wmSportType: WmSportType,
+    val sportId: Int,
+    val sportType: Int,
     val valueType: List<WmValueTypeData>
 
-) : WmBaseSyncData(timestamp, intervalTime){
+) : WmBaseSyncData(timestamp, intervalTime) {
 
 }
 
@@ -206,12 +194,14 @@ class WmActivityData(
     intervalTime: Long,
     /**
      * activity Type
+     * 活动类型
      */
-    val type: Int,
+    val activity: WmActivity,
+    val valueType: List<WmValueTypeData>,
     val duration: Int
 ) : WmBaseSyncData(timestamp, intervalTime) {
     override fun toString(): String {
-        return "WmActivityData(type=$type, duration=$duration, timestamp=$timestamp, intervalTime=$intervalTime)"
+        return "WmActivityData(activity=$activity, valueType=$valueType, duration=$duration)"
     }
 }
 
