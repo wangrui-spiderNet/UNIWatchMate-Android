@@ -5,14 +5,16 @@ import android.text.TextUtils
 import com.base.sdk.entity.WmDevice
 import com.base.sdk.entity.WmDeviceMode
 import com.base.sdk.entity.WmScanDevice
+import com.base.sdk.entity.apps.WmConnectState
 import com.base.sdk.`interface`.AbWmConnect
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableEmitter
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
+import io.reactivex.rxjava3.core.Single
 
 class SJConnect : AbWmConnect() {
 
-    private var connectEmitter: ObservableEmitter<Boolean>? = null
+    private var connectEmitter: ObservableEmitter<WmConnectState>? = null
 
     /**
      * 通过address 连接
@@ -66,17 +68,17 @@ class SJConnect : AbWmConnect() {
     }
 
     override fun disconnect() {
-        connectEmitter?.onNext(false)
+        connectEmitter?.onNext(WmConnectState.DISCONNECTED)
     }
 
     override fun reset() {
-        connectEmitter?.onNext(false)
+        connectEmitter?.onNext(WmConnectState.DISCONNECTED)
     }
 
-    override fun observeConnectState(): Observable<Boolean> {
-        return Observable.create<Boolean>(object : ObservableOnSubscribe<Boolean> {
+    override fun observeConnectState(): Observable<WmConnectState> {
+        return Observable.create<WmConnectState>(object : ObservableOnSubscribe<WmConnectState> {
             @Throws(Throwable::class)
-            override fun subscribe(emitter: ObservableEmitter<Boolean>) {
+            override fun subscribe(emitter: ObservableEmitter<WmConnectState>) {
                 connectEmitter = emitter
             }
         })
