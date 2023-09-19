@@ -1,9 +1,9 @@
 package com.base.api
 
-import android.bluetooth.BluetoothDevice
 import android.content.Context
 import com.base.sdk.*
-import com.base.sdk.entity.WmDeviceMode
+import com.base.sdk.entity.WmDeviceModel
+import com.base.sdk.entity.WmScanDevice
 import com.base.sdk.`interface`.AbWmConnect
 import com.base.sdk.`interface`.WmTransferFile
 import com.base.sdk.`interface`.app.AbWmApps
@@ -15,36 +15,22 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 object UNIWatchMate {
     private lateinit var mContext: Context
     private val mBaseUNIWatches: MutableList<AbUniWatch> = ArrayList()
-    var mUNIWatchSdk: Observable<AbUniWatch>? = null
+    var uniWatchSdk: Observable<AbUniWatch>? = null
     private var mMsgTimeOut = 10000
 
-//    var wmConnect: AbWmConnect? = null
-//    var wmApps: AbWmApps? = null
-//    var wmSettings: AbWmSettings? = null
-//    var wmSyncs: AbWmSyncs? = null
-//    var wmTransferFile: WmTransferFile? = null
+    var mWmConnect: AbWmConnect? = null
+    var mWmSettings: AbWmSettings? = null
+    var mWmTransferFile: WmTransferFile? = null
+    var mWmApps: AbWmApps? = null
+    var mWmSyncs: AbWmSyncs? = null
 
-    var subject = PublishSubject.create<AbUniWatch>()
-
-//    lateinit var sdkEmitter: ObservableEmitter<AbUniWatch>
-//
-//    /**
-//     * 监听SDK变化
-//     */
-//    fun observeSdkChange(): Observable<AbUniWatch> {
-//        return Observable.create(object : ObservableOnSubscribe<AbUniWatch> {
-//            override fun subscribe(emitter: ObservableEmitter<AbUniWatch>) {
-//                sdkEmitter = emitter
-//            }
-//        })
-//    }
+    private var sdkSubject = PublishSubject.create<AbUniWatch>()
 
     fun init(context: Context, msgTimeOut: Int, supportSdks: Array<AbUniWatch>) {
         mBaseUNIWatches.clear()
         mContext = context
 
-        mUNIWatchSdk = subject
-
+        uniWatchSdk = sdkSubject
         mMsgTimeOut = if (mMsgTimeOut < 5) {
             5
         } else {
@@ -56,51 +42,66 @@ object UNIWatchMate {
             mBaseUNIWatches.add(supportSdks[i])
         }
 
-        if (mUNIWatchSdk == null && mBaseUNIWatches.isEmpty()) {
+        if (uniWatchSdk == null && mBaseUNIWatches.isEmpty()) {
             throw RuntimeException("No Sdk Register Exception!")
         }
     }
 
-    fun connect(address: String, deviceMode: WmDeviceMode) {
+    fun setDeviceModel(deviceMode: WmDeviceModel) {
         mBaseUNIWatches.forEach {
-            if (it.wmConnect?.connect(address, deviceMode)?.isRecognized == true) {
-                subject.onNext(it)
+            if (it.getDevice(deviceMode)?.isRecognized == true) {
+                mWmConnect = it.wmConnect
+                mWmSettings = it.wmSettings
+                mWmApps = it.wmApps
+                mWmSyncs = it.wmSync
+                mWmTransferFile = it.wmTransferFile
+                sdkSubject.onNext(it)
 
-//                wmApps = it.wmApps
-//                wmConnect = it.wmConnect
-//                wmSettings = it.wmSettings
-//                wmSyncs = it.wmSync
-//                wmTransferFile = it.wmTransferFile
             }
         }
     }
 
-    fun connect(address: BluetoothDevice, deviceMode: WmDeviceMode) {
+    fun scanQr(qrString: String) {
         mBaseUNIWatches.forEach {
-            if (it.wmConnect?.connect(address, deviceMode)?.isRecognized == true) {
-                subject.onNext(it)
+            val scanDevice = it.parseScanQr(qrString)
+            scanDevice?.let { device ->
+                if (device.isRecognized) {
 
-//                wmApps = it.wmApps
-//                wmConnect = it.wmConnect
-//                wmSettings = it.wmSettings
-//                wmSyncs = it.wmSync
-//                wmTransferFile = it.wmTransferFile
+                    mWmConnect = it.wmConnect
+                    mWmSettings = it.wmSettings
+                    mWmApps = it.wmApps
+                    mWmSyncs = it.wmSync
+                    mWmTransferFile = it.wmTransferFile
+
+                    sdkSubject.onNext(it)
+                    mWmConnect?.connect(device.address!!, device.mode)
+                }
             }
         }
     }
 
-    fun scanQr(scanQr: String) {
-        mBaseUNIWatches.forEach {
-            if (it.wmConnect?.scanQr(scanQr)?.isRecognized == true) {
-                subject.onNext(it)
-
-//                wmApps = it.wmApps
-//                wmConnect = it.wmConnect
-//                wmSettings = it.wmSettings
-//                wmSyncs = it.wmSync
-//                wmTransferFile = it.wmTransferFile
-            }
-        }
-    }
+//    fun connect(address: String, deviceMode: WmDeviceModel) {
+//        mBaseUNIWatches.forEach {
+//            if (it.wmConnect?.connect(address, deviceMode)?.isRecognized == true) {
+//                sdkSubject.onNext(it)
+//            }
+//        }
+//    }
+//
+//    fun connect(address: BluetoothDevice, deviceMode: WmDeviceModel) {
+//        mBaseUNIWatches.forEach {
+//            if (it.wmConnect?.connect(address, deviceMode)?.isRecognized == true) {
+//                sdkSubject.onNext(it)
+//            }
+//        }
+//    }
+//
+//    fun scanQr(scanQr: String) {
+//        mBaseUNIWatches.forEach {
+//            if (it.wmConnect?.scanQr(scanQr)?.isRecognized == true) {
+//                sdkSubject.onNext(it)
+//            }
+//        }
+//    }
 
 }

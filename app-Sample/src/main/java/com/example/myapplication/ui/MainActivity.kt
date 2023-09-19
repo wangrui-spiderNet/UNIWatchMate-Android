@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.base.api.UNIWatchMate
-import com.base.sdk.entity.WmDeviceMode
-import com.base.sdk.`interface`.log.WmLog
-import com.example.myapplication.MyApplication
+import com.base.sdk.entity.WmDeviceModel
+import com.base.sdk.entity.settings.WmSportGoal
 import com.example.myapplication.R
+import io.reactivex.rxjava3.core.SingleObserver
+import io.reactivex.rxjava3.disposables.Disposable
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,7 +25,27 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnExchange.setOnClickListener {
-            UNIWatchMate.connect("12:34:56:78:9A:BC", WmDeviceMode.SJ_WATCH)
+            connectSample()
         }
+    }
+
+    private fun connectSample() {
+        UNIWatchMate.mWmConnect?.connect("12:34:56:78:9A:BC", WmDeviceModel.SJ_WATCH)
+    }
+
+    fun settingsSample() {
+        //设置运动目标 示例：其他与此类似，都是通过模块实例调用对应的接口方法
+        val sportGoal = WmSportGoal(10000, 200.0, 10000.0, 1000)
+        val settingSingle = UNIWatchMate.mWmSettings?.sportGoalSetting?.set(sportGoal)
+        settingSingle?.subscribe(object : SingleObserver<WmSportGoal> {
+            override fun onSubscribe(d: Disposable) {}
+            override fun onSuccess(basicInfo: WmSportGoal) {
+
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+        })
     }
 }

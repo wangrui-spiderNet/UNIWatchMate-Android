@@ -2,7 +2,7 @@ package com.sjbt.sdk
 
 import android.bluetooth.BluetoothDevice
 import com.base.sdk.entity.WmDevice
-import com.base.sdk.entity.WmDeviceMode
+import com.base.sdk.entity.WmDeviceModel
 import com.base.sdk.entity.WmScanDevice
 import com.base.sdk.entity.apps.WmConnectState
 import com.base.sdk.`interface`.AbWmConnect
@@ -20,12 +20,12 @@ class SJConnect : AbWmConnect() {
     /**
      * 通过address 连接
      */
-    override fun connect(address: String, deviceMode: WmDeviceMode): WmDevice {
-        val device = WmDevice(deviceMode, address)
+    override fun connect(address: String, deviceMode: WmDeviceModel): WmDevice {
+        val device = WmDevice(deviceMode)
         device.address = address
         device.mode = deviceMode
 
-        device.isRecognized = deviceMode == WmDeviceMode.SJ_WATCH
+        device.isRecognized = deviceMode == WmDeviceModel.SJ_WATCH
 
         if (device.isRecognized) {
             WmLog.e(TAG, " connect:${address}")
@@ -41,13 +41,14 @@ class SJConnect : AbWmConnect() {
     /**
      * 通过BluetoothDevice 连接
      */
-    override fun connect(address: BluetoothDevice, deviceMode: WmDeviceMode): WmDevice {
-        val device = WmDevice(deviceMode, address.address)
-        device.isRecognized = deviceMode == WmDeviceMode.SJ_WATCH
+    override fun connect(device: BluetoothDevice, deviceMode: WmDeviceModel): WmDevice {
+        val device = WmDevice(deviceMode)
+        device.address = device.address
+        device.isRecognized = deviceMode == WmDeviceModel.SJ_WATCH
 
         if (device.isRecognized) {
             //TODO 执行连接
-            WmLog.e(TAG, " connect:${address}")
+            WmLog.e(TAG, " connect:${device}")
             connectEmitter?.onNext(WmConnectState.CONNECTING)
             connectEmitter?.onNext(WmConnectState.PRE_CONNECTED)
         } else {
@@ -60,25 +61,26 @@ class SJConnect : AbWmConnect() {
     /**
      * 扫码连接 需要sdk自己实现解析二维码识别自家设备的逻辑
      */
-    override fun scanQr(qrString: String): WmScanDevice {
-        val address = parseAddress(qrString)
-        val scanDevice = WmScanDevice(WmDeviceMode.SJ_WATCH, address)
-        scanDevice.qrUrl = qrString
-        if (qrString.contains("shenju")) {
-            scanDevice.isRecognized = true
-        }
-
-        if (scanDevice.isRecognized) {
-            //TODO 执行连接
-            WmLog.e( TAG, "scan connect:${address}")
-            connectEmitter?.onNext(WmConnectState.CONNECTING)
-            connectEmitter?.onNext(WmConnectState.PRE_CONNECTED)
-        } else {
-            connectEmitter?.onError(RuntimeException("not recognized device"))
-        }
-
-        return scanDevice
-    }
+//    override fun scanQr(qrString: String): WmScanDevice {
+//        val address = parseAddress(qrString)
+//        val scanDevice = WmScanDevice(WmDeviceModel.SJ_WATCH)
+//        scanDevice.address = address
+//        scanDevice.qrUrl = qrString
+//        if (qrString.contains("shenju")) {
+//            scanDevice.isRecognized = true
+//        }
+//
+//        if (scanDevice.isRecognized) {
+//            //TODO 执行连接
+//            WmLog.e(TAG, "scan connect:${address}")
+//            connectEmitter?.onNext(WmConnectState.CONNECTING)
+//            connectEmitter?.onNext(WmConnectState.PRE_CONNECTED)
+//        } else {
+//            connectEmitter?.onError(RuntimeException("not recognized device"))
+//        }
+//
+//        return scanDevice
+//    }
 
     override fun disconnect() {
         connectEmitter?.onNext(WmConnectState.DISCONNECTED)

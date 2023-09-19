@@ -2,7 +2,7 @@ package com.base.sdk.`interface`
 
 import android.bluetooth.BluetoothDevice
 import com.base.sdk.entity.WmDevice
-import com.base.sdk.entity.WmDeviceMode
+import com.base.sdk.entity.WmDeviceModel
 import com.base.sdk.entity.WmScanDevice
 import com.base.sdk.entity.apps.WmConnectState
 import io.reactivex.rxjava3.core.Observable
@@ -14,13 +14,13 @@ abstract class AbWmConnect {
     /**
      * 连接方法
      */
-    abstract fun connect(address: String,deviceMode: WmDeviceMode): WmDevice
-    abstract fun connect(address: BluetoothDevice,deviceMode: WmDeviceMode): WmDevice
+    abstract fun connect(address: String,deviceMode: WmDeviceModel): WmDevice
+    abstract fun connect(address: BluetoothDevice,deviceMode: WmDeviceModel): WmDevice
 
     /**
      * 扫描二维码
      */
-    abstract fun scanQr(qrString: String): WmScanDevice
+//    abstract fun scanQr(qrString: String): WmScanDevice
 
     /**
      * 断开连接

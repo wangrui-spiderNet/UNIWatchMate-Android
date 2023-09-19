@@ -2,9 +2,10 @@ package com.sjbt.sdk
 
 import android.bluetooth.BluetoothDevice
 import android.content.Context
+import android.text.TextUtils
 import com.base.sdk.AbUniWatch
 import com.base.sdk.entity.WmDevice
-import com.base.sdk.entity.WmDeviceMode
+import com.base.sdk.entity.WmDeviceModel
 import com.base.sdk.entity.WmScanDevice
 import com.sjbt.sdk.app.SJAbWmApps
 import com.sjbt.sdk.dfu.SJTransferFile
@@ -41,8 +42,24 @@ object SJUniWatchSdk : AbUniWatch() {
         TODO("Not yet implemented")
     }
 
-    override fun getDevice(wmDeviceMode: WmDeviceMode, address: String?): WmDevice? {
-        TODO("Not yet implemented")
+    override fun getDevice(wmDeviceModel: WmDeviceModel): WmDevice? {
+        val wmDevice = WmDevice(WmDeviceModel.SJ_WATCH)
+        wmDevice.isRecognized = wmDeviceModel == WmDeviceModel.SJ_WATCH
+        return wmDevice
     }
 
+    override fun parseScanQr(qrString: String): WmScanDevice {
+        val wmScanDevice = WmScanDevice(WmDeviceModel.SJ_WATCH)
+        wmScanDevice.qrUrl = qrString
+        wmScanDevice.address = qrString.substring(0, 12)
+
+        wmScanDevice.isRecognized =
+            qrString.contains("shenju") && isLegalMacAddress(wmScanDevice.address)
+
+        return wmScanDevice
+    }
+
+    private fun isLegalMacAddress(address: String?): Boolean {
+        return TextUtils.isEmpty(address)
+    }
 }

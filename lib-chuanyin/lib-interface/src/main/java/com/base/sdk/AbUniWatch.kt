@@ -3,7 +3,8 @@ package com.base.sdk
 import android.bluetooth.BluetoothDevice
 import android.content.Context
 import com.base.sdk.entity.WmDevice
-import com.base.sdk.entity.WmDeviceMode
+import com.base.sdk.entity.WmDeviceModel
+import com.base.sdk.entity.WmScanDevice
 import com.base.sdk.`interface`.AbWmConnect
 import com.base.sdk.`interface`.WmTransferFile
 import com.base.sdk.`interface`.app.AbWmApps
@@ -58,7 +59,7 @@ abstract class AbUniWatch {
     /**
      * 根据设备类型返回设备信息
      */
-    abstract fun getDevice(wmDeviceMode: WmDeviceMode, address: String?): WmDevice?
+    abstract fun getDevice(wmDeviceModel: WmDeviceModel): WmDevice?
 
     /**
      * 开始扫描设备
@@ -73,5 +74,7 @@ abstract class AbUniWatch {
     fun setLogEnable(logEnable: Boolean) {
         WmLog.logEnable = logEnable
     }
+
+    abstract fun parseScanQr(qrString: String): WmScanDevice
 
 }
