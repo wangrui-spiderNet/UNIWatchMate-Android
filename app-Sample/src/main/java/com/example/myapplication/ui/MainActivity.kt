@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         val btnExchange = findViewById<Button>(R.id.btn_exchange)
 
         btnConnect.setOnClickListener {
+            //扫码切换sdk
             UNIWatchMate.scanQr("www.shenju.watch?mac=00:00:56:78:9A:BC?name=SJ 8020N")
         }
 
@@ -29,10 +30,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * 连接示例
+     */
     private fun connectSample() {
         UNIWatchMate.mWmConnect?.connect("12:34:56:78:9A:BC", WmDeviceModel.SJ_WATCH)
     }
 
+    /**
+     * 设置配置信息示例
+     */
     fun settingsSample() {
         //设置运动目标 示例：其他与此类似，都是通过模块实例调用对应的接口方法
         val sportGoal = WmSportGoal(10000, 200.0, 10000.0, 1000)
