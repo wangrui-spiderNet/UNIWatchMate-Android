@@ -60,6 +60,6 @@ object SJUniWatchSdk : AbUniWatch() {
     }
 
     private fun isLegalMacAddress(address: String?): Boolean {
-        return TextUtils.isEmpty(address)
+        return !TextUtils.isEmpty(address)
     }
 }

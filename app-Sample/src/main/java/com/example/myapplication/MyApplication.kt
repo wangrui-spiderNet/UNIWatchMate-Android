@@ -33,8 +33,8 @@ class MyApplication : Application() {
 
         //监听sdk变化
         UNIWatchMate.uniWatchSdk?.subscribe {
-            WmLog.e(TAG, "SDK changed")
             it.setLogEnable(true)
+            WmLog.e(TAG, "SDK changed")
         }
     }
 
