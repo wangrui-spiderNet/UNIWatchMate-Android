@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 object UNIWatchMate {
     private lateinit var mContext: Context
     private val mBaseUNIWatches: MutableList<AbUniWatch> = ArrayList()
-    lateinit var mUNIWatchSdk: Observable<AbUniWatch>
+    var mUNIWatchSdk: Observable<AbUniWatch>? = null
     private var mMsgTimeOut = 10000
 
 //    var wmConnect: AbWmConnect? = null

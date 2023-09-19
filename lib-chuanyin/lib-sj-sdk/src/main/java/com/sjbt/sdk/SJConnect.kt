@@ -1,20 +1,21 @@
 package com.sjbt.sdk
 
 import android.bluetooth.BluetoothDevice
-import android.text.TextUtils
 import com.base.sdk.entity.WmDevice
 import com.base.sdk.entity.WmDeviceMode
 import com.base.sdk.entity.WmScanDevice
 import com.base.sdk.entity.apps.WmConnectState
 import com.base.sdk.`interface`.AbWmConnect
+import com.base.sdk.`interface`.log.WmLog
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableEmitter
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
-import io.reactivex.rxjava3.core.Single
 
 class SJConnect : AbWmConnect() {
 
     private var connectEmitter: ObservableEmitter<WmConnectState>? = null
+
+    val TAG = "SJConnect"
 
     /**
      * 通过address 连接
@@ -27,8 +28,9 @@ class SJConnect : AbWmConnect() {
         device.isRecognized = deviceMode == WmDeviceMode.SJ_WATCH
 
         if (device.isRecognized) {
-            //TODO 执行连接
-
+            WmLog.e(TAG, " connect:${address}")
+            connectEmitter?.onNext(WmConnectState.CONNECTING)
+            connectEmitter?.onNext(WmConnectState.PRE_CONNECTED)
         } else {
             connectEmitter?.onError(RuntimeException("not recognized device"))
         }
@@ -45,7 +47,9 @@ class SJConnect : AbWmConnect() {
 
         if (device.isRecognized) {
             //TODO 执行连接
-
+            WmLog.e(TAG, " connect:${address}")
+            connectEmitter?.onNext(WmConnectState.CONNECTING)
+            connectEmitter?.onNext(WmConnectState.PRE_CONNECTED)
         } else {
             connectEmitter?.onError(RuntimeException("not recognized device"))
         }
@@ -58,13 +62,22 @@ class SJConnect : AbWmConnect() {
      */
     override fun scanQr(qrString: String): WmScanDevice {
         val address = parseAddress(qrString)
-        val scanDeviceInfo = WmScanDevice(WmDeviceMode.SJ_WATCH, address)
-        scanDeviceInfo.qrUrl = qrString
-        if (qrString.contains("shenjun")) {
-            scanDeviceInfo.isRecognized = true;
+        val scanDevice = WmScanDevice(WmDeviceMode.SJ_WATCH, address)
+        scanDevice.qrUrl = qrString
+        if (qrString.contains("shenju")) {
+            scanDevice.isRecognized = true
         }
 
-        return scanDeviceInfo
+        if (scanDevice.isRecognized) {
+            //TODO 执行连接
+            WmLog.e( TAG, "scan connect:${address}")
+            connectEmitter?.onNext(WmConnectState.CONNECTING)
+            connectEmitter?.onNext(WmConnectState.PRE_CONNECTED)
+        } else {
+            connectEmitter?.onError(RuntimeException("not recognized device"))
+        }
+
+        return scanDevice
     }
 
     override fun disconnect() {

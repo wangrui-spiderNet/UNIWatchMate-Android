@@ -7,6 +7,7 @@ import com.base.sdk.entity.WmDeviceMode
 import com.base.sdk.`interface`.AbWmConnect
 import com.base.sdk.`interface`.WmTransferFile
 import com.base.sdk.`interface`.app.AbWmApps
+import com.base.sdk.`interface`.log.WmLog
 import com.base.sdk.`interface`.setting.AbWmSettings
 import com.base.sdk.`interface`.sync.AbWmSyncs
 import io.reactivex.rxjava3.core.Observable
@@ -69,5 +70,8 @@ abstract class AbUniWatch {
      */
     abstract fun stopDiscovery()
 
+    fun setLogEnable(logEnable: Boolean) {
+        WmLog.logEnable = logEnable
+    }
 
 }
