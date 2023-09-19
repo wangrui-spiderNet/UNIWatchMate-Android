@@ -12,7 +12,7 @@ abstract class AbAppContact :IWmSupport {
     /**
      * syncContactList 同步通讯录列表
      */
-    abstract fun syncContactList(): Observable<List<WmContact>>
+    abstract var syncContactList : Observable<List<WmContact>>
 
     /**
      * addContact 添加通讯录

@@ -11,7 +11,7 @@ abstract class AbAppLanguage : IWmSupport {
     /**
      * 同步语言列表
      */
-    abstract fun syncLanguageList(): Observable<List<WmLanguage>>
+    abstract var syncLanguageList : Observable<List<WmLanguage>>
 
     /**
      * 设定语言

@@ -9,9 +9,9 @@ class AppAlarm : AbAppAlarm() {
         TODO("Not yet implemented")
     }
 
-    override fun syncAlarmList(): Observable<List<WmAlarm>> {
-        TODO("Not yet implemented")
-    }
+    override var syncAlarmList: Observable<List<WmAlarm>>
+        get() = TODO("Not yet implemented")
+        set(value) {}
 
     override fun addAlarm(alarm: WmAlarm): Observable<WmAlarm> {
         TODO("Not yet implemented")

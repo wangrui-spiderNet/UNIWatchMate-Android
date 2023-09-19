@@ -16,4 +16,8 @@ class SyncCaloriesData : AbSyncData<SyncCaloriesData>(){
     override fun syncData(startTime: Long): Observable<List<SyncCaloriesData>> {
         TODO("Not yet implemented")
     }
+
+    override var observeSyncDataList: Observable<List<SyncCaloriesData>>
+        get() = TODO("Not yet implemented")
+        set(value) {}
 }

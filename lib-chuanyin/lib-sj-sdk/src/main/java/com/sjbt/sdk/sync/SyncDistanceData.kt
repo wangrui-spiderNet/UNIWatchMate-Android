@@ -17,4 +17,8 @@ class SyncDistanceData :  AbSyncData<WmDistanceData>() {
     override fun syncData(startTime: Long): Observable<List<WmDistanceData>> {
         TODO("Not yet implemented")
     }
+
+    override var observeSyncDataList: Observable<List<WmDistanceData>>
+        get() = TODO("Not yet implemented")
+        set(value) {}
 }

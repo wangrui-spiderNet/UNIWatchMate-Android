@@ -1,6 +1,8 @@
 package com.sjbt.sdk.app
 
 import com.base.sdk.`interface`.app.AbAppCamera
+import com.base.sdk.`interface`.app.WMCameraFlashMode
+import com.base.sdk.`interface`.app.WMCameraPosition
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
@@ -10,23 +12,23 @@ class AppCamera :AbAppCamera() {
         TODO("Not yet implemented")
     }
 
-    override fun observeCameraState(): Observable<Boolean> {
+    override var observeCameraState: Observable<Boolean>
+        get() = TODO("Not yet implemented")
+        set(value) {}
+
+    override var observeCameraFlash: Observable<WMCameraFlashMode>
+        get() = TODO("Not yet implemented")
+        set(value) {}
+
+    override fun cameraFlashSwitch(type: WMCameraFlashMode): Observable<WMCameraFlashMode> {
         TODO("Not yet implemented")
     }
 
-    override fun observeCameraFlash(): Observable<Int> {
-        TODO("Not yet implemented")
-    }
+    override var observeCameraFrontBack: Observable<WMCameraPosition>
+        get() = TODO("Not yet implemented")
+        set(value) {}
 
-    override fun cameraFlashSwitch(type: Int): Observable<Int> {
-        TODO("Not yet implemented")
-    }
-
-    override fun observeCameraFrontBack(): Observable<Boolean> {
-        TODO("Not yet implemented")
-    }
-
-    override fun cameraBackSwitch(isBack: Boolean): Observable<Boolean> {
+    override fun cameraBackSwitch(isBack: WMCameraPosition): Observable<WMCameraPosition> {
         TODO("Not yet implemented")
     }
 

@@ -13,7 +13,7 @@ abstract class AbAppSport : IWmSupport {
     /**
      * syncSportList 同步运动列表
      */
-    abstract fun syncSportList(): Observable<List<WmSport>>
+    abstract var syncSportList : Observable<List<WmSport>>
 
     /**
      * addSport 增加运动项目

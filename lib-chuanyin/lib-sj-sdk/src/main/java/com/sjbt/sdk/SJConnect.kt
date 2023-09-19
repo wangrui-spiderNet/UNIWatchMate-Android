@@ -75,14 +75,14 @@ class SJConnect : AbWmConnect() {
         connectEmitter?.onNext(WmConnectState.DISCONNECTED)
     }
 
-    override fun observeConnectState(): Observable<WmConnectState> {
-        return Observable.create<WmConnectState>(object : ObservableOnSubscribe<WmConnectState> {
+    override var observeConnectState: Observable<WmConnectState>
+        get() = Observable.create(object : ObservableOnSubscribe<WmConnectState> {
             @Throws(Throwable::class)
             override fun subscribe(emitter: ObservableEmitter<WmConnectState>) {
                 connectEmitter = emitter
             }
         })
-    }
+        set(value) {}
 
     /**
      * 通过扫描到的二维码，解析mac地址

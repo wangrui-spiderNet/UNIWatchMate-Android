@@ -17,6 +17,6 @@ abstract class AbAppWeather :IWmSupport {
     /**
      * observeWeather 监听设备端天气请求
      */
-    abstract fun observeWeather(): Observable<Boolean>
+    abstract var observeWeather : Observable<Boolean>
 
 }

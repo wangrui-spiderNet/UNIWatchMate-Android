@@ -7,11 +7,11 @@ import io.reactivex.rxjava3.core.Observable
 /**
  * 应用模块-闹钟
  */
-abstract class AbAppAlarm :IWmSupport {
+abstract class AbAppAlarm : IWmSupport {
     /**
      * syncAlarmList 同步闹钟列表
      */
-    abstract fun syncAlarmList(): Observable<List<WmAlarm>>
+    abstract var syncAlarmList: Observable<List<WmAlarm>>
 
     /**
      * addAlarm 添加闹钟

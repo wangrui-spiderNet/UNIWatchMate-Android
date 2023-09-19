@@ -35,7 +35,7 @@ abstract class AbWmConnect {
     /**
      * 连接状态监听
      */
-    abstract fun observeConnectState(): Observable<WmConnectState>
+    abstract var observeConnectState : Observable<WmConnectState>
 
     /**
      * 是否准备好进行私有协议通讯

@@ -17,4 +17,8 @@ class SyncRateData : AbSyncData<WmHeartRateData>() {
      override fun syncData(startTime: Long): Observable<List<WmHeartRateData>> {
          TODO("Not yet implemented")
      }
- }
+
+    override var observeSyncDataList: Observable<List<WmHeartRateData>>
+        get() = TODO("Not yet implemented")
+        set(value) {}
+}
