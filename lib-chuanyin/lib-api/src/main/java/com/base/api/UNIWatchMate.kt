@@ -4,12 +4,23 @@ import android.bluetooth.BluetoothDevice
 import android.content.Context
 import com.base.sdk.AbUniWatch
 import com.base.sdk.entity.WmDeviceMode
+import com.base.sdk.`interface`.AbWmConnect
+import com.base.sdk.`interface`.WmTransferFile
+import com.base.sdk.`interface`.app.AbWmApps
+import com.base.sdk.`interface`.setting.AbWmSettings
+import com.base.sdk.`interface`.sync.AbWmSyncs
 
 object UNIWatchMate {
     private lateinit var mContext: Context
     private val mBaseUNIWatches: MutableList<AbUniWatch> = ArrayList()
-    lateinit var mUNIWatchSdk: AbUniWatch
+    private lateinit var mUNIWatchSdk: AbUniWatch
     private var mMsgTimeOut = 10000
+
+    var wmConnect: AbWmConnect? = null
+    var wmApps: AbWmApps? = null
+    var wmSettings: AbWmSettings? = null
+    var wmSyncs: AbWmSyncs? = null
+    var wmTransferFile: WmTransferFile? = null
 
     fun init(context: Context, msgTimeOut: Int, supportSdks: Array<AbUniWatch>) {
         mBaseUNIWatches.clear()
@@ -34,6 +45,12 @@ object UNIWatchMate {
         mBaseUNIWatches.forEach {
             if (it.wmConnect?.connect(address, deviceMode)?.isRecognized == true) {
                 mUNIWatchSdk = it
+
+                wmApps = it.wmApps
+                wmConnect = it.wmConnect
+                wmSettings = it.wmSettings
+                wmSyncs = it.wmSync
+                wmTransferFile = it.wmTransferFile
             }
         }
     }
@@ -42,6 +59,12 @@ object UNIWatchMate {
         mBaseUNIWatches.forEach {
             if (it.wmConnect?.connect(address, deviceMode)?.isRecognized == true) {
                 mUNIWatchSdk = it
+
+                wmApps = it.wmApps
+                wmConnect = it.wmConnect
+                wmSettings = it.wmSettings
+                wmSyncs = it.wmSync
+                wmTransferFile = it.wmTransferFile
             }
         }
     }
@@ -50,6 +73,12 @@ object UNIWatchMate {
         mBaseUNIWatches.forEach {
             if (it.wmConnect?.scanQr(scanQr)?.isRecognized == true) {
                 mUNIWatchSdk = it
+
+                wmApps = it.wmApps
+                wmConnect = it.wmConnect
+                wmSettings = it.wmSettings
+                wmSyncs = it.wmSync
+                wmTransferFile = it.wmTransferFile
             }
         }
     }
