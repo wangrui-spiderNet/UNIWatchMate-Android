@@ -54,7 +54,7 @@ abstract class AbUniWatch {
     /**
      * 初始化方法，需要在所有方法执行前调用,建议在application执行
      */
-    abstract fun init(context: Context?, msgTimeOut: Int)
+    abstract fun init(context: Context, msgTimeOut: Int)
 
     /**
      * 根据设备类型返回设备信息

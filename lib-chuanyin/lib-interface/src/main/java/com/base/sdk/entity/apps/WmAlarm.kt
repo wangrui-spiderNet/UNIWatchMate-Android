@@ -26,6 +26,12 @@ class WmAlarm(
         this.isOn = false
         // 在这里添加停止闹钟的逻辑
     }
+
+    override fun toString(): String {
+        return "WmAlarm(alarmId=$alarmId, alarmName='$alarmName', alarmTime=$alarmTime, repeatOptions=$repeatOptions, isOn=$isOn)"
+    }
+
+
 }
 
 /**
@@ -47,4 +53,6 @@ enum class AlarmRepeatOption(val value: Int) {
                 .toSet()
         }
     }
+
+
 }

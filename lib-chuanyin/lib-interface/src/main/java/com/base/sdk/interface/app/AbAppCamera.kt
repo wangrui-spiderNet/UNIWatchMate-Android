@@ -50,6 +50,8 @@ abstract class AbAppCamera :IWmSupport {
      */
     abstract fun updateCameraPreview(data: ByteArray)
 
+    abstract fun stopCameraPreview()
+
 }
 
 enum class WMCameraPosition{
