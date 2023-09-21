@@ -1,10 +1,10 @@
 package com.sjbt.sdk.sync
 
-import android.database.Observable
 import com.base.sdk.entity.data.WmDistanceData
 import com.base.sdk.`interface`.sync.AbSyncData
+import io.reactivex.rxjava3.core.Observable
 
-class SyncDistanceData :  AbSyncData<WmDistanceData>() {
+class SyncDistanceData : AbSyncData<List<WmDistanceData> >() {
 
     override fun isSupport(): Boolean {
         TODO("Not yet implemented")
@@ -18,7 +18,11 @@ class SyncDistanceData :  AbSyncData<WmDistanceData>() {
         TODO("Not yet implemented")
     }
 
-    override var observeSyncDataList: Observable<List<WmDistanceData>>
+    override var observeSyncData: Observable<List<WmDistanceData>>
         get() = TODO("Not yet implemented")
         set(value) {}
+
+    override fun syncTimeOut(obj: String) {
+        TODO("Not yet implemented")
+    }
 }

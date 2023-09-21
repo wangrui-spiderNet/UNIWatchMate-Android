@@ -16,11 +16,13 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+
 import com.sjbt.sdk.entity.MsgBean;
 import com.sjbt.sdk.log.SJLog;
 import com.sjbt.sdk.spp.cmd.CmdConfig;
 import com.sjbt.sdk.spp.cmd.CmdHelper;
 import com.sjbt.sdk.utils.BtUtils;
+
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -107,7 +109,7 @@ public class BtEngine {
     }
 
     private BtEngine() {
-        SJLog.INSTANCE.logBt(TAG,"BtEngine() 构建");
+        SJLog.INSTANCE.logBt(TAG, "BtEngine() 构建");
         myHandlerThread.startThread();
     }
 
@@ -121,8 +123,8 @@ public class BtEngine {
     private static void socketConnectRead() throws IOException {
 
         if (!mSocket.isConnected()) {
-            SJLog.INSTANCE.logBt(TAG,"开始连接-->:" + mDevice);
-            
+            SJLog.INSTANCE.logBt(TAG, "开始连接-->:" + mDevice);
+
             mStateMap.put(mDevice.getAddress(), STATE_CONNECTING);
             mSocket.connect();
             deviceBusing = false;
@@ -131,7 +133,7 @@ public class BtEngine {
         if (mSocket.isConnected()) {
             mStateMap.put(mDevice.getAddress(), STATE_CONNECTED);
             BluetoothDevice device = mSocket.getRemoteDevice();
-            SJLog.INSTANCE.logBt(TAG,"连接成功:" + device.getAddress());
+            SJLog.INSTANCE.logBt(TAG, "连接成功:" + device.getAddress());
             notifyUI(Listener.CONNECTED, device);
 
             EXECUTOR.execute(new Runnable() {
@@ -178,7 +180,7 @@ public class BtEngine {
                                 }
 
                                 String msgStr = byte2Hex(result).toUpperCase();
-                                SJLog.INSTANCE.logBt(TAG,"返回消息：" + msgStr);
+                                SJLog.INSTANCE.logBt(TAG, "返回消息：" + msgStr);
 
                                 String msgTimeCode = msgStr.substring(0, 8).toUpperCase();
 
@@ -225,7 +227,7 @@ public class BtEngine {
         }
 
         public void startThread() {
-            SJLog.INSTANCE.logBt(TAG,"startThread:启动线程");
+            SJLog.INSTANCE.logBt(TAG, "startThread:启动线程");
             start();
             mBzyHandler = new Handler(getLooper()) {
                 @Override
@@ -240,10 +242,10 @@ public class BtEngine {
 
                         case TYPE_CONNECT:
                             if (mDevice != null) {
-                                SJLog.INSTANCE.logBt(TAG,"创建BluetoothSocket：" + mDevice.getAddress());
+                                SJLog.INSTANCE.logBt(TAG, "创建BluetoothSocket：" + mDevice.getAddress());
                                 try {
                                     mSocket = mDevice.createInsecureRfcommSocketToServiceRecord(SPP_UUID);
-                                    SJLog.INSTANCE.logBt(TAG,"开启子线程读取" + mDevice.getAddress());
+                                    SJLog.INSTANCE.logBt(TAG, "开启子线程读取" + mDevice.getAddress());
                                     socketConnectRead();
                                 } catch (IOException e) {
                                     closeSocket("loopRead异常 " + e, true);
@@ -251,7 +253,7 @@ public class BtEngine {
                                     notifyErrorOnUI("3-" + e.getMessage());
                                 }
                             } else {
-                                SJLog.INSTANCE.logBt(TAG,"设备异常Device=null");
+                                SJLog.INSTANCE.logBt(TAG, "设备异常Device=null");
                             }
                             break;
                     }
@@ -292,9 +294,20 @@ public class BtEngine {
         }
     }
 
-
     private void sendHandleMessage(int what, Object obj) {
         myHandlerThread.sendMessage(what, obj);
+    }
+
+    /**
+     * 发送短消息
+     */
+    public void sendMsgOnWorkThread(byte[] bytes) {
+        if (deviceBusing) {
+            notifyUI(Listener.BUSY, bytes);
+            return;
+        }
+
+        sendHandleMessage(TYPE_MSG, bytes);
     }
 
     public static void sendMsg(byte[] bytes) {
@@ -311,7 +324,7 @@ public class BtEngine {
                 msgQueue.put(msgTimeCode, new Runnable() {
                     @Override
                     public void run() {
-                        SJLog.INSTANCE.logBt(TAG,"Biu2Us消息发送超时回调：" + msgTimeCode);
+                        SJLog.INSTANCE.logBt(TAG, "Biu2Us消息发送超时回调：" + msgTimeCode);
                         notifyUI(Listener.TIME_OUT, bytes);
                         mHandler.removeCallbacks(msgQueue.get(msgTimeCode));
                         msgQueue.remove(msgTimeCode);
@@ -323,7 +336,7 @@ public class BtEngine {
 //            SJLog.INSTANCE.logBt(TAG,"开启子线程读取.容许最大长度Receive:" + mSocket.getMaxReceivePacketSize());
             mSocket.getOutputStream().write(bytes);
             mSocket.getOutputStream().flush();
-            SJLog.INSTANCE.logBt(TAG,"发送消息：" + BtUtils.bytesToHexString(bytes));
+            SJLog.INSTANCE.logBt(TAG, "发送消息：" + BtUtils.bytesToHexString(bytes));
 
         } catch (Throwable e) {
 //            closeSocket("发送过程 " + e.getMessage(), true);
@@ -445,7 +458,7 @@ public class BtEngine {
 
             if (mSocket != null && mSocket.isConnected()) {
                 mSocket.close();
-                SJLog.INSTANCE.logBt(TAG,name + " 关闭Socket");
+                SJLog.INSTANCE.logBt(TAG, name + " 关闭Socket");
 
                 if (isNotify) {
                     notifyUI(Listener.ON_SOCKET_CLOSE, null);
@@ -487,7 +500,7 @@ public class BtEngine {
                                     if (msgBean.cmdIdStr.equals(CmdConfig.CMD_STR_8015) && msgBean.head == HEAD_COMMON) {
                                         byte busy = byteBuffer.get(16);
                                         deviceBusing = (busy == 1);
-                                        SJLog.INSTANCE.logBt(TAG,"正在忙：" + deviceBusing);
+                                        SJLog.INSTANCE.logBt(TAG, "正在忙：" + deviceBusing);
                                         if (deviceBusing) {
                                             mHandler.postDelayed(busyRun, 15000);
                                         } else {
@@ -507,11 +520,11 @@ public class BtEngine {
                             mListener.socketNotify(state, obj);
                         }
                     } else {
-                        SJLog.INSTANCE.logBt(TAG,"Listener 是NULL，消息无法下发");
+                        SJLog.INSTANCE.logBt(TAG, "Listener 是NULL，消息无法下发");
                     }
 
                 } catch (Throwable e) {
-                    SJLog.INSTANCE.logBt(TAG,"333.异常");
+                    SJLog.INSTANCE.logBt(TAG, "333.异常");
                     e.printStackTrace();
                 }
             }
@@ -590,7 +603,7 @@ public class BtEngine {
                         if (mListener != null) {
                             mListener.onConnectFailed(mDevice, msg);
                         } else {
-                            SJLog.INSTANCE.logBt(TAG,"BtEngine listener 被销毁");
+                            SJLog.INSTANCE.logBt(TAG, "BtEngine listener 被销毁");
                         }
                     } catch (Throwable e) {
                         e.printStackTrace();
@@ -605,6 +618,7 @@ public class BtEngine {
         int CONNECTED = 1;
         int MSG = 2;
         int TIME_OUT = 3;
+        int BUSY = 4;
 
         void socketNotify(int state, Object obj);
 

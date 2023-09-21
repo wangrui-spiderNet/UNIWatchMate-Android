@@ -14,13 +14,13 @@ import com.base.sdk.entity.WmDevice
 import com.base.sdk.entity.WmDeviceModel
 import com.base.sdk.entity.WmScanDevice
 import com.base.sdk.entity.apps.WmConnectState
-import com.sjbt.sdk.app.SJAbWmApps
+import com.sjbt.sdk.app.*
 import com.sjbt.sdk.dfu.SJTransferFile
 import com.sjbt.sdk.entity.CameraFrameInfo
 import com.sjbt.sdk.entity.H264FrameMap
 import com.sjbt.sdk.entity.MsgBean
 import com.sjbt.sdk.log.SJLog
-import com.sjbt.sdk.settings.SJSettings
+import com.sjbt.sdk.settings.*
 import com.sjbt.sdk.spp.BtStateReceiver
 import com.sjbt.sdk.spp.OnBtStateListener
 import com.sjbt.sdk.spp.bt.BtEngine
@@ -28,11 +28,14 @@ import com.sjbt.sdk.spp.bt.BtEngine.Listener
 import com.sjbt.sdk.spp.bt.BtEngine.Listener.*
 import com.sjbt.sdk.spp.cmd.CmdConfig.*
 import com.sjbt.sdk.spp.cmd.CmdHelper
-import com.sjbt.sdk.sync.SJSyncData
+import com.sjbt.sdk.sync.*
+import com.sjbt.sdk.utils.BtUtils
+import com.sjbt.sdk.utils.FileUtils
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableEmitter
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import java.io.File
+import java.nio.ByteBuffer
 
 object SJUniWatchSdk : AbUniWatch(), Listener {
 
@@ -47,7 +50,8 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
     private lateinit var discoveryObservableEmitter: ObservableEmitter<BluetoothDevice>
 
     //连接
-    var mMacAddress: String? = null
+    var mCurrDevice: BluetoothDevice? = null
+    var mCurrAddress: String? = null
     var mConnectTryCount = 0
 
     //文件传输相关
@@ -76,70 +80,83 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
     var needNewH264Frame = false
     var continueUpdateFrame: Boolean = false
 
-    override fun socketNotify(state: Int, obj: Any?) {
-        try {
-            when (state) {
-                MSG -> {
-                    val msg = obj as ByteArray
-                    val msgBean: MsgBean = CmdHelper.getPayLoadJson(msg)
+    //同步数据
+    private lateinit var sjConnect: SJConnect
+    private lateinit var syncActivity: SyncActivityData
+    private lateinit var syncCaloriesData: SyncCaloriesData
+    private lateinit var syncDeviceInfo: SyncDeviceInfo
+    private lateinit var syncDistanceData: SyncDistanceData
+    private lateinit var syncHeartRateData: SyncHeartRateData
+    private lateinit var syncOxygenData: SyncOxygenData
+    private lateinit var syncRealtimeRateData: SyncRealtimeRateData
+    private lateinit var syncSleepData: SyncSleepData
+    private lateinit var syncSportSummaryData: SyncSportSummaryData
+    private lateinit var syncStepData: SyncStepData
+    private lateinit var syncTodayTotalData: SyncTodayTotalData
 
-                    when (msgBean.head) {
-                        HEAD_VERIFY -> {
+    //应用
+    private lateinit var appAlarm: AppAlarm
+    private lateinit var appCamera: AppCamera
+    private lateinit var appContact: AppContact
+    private lateinit var appDial: AppDial
+    private lateinit var appFind: AppFind
+    private lateinit var appLanguage: AppLanguage
+    private lateinit var appNotification: AppNotification
+    private lateinit var appSport: AppSport
+    private lateinit var appWeather: AppWeather
 
-                        }
-
-                        HEAD_COMMON -> {
-
-                        }
-
-                        HEAD_SPORT_HEALTH -> {
-
-                        }
-
-                        HEAD_CAMERA_PREVIEW -> {
-
-                        }
-
-                        HEAD_FILE_SPP_A_2_D -> {
-
-                        }
-                    }
-                }
-
-                TIME_OUT -> {
-
-                }
-
-                ON_SOCKET_CLOSE -> {
-
-                }
-
-                CONNECTED -> {
-                    (wmConnect as SJConnect).btStateChange(WmConnectState.CONNECTED)
-                }
-
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    override fun socketNotifyError(obj: ByteArray?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onConnectFailed(device: BluetoothDevice?, msg: String?) {
-        TODO("Not yet implemented")
-    }
+    //设置
+    private lateinit var settingAppView:SettingAppView
+    private lateinit var settingDateTime: SettingDateTime
+    private lateinit var settingHeartRateAlerts: SettingHeartRateAlerts
+    private lateinit var settingPersonalInfo: SettingPersonalInfo
+    private lateinit var settingSedentaryReminder: SettingSedentaryReminder
+    private lateinit var settingSoundAndHaptic: SettingSoundAndHaptic
+    private lateinit var settingSportGoal: SettingSportGoal
+    private lateinit var settingUnitInfo: SettingUnitInfo
+    private lateinit var settingWistRaise: SettingWistRaise
 
     override fun init(context: Context, msgTimeOut: Int) {
         this.context = context
         this.msgTimeOut = msgTimeOut
         wmSettings = SJSettings()
-        wmApps = SJAbWmApps()
+        wmApps = SJApps()
         wmSync = SJSyncData()
         wmConnect = SJConnect()
         wmTransferFile = SJTransferFile()
+
+        sjConnect = wmConnect as SJConnect
+
+        syncActivity = wmSync.syncActivityData as SyncActivityData
+        syncCaloriesData = wmSync.syncCaloriesData as SyncCaloriesData
+        syncDeviceInfo = wmSync.syncDeviceInfoData as SyncDeviceInfo
+        syncDistanceData = wmSync.syncDistanceData as SyncDistanceData
+        syncHeartRateData = wmSync.syncHeartRateData as SyncHeartRateData
+        syncOxygenData = wmSync.syncOxygenData as SyncOxygenData
+        syncRealtimeRateData = wmSync.syncRealtimeRateData as SyncRealtimeRateData
+        syncSleepData = wmSync.syncSleepData as SyncSleepData
+        syncSportSummaryData = wmSync.syncSportSummaryData as SyncSportSummaryData
+        syncStepData = wmSync.syncStepData as SyncStepData
+        syncTodayTotalData = wmSync.syncTodayInfoData as SyncTodayTotalData
+
+        appCamera = wmApps.appCamera as AppCamera
+        appContact = wmApps.appContact as AppContact
+        appDial = wmApps.appDial as AppDial
+        appFind = wmApps.appFind as AppFind
+        appLanguage = wmApps.appLanguage as AppLanguage
+        appNotification = wmApps.appNotification as AppNotification
+        appSport = wmApps.appSport as AppSport
+        appWeather = wmApps.appWeather as AppWeather
+
+        settingAppView = wmSettings.settingAppView as SettingAppView
+        settingDateTime = wmSettings.settingDateTime as SettingDateTime
+        settingHeartRateAlerts = wmSettings.settingHeartRate as SettingHeartRateAlerts
+        settingPersonalInfo = wmSettings.settingPersonalInfo as SettingPersonalInfo
+        settingSedentaryReminder = wmSettings.settingSedentaryReminder as SettingSedentaryReminder
+        settingSoundAndHaptic = wmSettings.settingSoundAndHaptic as SettingSoundAndHaptic
+        settingSportGoal = wmSettings.settingSportGoal as SettingSportGoal
+        settingUnitInfo = wmSettings.settingUnitInfo as SettingUnitInfo
+        settingWistRaise = wmSettings.settingWistRaise as SettingWistRaise
 
         val mBluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE)
         mBtAdapter = (mBluetoothManager as (android.bluetooth.BluetoothManager)).getAdapter()
@@ -149,9 +166,9 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
             override fun onClassicBtDisConnect(device: BluetoothDevice) {
                 SJLog.logBt(TAG, "onClassicBtDisConnect：" + device.address)
 
-                mMacAddress?.let {
-                    if (device.address == mMacAddress) {
-                        (wmConnect as SJConnect).mConnectTryCount = 0
+                mCurrAddress?.let {
+                    if (device.address == mCurrAddress) {
+                        (sjConnect).mConnectTryCount = 0
 
                         mTransferring = false
                         mTransferRetryCount = 0
@@ -168,7 +185,7 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
 
             override fun onClassicBtConnect(device: BluetoothDevice) {
                 SJLog.logBt(TAG, "onClassicBtConnect：" + device.address)
-                if (!TextUtils.isEmpty(mMacAddress) && device.address == mMacAddress) {
+                if (!TextUtils.isEmpty(mCurrAddress) && device.address == mCurrAddress) {
                     wmConnect?.disconnect()
                 }
             }
@@ -201,7 +218,7 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
 
             override fun onBindState(device: BluetoothDevice, bondState: Int) {
                 if (bondState == BluetoothDevice.BOND_NONE) {
-                    if (!TextUtils.isEmpty(mMacAddress) && device.address == mMacAddress) {
+                    if (!TextUtils.isEmpty(mCurrAddress) && device.address == mCurrAddress) {
                         mConnectTryCount = 0
                         mBtEngine.clearStateMap()
 
@@ -227,6 +244,354 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
 
             }
         })
+    }
+
+    override fun socketNotify(state: Int, obj: Any?) {
+        try {
+            when (state) {
+                MSG -> {
+                    val msg = obj as ByteArray
+                    val msgBean: MsgBean = CmdHelper.getPayLoadJson(msg)
+
+                    when (msgBean.head) {
+                        HEAD_VERIFY -> {
+
+                        }
+
+                        HEAD_COMMON -> {
+
+                        }
+
+                        HEAD_SPORT_HEALTH -> {
+
+                        }
+
+                        HEAD_CAMERA_PREVIEW -> {
+
+                        }
+
+                        HEAD_FILE_SPP_A_2_D -> {
+
+                        }
+                    }
+                }
+
+                TIME_OUT -> {
+                    SJLog.logBt(TAG, "msg time out:")
+
+                    msgTimeOut(obj as ByteArray)
+                }
+
+                BUSY -> {
+
+                }
+
+                ON_SOCKET_CLOSE -> {
+                    SJLog.logBt(TAG, "onSocketClose")
+                }
+
+                CONNECTED -> {
+                    mCurrDevice = obj as BluetoothDevice
+                    (sjConnect).btStateChange(WmConnectState.CONNECTED)
+                }
+
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun msgTimeOut(msg: ByteArray) {
+
+        mBtAdapter?.takeIf { !it.isEnabled }?.let {
+            mBtEngine.clearMsgQueue()
+            mBtEngine.clearStateMap()
+            (wmConnect as? SJConnect)?.btStateChange(WmConnectState.DISCONNECTED)
+        }
+
+        if (mCanceledSend) {
+            mBtEngine.clearMsgQueue()
+            return
+        }
+
+        val msgBean = CmdHelper.getPayLoadJson(msg)
+        when (msgBean.head) {
+            HEAD_VERIFY -> {
+                when (msgBean.cmdIdStr) {
+                    CMD_STR_8001_TIME_OUT, CMD_STR_8002_TIME_OUT -> {
+                        mBtEngine.clearStateMap()
+                        mBtEngine.clearMsgQueue()
+
+                        (sjConnect).btStateChange(WmConnectState.CONNECT_FAIL)
+                    }
+                }
+            }
+
+            HEAD_COMMON -> {
+                when (msgBean.cmdIdStr) {
+                    CMD_STR_8001_TIME_OUT -> {
+                        ((wmSync as SJSyncData).syncDeviceInfoData as SyncDeviceInfo).syncTimeOut("get basicInfo timeout!")
+                    }
+
+                    CMD_STR_8002_TIME_OUT -> {
+                    }
+
+                    CMD_STR_8003_TIME_OUT -> {
+                        if (batteryEmitter != null) {
+                            batteryEmitter.onError(RuntimeException("get battery timeout!"))
+                        }
+                    }
+
+                    CMD_STR_8004_TIME_OUT -> {
+                        if (sendNotifyEmitter != null) {
+                            sendNotifyEmitter.onError(RuntimeException("send notify timeout!"))
+                        }
+                    }
+                    CMD_STR_8005_TIME_OUT -> {}
+                    CMD_STR_8006_TIME_OUT -> {}
+                    CMD_STR_8007_TIME_OUT -> {
+                        if (emitterSyncTime != null) {
+                            emitterSyncTime.onError(RuntimeException("get sync time timeout!"))
+                        }
+                    }
+                    CMD_STR_8008_TIME_OUT -> {
+                        if (emitterGetAppView != null) {
+                            emitterGetAppView.onError(RuntimeException("get app views"))
+                        }
+                    }
+                    CMD_STR_8009_TIME_OUT -> {
+                        if (singleSetAppViewEmitter != null) {
+                            singleSetAppViewEmitter.onError(RuntimeException("set app view time out"))
+                        }
+                    }
+                    CMD_STR_800A_TIME_OUT -> {}
+                    CMD_STR_800B_TIME_OUT -> {}
+                    CMD_STR_800C_TIME_OUT -> {
+                        if (timeStateEmitter != null) {
+                            timeStateEmitter.onError(RuntimeException("get time state timeout!"))
+                        }
+                    }
+                    CMD_STR_800D_TIME_OUT -> {}
+                    CMD_STR_800E_TIME_OUT -> {}
+                    CMD_STR_800F_TIME_OUT -> {
+                        if (getAppViewEmitter != null) {
+                            getAppViewEmitter.onError(RuntimeException("getAppViews timeout!"))
+                            getAppViewEmitter.onComplete()
+                        }
+                        if (observeAppViewEmitter != null) {
+                            observeAppViewEmitter.onError(RuntimeException("getAppViews timeout!"))
+                            observeAppViewEmitter.onComplete()
+                        }
+                    }
+                    CMD_STR_8010_TIME_OUT -> if (dialDelEmitter != null) {
+                        dialDelEmitter.onError(RuntimeException("delete dial timeout!"))
+                    }
+                    CMD_STR_8011_TIME_OUT -> {}
+                    CMD_STR_8012_TIME_OUT -> {}
+                    CMD_STR_8013_TIME_OUT -> {}
+                    CMD_STR_8014_TIME_OUT -> {
+                        if (getDialEmitter != null) {
+                            getDialEmitter.onError(RuntimeException("get dial timeout!"))
+                        }
+                    }
+                    CMD_STR_8017_TIME_OUT -> //                        if (mGetDeviceRingStateListener != null) {
+//                            mGetDeviceRingStateListener.onTimeOut(msgBean);
+//                        }
+                        if (shakeEmitterSingle != null) {
+                            shakeEmitterSingle.onError(RuntimeException("shake timeout!"))
+                        }
+                    CMD_STR_8018_TIME_OUT -> //                        if (mSetDeviceRingStateListener != null) {
+//                            mSetDeviceRingStateListener.onTimeOut(msgBean);
+//                        }
+                        if (setDeviceEmitter != null) {
+                            setDeviceEmitter.onError(RuntimeException("set state timeout!"))
+                        }
+                    CMD_STR_801C_TIME_OUT -> if (setAlarmEmitter != null) {
+                        setAlarmEmitter.onError(RuntimeException("set alarm timeout!"))
+                    }
+                    CMD_STR_801E_TIME_OUT -> if (getAlarmEmitter != null) {
+                        getAlarmEmitter.onError(RuntimeException("get alarm timeout!"))
+                    }
+                    CMD_STR_8021_TIME_OUT -> if (searchDeviceEmitter != null) {
+                        searchDeviceEmitter.onError(RuntimeException("search device timeout!"))
+                    }
+                    CMD_STR_8022_TIME_OUT -> if (contactListEmitter != null) {
+                        contactListEmitter.onError(RuntimeException("get contact list timeout!"))
+                    }
+                    CMD_STR_8023_TIME_OUT -> if (appAddContactEmitter != null) {
+                        appAddContactEmitter.onError(RuntimeException("app add contact time out"))
+                    }
+                    CMD_STR_8025_TIME_OUT -> if (appDelContactEmitter != null) {
+                        appDelContactEmitter.onError(RuntimeException("app delete contact timeout"))
+                    }
+                    CMD_STR_8026_TIME_OUT -> {}
+                    CMD_STR_8027_TIME_OUT -> {
+                        if (contactActionType == CONTACT_ACTION_LIST) {
+                            contactListEmitter.onError(RuntimeException("get contact list timeout!"))
+                        } else if (contactActionType == CONTACT_ACTION_ADD) {
+                            appAddContactEmitter.onError(RuntimeException("app add contact time out"))
+                        } else if (contactActionType == CONTACT_ACTION_DELETE) {
+                            appDelContactEmitter.onError(RuntimeException("app delete contact timeout"))
+                        }
+                    }
+                    CMD_STR_8029_TIME_OUT -> {}
+                    CMD_STR_802A_TIME_OUT -> {
+                        if (requestDeviceCameraEmitter != null) {
+                            requestDeviceCameraEmitter.onError(RuntimeException("request device camera timeout!"))
+                        }
+                    }
+                    CMD_STR_802D_TIME_OUT -> {
+                        if (actionSupportEmitter != null) {
+                            actionSupportEmitter.onError(RuntimeException("action bean error!"))
+                        }
+                    }
+                }
+            }
+
+            HEAD_SPORT_HEALTH -> {
+                when (msgBean.cmdIdStr) {
+                    CMD_STR_8001_TIME_OUT -> {
+                        if (getSportInfoEmitter != null) {
+                            getSportInfoEmitter.onError(RuntimeException("get sport info timeout"))
+                        }
+
+                        wmApps as SJApps
+
+                    }
+
+                    CMD_STR_8002_TIME_OUT -> if (stepEmitter != null) {
+                        stepEmitter.onError(RuntimeException("get step timeout"))
+                    }
+
+                    CMD_STR_8003_TIME_OUT -> if (rateEmitter != null) {
+                        rateEmitter.onError(RuntimeException("get rate timeout"))
+                    }
+                    CMD_STR_8008_TIME_OUT -> if (sleepRecordEmitter != null) {
+                        sleepRecordEmitter.onError(RuntimeException("get sleep record timeout"))
+                    }
+                    CMD_STR_8009_TIME_OUT -> if (getBloodOxEmitter != null) {
+                        getBloodOxEmitter.onError(RuntimeException("get blood ox timeout"))
+                    }
+                    CMD_STR_800A_TIME_OUT -> if (getBloodSugarEmitter != null) {
+                        getBloodSugarEmitter.onError(RuntimeException("get blood sugar timeout"))
+                    }
+                    CMD_STR_800B_TIME_OUT -> if (getBloodPressEmitter != null) {
+                        getBloodPressEmitter.onError(RuntimeException("get blood press timeout"))
+                    }
+                    CMD_STR_800C_TIME_OUT -> if (sleepSetEmitter != null) {
+                        sleepSetEmitter.onError(RuntimeException("sleep set timeout"))
+                    }
+                    CMD_STR_800D_TIME_OUT -> if (setSleepEmitter != null) {
+                        setSleepEmitter.onError(RuntimeException("set sleep timeout"))
+                    }
+                }
+            }
+
+            HEAD_CAMERA_PREVIEW -> {
+                mTransferring = false
+                when (msgBean.cmdIdStr) {
+                    CMD_STR_8001_TIME_OUT -> if (cameraPreviewEmitter != null) {
+                        cameraPreviewEmitter.onError(RuntimeException("camera preview timeout"))
+                    }
+                }
+            }
+
+            HEAD_FILE_SPP_A_2_D -> {
+                mTransferring = false
+                when (msgBean.cmdIdStr) {
+                    CMD_STR_8001_TIME_OUT -> {}
+                    CMD_STR_8002_TIME_OUT -> if (mTransferRetryCount < MAX_RETRY_COUNT) {
+                        mTransferRetryCount++
+                        mSendingFile = mTransferFiles!![mSendFileCount]
+                        sendNormalMsg(
+                            CmdHelper.getTransferFile02Cmd(
+                                FileUtils.readFileBytes(
+                                    mSendingFile
+                                ).size, mSendingFile!!.name
+                            )
+                        )
+                    } else {
+                        transferEnd()
+                    }
+                    CMD_STR_8003_TIME_OUT -> if (mTransferRetryCount < MAX_RETRY_COUNT) {
+                        mTransferRetryCount++
+                        sendNormalMsg(
+                            CmdHelper.getTransfer03Cmd(
+                                mOtaProcess,
+                                getOtaDataInfoNew(mFileDataArray, mOtaProcess),
+                                mDivide
+                            )
+                        )
+                    } else {
+                        if (mTransferFileListener != null) {
+                            mTransferFileListener.transferFail(FAIL_TYPE_TIMEOUT, "8003 time out")
+                        }
+                    }
+
+                    CMD_STR_8004_TIME_OUT -> if (mTransferRetryCount < MAX_RETRY_COUNT) {
+                        mTransferRetryCount++
+                        val ota_data = CmdHelper.getTransfer04Cmd()
+                        sendNormalMsg(ota_data)
+                    } else {
+                        if (mTransferFileListener != null) {
+                            mTransferFileListener.transferFail(FAIL_TYPE_TIMEOUT, "8004 time out")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun transferEnd() {
+        try {
+            mBtEngine.clearMsgQueue()
+            mOtaProcess = 0
+            mTransferRetryCount = 0
+            mTransferring = false
+            mSendFileCount = 0
+//            removeCallBackRunner(mTransferTimeoutRunner)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun sendNormalMsg(msg: ByteArray?) {
+        if (mBtEngine == null || msg == null) {
+            return
+        }
+        if (mTransferring) {
+            val byteBuffer = ByteBuffer.wrap(msg)
+            val head = byteBuffer.get()
+            val cmdId = byteBuffer[2]
+
+            if (isMsgStopped(head, cmdId)) {
+                SJLog.logBt(TAG, "正在 传输文件中...:" + BtUtils.bytesToHexString(msg))
+                return
+            }
+
+        }
+        mBtEngine.sendMsgOnWorkThread(msg)
+    }
+
+    private fun isMsgStopped(head: Byte, cmdId: Byte): Boolean {
+        return head != HEAD_FILE_SPP_A_2_D && head != HEAD_CAMERA_PREVIEW && !isCameraCmd(
+            head,
+            cmdId
+        )
+    }
+
+    private fun isCameraCmd(head: Byte, cmdId: Byte): Boolean {
+        return head == HEAD_COMMON && (cmdId == CMD_ID_8028 || cmdId == CMD_ID_8029 || cmdId == CMD_ID_802A || cmdId == CMD_ID_802B || cmdId == CMD_ID_802C)
+    }
+
+    override fun socketNotifyError(obj: ByteArray?) {
+
+    }
+
+    override fun onConnectFailed(device: BluetoothDevice?, msg: String?) {
+        wmConnect?.let {
+            (it as SJConnect).btStateChange(WmConnectState.CONNECT_FAIL)
+        }
     }
 
     override fun startDiscovery(): Observable<BluetoothDevice> {

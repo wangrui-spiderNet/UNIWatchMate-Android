@@ -1,9 +1,10 @@
 package com.sjbt.sdk.sync
 
-import android.database.Observable
+import com.base.sdk.entity.data.WmCaloriesData
 import com.base.sdk.`interface`.sync.AbSyncData
+import io.reactivex.rxjava3.core.Observable
 
-class SyncCaloriesData : AbSyncData<SyncCaloriesData>(){
+class SyncCaloriesData : AbSyncData<List<WmCaloriesData>>() {
 
     override fun isSupport(): Boolean {
         TODO("Not yet implemented")
@@ -13,11 +14,15 @@ class SyncCaloriesData : AbSyncData<SyncCaloriesData>(){
         TODO("Not yet implemented")
     }
 
-    override fun syncData(startTime: Long): Observable<List<SyncCaloriesData>> {
+    override fun syncData(startTime: Long): Observable<List<WmCaloriesData>> {
         TODO("Not yet implemented")
     }
 
-    override var observeSyncDataList: Observable<List<SyncCaloriesData>>
+    override var observeSyncData: Observable<List<WmCaloriesData>>
         get() = TODO("Not yet implemented")
         set(value) {}
+
+    override fun syncTimeOut(obj: String) {
+        TODO("Not yet implemented")
+    }
 }

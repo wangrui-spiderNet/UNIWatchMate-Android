@@ -43,4 +43,8 @@ class AppCamera :AbAppCamera() {
     override fun updateCameraPreview(data: ByteArray) {
         TODO("Not yet implemented")
     }
+
+    override fun stopCameraPreview() {
+        TODO("Not yet implemented")
+    }
 }

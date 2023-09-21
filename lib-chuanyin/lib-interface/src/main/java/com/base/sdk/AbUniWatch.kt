@@ -29,27 +29,27 @@ abstract class AbUniWatch {
     /**
      * 设置模块
      */
-    var wmSettings: AbWmSettings? = null
+   lateinit var wmSettings: AbWmSettings
 
     /**
      * A应用模块
      */
-    var wmApps: AbWmApps? = null
+    lateinit var wmApps: AbWmApps
 
     /**
      * 同步模块
      */
-    var wmSync: AbWmSyncs? = null
+    lateinit var wmSync: AbWmSyncs
 
     /**
      * 连接模块
      */
-    var wmConnect: AbWmConnect? = null
+    lateinit var wmConnect: AbWmConnect
 
     /**
      * 文件传输
      */
-    var wmTransferFile: WmTransferFile? = null
+    lateinit var wmTransferFile: WmTransferFile
 
     /**
      * 初始化方法，需要在所有方法执行前调用,建议在application执行

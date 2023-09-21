@@ -1,8 +1,8 @@
 package com.sjbt.sdk.settings
 
-import android.database.Observable
 import com.base.sdk.entity.settings.WmSportGoal
 import com.base.sdk.`interface`.setting.AbWmSetting
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 class SettingSportGoal : AbWmSetting<WmSportGoal>() {
@@ -18,7 +18,8 @@ class SettingSportGoal : AbWmSetting<WmSportGoal>() {
         TODO("Not yet implemented")
     }
 
-    override var observeSettingChange: io.reactivex.rxjava3.core.Observable<WmSportGoal>
+    override var observeSettingChange: Observable<WmSportGoal>
         get() = TODO("Not yet implemented")
         set(value) {}
+
 }

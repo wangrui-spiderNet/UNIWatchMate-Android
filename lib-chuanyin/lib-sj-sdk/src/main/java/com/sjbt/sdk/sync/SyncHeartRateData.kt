@@ -1,10 +1,10 @@
 package com.sjbt.sdk.sync
 
-import com.base.sdk.entity.data.WmStepData
+import com.base.sdk.entity.data.WmHeartRateData
 import com.base.sdk.`interface`.sync.AbSyncData
 import io.reactivex.rxjava3.core.Observable
 
-class SyncStepData : AbSyncData<List<WmStepData>>() {
+class SyncHeartRateData: AbSyncData<List<WmHeartRateData>>() {
 
     override fun isSupport(): Boolean {
         TODO("Not yet implemented")
@@ -14,11 +14,11 @@ class SyncStepData : AbSyncData<List<WmStepData>>() {
         TODO("Not yet implemented")
     }
 
-    override fun syncData(startTime: Long): Observable<List<WmStepData>> {
+    override fun syncData(startTime: Long): Observable<List<WmHeartRateData>> {
         TODO("Not yet implemented")
     }
 
-    override var observeSyncData: Observable<List<WmStepData>>
+    override var observeSyncData: Observable<List<WmHeartRateData>>
         get() = TODO("Not yet implemented")
         set(value) {}
 

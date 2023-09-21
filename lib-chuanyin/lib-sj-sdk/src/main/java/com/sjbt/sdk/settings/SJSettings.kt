@@ -6,43 +6,43 @@ import com.base.sdk.`interface`.setting.AbWmSettings
 
 class SJSettings : AbWmSettings() {
 
-    override var sportGoalSetting: AbWmSetting<WmSportGoal>?
+    override var settingSportGoal: AbWmSetting<WmSportGoal>?
         get() = SettingSportGoal()
         set(value) {}
 
-    override var dateTimeSetting: AbWmSetting<WmDateTime>?
+    override var settingDateTime: AbWmSetting<WmDateTime>?
         get() = TODO("Not yet implemented")
         set(value) {}
 
-    override var personalInfoSetting: AbWmSetting<WmPersonalInfo>?
+    override var settingPersonalInfo: AbWmSetting<WmPersonalInfo>?
         get() = TODO("Not yet implemented")
         set(value) {}
 
-    override var sedentaryReminderSetting: AbWmSetting<WmSedentaryReminder>?
+    override var settingSedentaryReminder: AbWmSetting<WmSedentaryReminder>?
         get() = TODO("Not yet implemented")
         set(value) {}
 
-    override var soundAndHapticSetting: AbWmSetting<WmSoundAndHaptic>?
+    override var settingSoundAndHaptic: AbWmSetting<WmSoundAndHaptic>?
         get() = TODO("Not yet implemented")
         set(value) {}
 
-    override var unitInfoSetting: AbWmSetting<WmUnitInfo>?
+    override var settingUnitInfo: AbWmSetting<WmUnitInfo>?
         get() = TODO("Not yet implemented")
         set(value) {}
 
-    override var wistRaiseSetting: AbWmSetting<WmWistRaise>?
+    override var settingWistRaise: AbWmSetting<WmWistRaise>?
         get() = TODO("Not yet implemented")
         set(value) {}
 
-    override var appViewSetting: AbWmSetting<WmAppView>?
+    override var settingAppView: AbWmSetting<WmAppView>?
         get() = TODO("Not yet implemented")
         set(value) {}
 
-    override var drinkWaterSetting: AbWmSetting<WmSedentaryReminder>?
+    override var settingDrinkWater: AbWmSetting<WmSedentaryReminder>?
         get() = TODO("Not yet implemented")
         set(value) {}
 
-    override var rateSetting: AbWmSetting<WmHeartRateAlerts>?
+    override var settingHeartRate: AbWmSetting<WmHeartRateAlerts>?
         get() = TODO("Not yet implemented")
         set(value) {}
 }
