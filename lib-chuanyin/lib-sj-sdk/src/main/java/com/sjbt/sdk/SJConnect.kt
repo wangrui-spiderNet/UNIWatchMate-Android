@@ -10,6 +10,7 @@ import com.sjbt.sdk.log.SJLog
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableEmitter
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
+import io.reactivex.rxjava3.core.Single
 
 class SJConnect : AbWmConnect() {
 
@@ -79,11 +80,7 @@ class SJConnect : AbWmConnect() {
         TODO("Not yet implemented")
     }
 
-    /**
-     * 通过扫描到的二维码，解析mac地址
-     */
-    private fun parseAddress(qrString: String): String {
-        val address = qrString.substring(0, 12)
-        return address
+    override fun bindDevice(bindInfo: BindInfo): Single<BindInfo> {
+        TODO("Not yet implemented")
     }
 }

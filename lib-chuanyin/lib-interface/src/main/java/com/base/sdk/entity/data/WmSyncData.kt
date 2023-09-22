@@ -1,6 +1,5 @@
 package com.base.sdk.entity.data
 
-import com.base.sdk.entity.common.WmActivity
 import com.base.sdk.entity.common.WmValueTypeData
 
 abstract class WmBaseSyncData(
@@ -8,7 +7,6 @@ abstract class WmBaseSyncData(
      * Timestamp of this data
      */
     val timestamp: Long,
-    val intervalTime: Long
 )
 
 /**
@@ -16,12 +14,12 @@ abstract class WmBaseSyncData(
  */
 class WmSportSummaryData(
     timestamp: Long,
-    intervalTime: Long,
     val sportId: Int,
-    val sportType: Int,
+    /**
+     * 基本参数类型
+     */
     val valueType: List<WmValueTypeData>
-
-) : WmBaseSyncData(timestamp, intervalTime) {
+) : WmBaseSyncData(timestamp) {
 
 }
 
@@ -30,7 +28,7 @@ class WmSportSummaryData(
  */
 class WmHeartRateData(
     timestamp: Long,
-    intervalTime: Long,
+    val  intervalTime: Long,
     /**
      * heart rate value (beats per minute)
      */
@@ -43,63 +41,63 @@ class WmHeartRateData(
      */
     val duration: Int
 
-) : WmBaseSyncData(timestamp, intervalTime)
+) : WmBaseSyncData(timestamp)
 
 /**
  * Oxygen value 血氧数据
  */
 class WmOxygenData(
     timestamp: Long,
-    intervalTime: Long,
+    val intervalTime: Long,
     /**
      * Oxygen value (SpO2)，0~100
      */
     val oxygen: Int
-) : WmBaseSyncData(timestamp, intervalTime)
+) : WmBaseSyncData(timestamp)
 
 /**
  * Step value 步数数据
  */
 class WmStepData(
     timestamp: Long,
-    intervalTime: Long,
+    val intervalTime: Long,
     /**
      * Step value
      */
     val step: Int,
 
-    ) : WmBaseSyncData(timestamp, intervalTime)
+    ) : WmBaseSyncData(timestamp)
 
 /**
  * distance value 距离数据
  */
 class WmDistanceData(
     timestamp: Long,
-    intervalTime: Long,
+    val intervalTime: Long,
     /**
      * distance value
      */
     val distance: Int,
 
-    ) : WmBaseSyncData(timestamp, intervalTime)
+    ) : WmBaseSyncData(timestamp)
 
 /**
  * calorie value 卡路里数据
  */
 class WmCaloriesData(
     timestamp: Long,
-    intervalTime: Long,
+    val intervalTime: Long,
     /**
      * calorie value
      */
     val calorie: Int,
 
-    ) : WmBaseSyncData(timestamp, intervalTime)
+    ) : WmBaseSyncData(timestamp)
 
 
 class WmBloodPressureData(
     timestamp: Long,
-    intervalTime: Long,
+    val intervalTime: Long,
     /**
      * systolic blood pressure (unit mmHg)
      */
@@ -109,11 +107,11 @@ class WmBloodPressureData(
      * diastolic blood pressure (unit mmHg)
      */
     val dbp: Int //舒张压值
-) : WmBaseSyncData(timestamp, intervalTime)
+) : WmBaseSyncData(timestamp)
 
 class WmBloodPressureMeasureData(
     timestamp: Long,
-    intervalTime: Long,
+    val intervalTime: Long,
     /**
      * systolic blood pressure (unit mmHg)
      */
@@ -129,31 +127,30 @@ class WmBloodPressureMeasureData(
      * This value exists only if [WmDeviceInfo.Feature.BLOOD_PRESSURE_AIR_PUMP] is support
      */
     val heartRate: Int
-) : WmBaseSyncData(timestamp, intervalTime)
-
+) : WmBaseSyncData(timestamp)
 
 class WmRealtimeRateData(
     timestamp: Long,
-    intervalTime: Long,
+    val intervalTime: Long,
     /**
      * Respiratory rate value (breaths per minute)
      */
     val rate: Int
-) : WmBaseSyncData(timestamp, intervalTime)
+) : WmBaseSyncData(timestamp)
 
 class WmPressureData(
     timestamp: Long,
-    intervalTime: Long,
+    val intervalTime: Long,
     /**
      * Pressure value. Limit(0,256)
      */
     val pressure: Int
-) : WmBaseSyncData(timestamp, intervalTime)
+) : WmBaseSyncData(timestamp)
 
 
 class WmTemperatureData(
     timestamp: Long,
-    intervalTime: Long,
+    val intervalTime: Long,
     /**
      * Temperature of your body(unit ℃)。
      * This value is generally in the normal body temperature range[36℃-42℃].
@@ -164,15 +161,14 @@ class WmTemperatureData(
      * The range of this value is wider, because it is related to the ambient temperature, in extreme cases it may be below 0℃.
      */
     val wrist: Float
-) : WmBaseSyncData(timestamp, intervalTime)
-
+) : WmBaseSyncData(timestamp)
 
 class WmGameData(
     /**
      * Game start time
      */
     timestamp: Long,
-    intervalTime: Long,
+    val intervalTime: Long,
     /**
      * Game Type
      */
@@ -184,24 +180,18 @@ class WmGameData(
     val duration: Int,
     val score: Int,
     val level: Int
-) : WmBaseSyncData(timestamp, intervalTime)
+) : WmBaseSyncData(timestamp)
 
 /**
  * 活动时长
  */
 class WmActivityData(
     timestamp: Long,
-    intervalTime: Long,
-    /**
-     * activity Type
-     * 活动类型
-     */
-    val activity: WmActivity,
-    val valueType: List<WmValueTypeData>,
+    val intervalTime: Long,
     val duration: Int
-) : WmBaseSyncData(timestamp, intervalTime) {
+) : WmBaseSyncData(timestamp) {
     override fun toString(): String {
-        return "WmActivityData(activity=$activity, valueType=$valueType, duration=$duration)"
+        return "WmActivityData(activity=$duration, duration=$duration)"
     }
 }
 
@@ -212,7 +202,7 @@ class WmActivityData(
  */
 class WmEcgData(
     timestamp: Long,
-    intervalTime: Long,
+    val intervalTime: Long,
     /**
      * Sampling rate (number of ECG values per second)
      *
@@ -223,7 +213,7 @@ class WmEcgData(
      * Ecg values
      */
     val items: List<Int>,
-) : WmBaseSyncData(timestamp, intervalTime) {
+) : WmBaseSyncData(timestamp) {
     companion object {
         const val DEFAULT_SAMPLING_RATE = 100
     }

@@ -5,7 +5,6 @@ package com.base.sdk.entity.data
  */
 class WmTodayTotalData(
     timestamp: Long,
-    intervalTime: Long,
 
     /**
      * Total steps
@@ -52,4 +51,4 @@ class WmTodayTotalData(
      */
     val deltaCalorie: Int,//未保存在item中的卡路里数，单位卡，不是千卡
 
-) : WmBaseSyncData(timestamp,intervalTime)
+) : WmBaseSyncData(timestamp)

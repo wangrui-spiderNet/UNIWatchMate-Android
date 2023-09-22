@@ -92,82 +92,49 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
     override val wmConnect: AbWmConnect = SJConnect()
     override val wmTransferFile: WmTransferFile = SJTransferFile()
 
+    private val sjConnect: SJConnect = wmConnect as SJConnect
+
     //同步数据
-    private lateinit var sjConnect: SJConnect
-    private lateinit var syncActivity: SyncActivityData
-    private lateinit var syncCaloriesData: SyncCaloriesData
-    private lateinit var syncDeviceInfo: SyncDeviceInfo
-    private lateinit var syncDistanceData: SyncDistanceData
-    private lateinit var syncHeartRateData: SyncHeartRateData
-    private lateinit var syncOxygenData: SyncOxygenData
-    private lateinit var syncRealtimeRateData: SyncRealtimeRateData
-    private lateinit var syncSleepData: SyncSleepData
-    private lateinit var syncSportSummaryData: SyncSportSummaryData
-    private lateinit var syncStepData: SyncStepData
-    private lateinit var syncTodayTotalData: SyncTodayTotalData
+    private val syncActivity = wmSync.syncActivityData as SyncActivityData
+    private val syncCaloriesData = wmSync.syncCaloriesData as SyncCaloriesData
+    private val syncDeviceInfo = wmSync.syncDeviceInfoData as SyncDeviceInfo
+    private val syncDistanceData = wmSync.syncDistanceData as SyncDistanceData
+    private val syncHeartRateData = wmSync.syncHeartRateData as SyncHeartRateData
+    private val syncOxygenData = wmSync.syncOxygenData as SyncOxygenData
+    private val syncRealtimeRateData = wmSync.syncRealtimeRateData as SyncRealtimeRateData
+    private val syncSleepData = wmSync.syncSleepData as SyncSleepData
+    private val syncSportSummaryData = wmSync.syncSportSummaryData as SyncSportSummaryData
+    private val syncStepData = wmSync.syncStepData as SyncStepData
+    private val syncTodayTotalData = wmSync.syncTodayInfoData as SyncTodayTotalData
 
     //应用
-    private lateinit var appAlarm: AppAlarm
-    private lateinit var appCamera: AppCamera
-    private lateinit var appContact: AppContact
-    private lateinit var appDial: AppDial
-    private lateinit var appFind: AppFind
-    private lateinit var appLanguage: AppLanguage
-    private lateinit var appNotification: AppNotification
-    private lateinit var appSport: AppSport
-    private lateinit var appWeather: AppWeather
+    private val appCamera = wmApps.appCamera as AppCamera
+    private val appContact = wmApps.appContact as AppContact
+    private val appDial = wmApps.appDial as AppDial
+    private val appFind = wmApps.appFind as AppFind
+    private val appLanguage = wmApps.appLanguage as AppLanguage
+    private val appNotification = wmApps.appNotification as AppNotification
+    private val appSport = wmApps.appSport as AppSport
+    private val appWeather = wmApps.appWeather as AppWeather
 
     //设置
-    private lateinit var settingAppView:SettingAppView
-    private lateinit var settingDateTime: SettingDateTime
-    private lateinit var settingHeartRateAlerts: SettingHeartRateAlerts
-    private lateinit var settingPersonalInfo: SettingPersonalInfo
-    private lateinit var settingSedentaryReminder: SettingSedentaryReminder
-    private lateinit var settingSoundAndHaptic: SettingSoundAndHaptic
-    private lateinit var settingSportGoal: SettingSportGoal
-    private lateinit var settingUnitInfo: SettingUnitInfo
-    private lateinit var settingWistRaise: SettingWistRaise
-
+    private val settingAppView = wmSettings.settingAppView as SettingAppView
+    private val settingDateTime = wmSettings.settingDateTime as SettingDateTime
+    private val settingHeartRateAlerts = wmSettings.settingHeartRate as SettingHeartRateAlerts
+    private val settingPersonalInfo = wmSettings.settingPersonalInfo as SettingPersonalInfo
+    private val settingSedentaryReminder =
+        wmSettings.settingSedentaryReminder as SettingSedentaryReminder
+    private val settingSoundAndHaptic = wmSettings.settingSoundAndHaptic as SettingSoundAndHaptic
+    private val settingSportGoal = wmSettings.settingSportGoal as SettingSportGoal
+    private val settingUnitInfo = wmSettings.settingUnitInfo as SettingUnitInfo
+    private val settingWistRaise = wmSettings.settingWistRaise as SettingWistRaise
 
     override fun init(context: Application, msgTimeOut: Int) {
         this.context = context
         this.msgTimeOut = msgTimeOut
 
-        sjConnect = wmConnect as SJConnect
-
-        syncActivity = wmSync.syncActivityData as SyncActivityData
-        syncCaloriesData = wmSync.syncCaloriesData as SyncCaloriesData
-        syncDeviceInfo = wmSync.syncDeviceInfoData as SyncDeviceInfo
-        syncDistanceData = wmSync.syncDistanceData as SyncDistanceData
-        syncHeartRateData = wmSync.syncHeartRateData as SyncHeartRateData
-        syncOxygenData = wmSync.syncOxygenData as SyncOxygenData
-        syncRealtimeRateData = wmSync.syncRealtimeRateData as SyncRealtimeRateData
-        syncSleepData = wmSync.syncSleepData as SyncSleepData
-        syncSportSummaryData = wmSync.syncSportSummaryData as SyncSportSummaryData
-        syncStepData = wmSync.syncStepData as SyncStepData
-        syncTodayTotalData = wmSync.syncTodayInfoData as SyncTodayTotalData
-
-        appCamera = wmApps.appCamera as AppCamera
-        appContact = wmApps.appContact as AppContact
-        appDial = wmApps.appDial as AppDial
-        appFind = wmApps.appFind as AppFind
-        appLanguage = wmApps.appLanguage as AppLanguage
-        appNotification = wmApps.appNotification as AppNotification
-        appSport = wmApps.appSport as AppSport
-        appWeather = wmApps.appWeather as AppWeather
-
-        settingAppView = wmSettings.settingAppView as SettingAppView
-        settingDateTime = wmSettings.settingDateTime as SettingDateTime
-        settingHeartRateAlerts = wmSettings.settingHeartRate as SettingHeartRateAlerts
-        settingPersonalInfo = wmSettings.settingPersonalInfo as SettingPersonalInfo
-        settingSedentaryReminder = wmSettings.settingSedentaryReminder as SettingSedentaryReminder
-        settingSoundAndHaptic = wmSettings.settingSoundAndHaptic as SettingSoundAndHaptic
-        settingSportGoal = wmSettings.settingSportGoal as SettingSportGoal
-        settingUnitInfo = wmSettings.settingUnitInfo as SettingUnitInfo
-        settingWistRaise = wmSettings.settingWistRaise as SettingWistRaise
-
         val mBluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE)
-        mBtAdapter = (mBluetoothManager as (android.bluetooth.BluetoothManager)).getAdapter()
+        mBtAdapter = (mBluetoothManager as (android.bluetooth.BluetoothManager)).adapter
 
         mBtStateReceiver = BtStateReceiver(context!!, object : OnBtStateListener {
 
@@ -176,15 +143,16 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
 
                 mCurrAddress?.let {
                     if (device.address == mCurrAddress) {
-                        (sjConnect).mConnectTryCount = 0
+                        sjConnect.mConnectTryCount = 0
 
                         mTransferring = false
                         mTransferRetryCount = 0
                         mCanceledSend = true
                         mBtEngine.clearMsgQueue()
                         mBtEngine.clearStateMap()
-                        wmApps?.appCamera?.stopCameraPreview()
-                        wmConnect?.disconnect()
+
+                        appCamera.stopCameraPreview()
+                        sjConnect.disconnect()
 
 //                        removeCallBackRunner(mConnectTimeoutRunner)
                     }
@@ -194,7 +162,7 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
             override fun onClassicBtConnect(device: BluetoothDevice) {
                 SJLog.logBt(TAG, "onClassicBtConnect：" + device.address)
                 if (!TextUtils.isEmpty(mCurrAddress) && device.address == mCurrAddress) {
-                    wmConnect?.disconnect()
+                    sjConnect.disconnect()
                 }
             }
 
@@ -206,21 +174,17 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
                 mBtEngine.clearMsgQueue()
                 mBtEngine.clearStateMap()
 
-                wmConnect?.let {
-                    it.disconnect()
-                    (it as SJConnect).btStateChange(WmConnectState.BT_DISABLE)
-                }
+                sjConnect.disconnect()
+                sjConnect.btStateChange(WmConnectState.BT_DISABLE)
 
-                wmApps?.appCamera?.stopCameraPreview()
+                appCamera.stopCameraPreview()
 
 //                removeCallBackRunner(mConnectTimeoutRunner)
             }
 
             override fun onClassicBtOpen() {
                 SJLog.logBt(TAG, "onClassicBtOpen")
-                wmConnect?.let {
-                    (it as SJConnect).btStateChange(WmConnectState.BT_ENABLE)
-                }
+                sjConnect.btStateChange(WmConnectState.BT_ENABLE)
 //                removeCallBackRunner(mConnectTimeoutRunner)
             }
 
@@ -230,9 +194,7 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
                         mConnectTryCount = 0
                         mBtEngine.clearStateMap()
 
-                        wmConnect?.let {
-                            (it as SJConnect).btStateChange(WmConnectState.CONNECT_FAIL)
-                        }
+                        sjConnect.btStateChange(WmConnectState.DISCONNECTED)
 
 //                        removeCallBackRunner(mConnectTimeoutRunner)
                         SJLog.logBt(TAG, "取消配对：" + device.address)
@@ -300,7 +262,7 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
 
                 CONNECTED -> {
                     mCurrDevice = obj as BluetoothDevice
-                    (sjConnect).btStateChange(WmConnectState.CONNECTED)
+                    sjConnect.btStateChange(WmConnectState.CONNECTED)
                 }
 
             }
@@ -330,7 +292,7 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
                         mBtEngine.clearStateMap()
                         mBtEngine.clearMsgQueue()
 
-                        (sjConnect).btStateChange(WmConnectState.CONNECT_FAIL)
+                        sjConnect.btStateChange(WmConnectState.DISCONNECTED)
                     }
                 }
             }
@@ -338,69 +300,74 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
             HEAD_COMMON -> {
                 when (msgBean.cmdIdStr) {
                     CMD_STR_8001_TIME_OUT -> {
-                        ((wmSync as SJSyncData).syncDeviceInfoData as SyncDeviceInfo).syncTimeOut("get basicInfo timeout!")
+                        syncDeviceInfo.syncTimeOut("get basicInfo timeout!")
                     }
 
                     CMD_STR_8002_TIME_OUT -> {
                     }
 
                     CMD_STR_8003_TIME_OUT -> {
-                        if (batteryEmitter != null) {
-                            batteryEmitter.onError(RuntimeException("get battery timeout!"))
-                        }
+//                        if (batteryEmitter != null) {
+//                            batteryEmitter.onError(RuntimeException("get battery timeout!"))
+//                        }
+
                     }
 
                     CMD_STR_8004_TIME_OUT -> {
-                        if (sendNotifyEmitter != null) {
-                            sendNotifyEmitter.onError(RuntimeException("send notify timeout!"))
-                        }
+//                        if (sendNotifyEmitter != null) {
+//                            sendNotifyEmitter.onError(RuntimeException("send notify timeout!"))
+//                        }
+
                     }
                     CMD_STR_8005_TIME_OUT -> {}
                     CMD_STR_8006_TIME_OUT -> {}
                     CMD_STR_8007_TIME_OUT -> {
-                        if (emitterSyncTime != null) {
-                            emitterSyncTime.onError(RuntimeException("get sync time timeout!"))
-                        }
+                        settingDateTime.getEmitter.onError(RuntimeException("get sync time timeout!"))
                     }
+
                     CMD_STR_8008_TIME_OUT -> {
-                        if (emitterGetAppView != null) {
-                            emitterGetAppView.onError(RuntimeException("get app views"))
-                        }
+//                        if (emitterGetAppView != null) {
+//                            emitterGetAppView.onError(RuntimeException("get app views"))
+//                        }
+                        settingAppView.getEmitter.onError(RuntimeException("get app views"))
                     }
                     CMD_STR_8009_TIME_OUT -> {
-                        if (singleSetAppViewEmitter != null) {
-                            singleSetAppViewEmitter.onError(RuntimeException("set app view time out"))
-                        }
+//                        if (singleSetAppViewEmitter != null) {
+//                            singleSetAppViewEmitter.onError(RuntimeException("set app view time out"))
+//                        }
+                        settingAppView.setEmitter.onError(RuntimeException("set app view time out"))
                     }
                     CMD_STR_800A_TIME_OUT -> {}
                     CMD_STR_800B_TIME_OUT -> {}
                     CMD_STR_800C_TIME_OUT -> {
-                        if (timeStateEmitter != null) {
-                            timeStateEmitter.onError(RuntimeException("get time state timeout!"))
-                        }
+//                        if (timeStateEmitter != null) {
+//                            timeStateEmitter.onError(RuntimeException("get time state timeout!"))
+//                        }
+
+                        settingDateTime.getEmitter.onError(RuntimeException("get sync time timeout!"))
                     }
                     CMD_STR_800D_TIME_OUT -> {}
                     CMD_STR_800E_TIME_OUT -> {}
                     CMD_STR_800F_TIME_OUT -> {
-                        if (getAppViewEmitter != null) {
-                            getAppViewEmitter.onError(RuntimeException("getAppViews timeout!"))
-                            getAppViewEmitter.onComplete()
-                        }
-                        if (observeAppViewEmitter != null) {
-                            observeAppViewEmitter.onError(RuntimeException("getAppViews timeout!"))
-                            observeAppViewEmitter.onComplete()
-                        }
+                        settingAppView.getEmitter.onError(RuntimeException("getAppViews timeout!"))
                     }
-                    CMD_STR_8010_TIME_OUT -> if (dialDelEmitter != null) {
-                        dialDelEmitter.onError(RuntimeException("delete dial timeout!"))
-                    }
+
+//                   TODO
+//                    CMD_STR_8010_TIME_OUT -> if (dialDelEmitter != null) {
+//                        dialDelEmitter.onError(RuntimeException("delete dial timeout!"))
+//
+//                    }
+
                     CMD_STR_8011_TIME_OUT -> {}
                     CMD_STR_8012_TIME_OUT -> {}
                     CMD_STR_8013_TIME_OUT -> {}
                     CMD_STR_8014_TIME_OUT -> {
-                        if (getDialEmitter != null) {
-                            getDialEmitter.onError(RuntimeException("get dial timeout!"))
-                        }
+
+//                        TODO
+//                        if (getDialEmitter != null) {
+//                            getDialEmitter.onError(RuntimeException("get dial timeout!"))
+//                        }
+
                     }
                     CMD_STR_8017_TIME_OUT -> //                        if (mGetDeviceRingStateListener != null) {
 //                            mGetDeviceRingStateListener.onTimeOut(msgBean);
@@ -597,9 +564,7 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
     }
 
     override fun onConnectFailed(device: BluetoothDevice?, msg: String?) {
-        wmConnect?.let {
-            (it as SJConnect).btStateChange(WmConnectState.CONNECT_FAIL)
-        }
+        sjConnect.btStateChange(WmConnectState.DISCONNECTED)
     }
 
     override fun startDiscovery(): Observable<BluetoothDevice> {

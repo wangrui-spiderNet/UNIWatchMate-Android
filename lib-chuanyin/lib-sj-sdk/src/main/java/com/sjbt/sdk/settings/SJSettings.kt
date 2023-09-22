@@ -3,46 +3,18 @@ package com.sjbt.sdk.settings
 import com.base.sdk.entity.settings.*
 import com.base.sdk.`interface`.setting.AbWmSetting
 import com.base.sdk.`interface`.setting.AbWmSettings
+import com.sjbt.sdk.SJUniWatchSdk
 
 class SJSettings : AbWmSettings() {
 
-    override var settingSportGoal: AbWmSetting<WmSportGoal>?
-        get() = SettingSportGoal()
-        set(value) {}
-
-    override var settingDateTime: AbWmSetting<WmDateTime>?
-        get() = TODO("Not yet implemented")
-        set(value) {}
-
-    override var settingPersonalInfo: AbWmSetting<WmPersonalInfo>?
-        get() = TODO("Not yet implemented")
-        set(value) {}
-
-    override var settingSedentaryReminder: AbWmSetting<WmSedentaryReminder>?
-        get() = TODO("Not yet implemented")
-        set(value) {}
-
-    override var settingSoundAndHaptic: AbWmSetting<WmSoundAndHaptic>?
-        get() = TODO("Not yet implemented")
-        set(value) {}
-
-    override var settingUnitInfo: AbWmSetting<WmUnitInfo>?
-        get() = TODO("Not yet implemented")
-        set(value) {}
-
-    override var settingWistRaise: AbWmSetting<WmWistRaise>?
-        get() = TODO("Not yet implemented")
-        set(value) {}
-
-    override var settingAppView: AbWmSetting<WmAppView>?
-        get() = TODO("Not yet implemented")
-        set(value) {}
-
-    override var settingDrinkWater: AbWmSetting<WmSedentaryReminder>?
-        get() = TODO("Not yet implemented")
-        set(value) {}
-
-    override var settingHeartRate: AbWmSetting<WmHeartRateAlerts>?
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override val settingSportGoal: AbWmSetting<WmSportGoal> = SettingSportGoal()
+    override val settingDateTime: AbWmSetting<WmDateTime> = SettingDateTime()
+    override val settingPersonalInfo: AbWmSetting<WmPersonalInfo> = SettingPersonalInfo()
+    override val settingSedentaryReminder: AbWmSetting<WmSedentaryReminder> = SettingSedentaryReminder()
+    override val settingSoundAndHaptic: AbWmSetting<WmSoundAndHaptic> = SettingSoundAndHaptic()
+    override val settingUnitInfo: AbWmSetting<WmUnitInfo> = SettingUnitInfo()
+    override val settingWistRaise: AbWmSetting<WmWistRaise> = SettingWistRaise()
+    override val settingAppView: AbWmSetting<WmAppView> = SettingAppView()
+    override val settingDrinkWater: AbWmSetting<WmSedentaryReminder> = SettingSedentaryReminder()
+    override val settingHeartRate: AbWmSetting<WmHeartRateAlerts> = SettingHeartRateAlerts()
 }
