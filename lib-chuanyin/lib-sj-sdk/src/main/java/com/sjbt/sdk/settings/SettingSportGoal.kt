@@ -18,8 +18,7 @@ class SettingSportGoal : AbWmSetting<WmSportGoal>() {
         TODO("Not yet implemented")
     }
 
-    override var observeSettingChange: Observable<WmSportGoal>
-        get() = TODO("Not yet implemented")
-        set(value) {}
-
+    override fun observeChange(): Observable<WmSportGoal> {
+        TODO("Not yet implemented")
+    }
 }

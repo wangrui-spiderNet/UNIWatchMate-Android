@@ -10,9 +10,9 @@ class SettingDrinkWaterReminder:AbWmSetting<WmSedentaryReminder>() {
         TODO("Not yet implemented")
     }
 
-    override var observeSettingChange: Observable<WmSedentaryReminder>
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override fun observeChange(): Observable<WmSedentaryReminder> {
+        TODO("Not yet implemented")
+    }
 
     override fun set(obj: WmSedentaryReminder): Single<WmSedentaryReminder> {
         TODO("Not yet implemented")

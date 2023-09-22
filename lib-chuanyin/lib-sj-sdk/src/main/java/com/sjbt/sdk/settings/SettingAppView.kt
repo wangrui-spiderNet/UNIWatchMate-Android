@@ -11,10 +11,6 @@ class SettingAppView: AbWmSetting<WmAppView>(){
         TODO("Not yet implemented")
     }
 
-    override var observeSettingChange: Observable<WmAppView>
-        get() = TODO("Not yet implemented")
-        set(value) {}
-
     override fun set(obj: WmAppView): Single<WmAppView> {
         TODO("Not yet implemented")
     }
@@ -23,4 +19,7 @@ class SettingAppView: AbWmSetting<WmAppView>(){
         TODO("Not yet implemented")
     }
 
+    override fun observeChange(): Observable<WmAppView> {
+        TODO("Not yet implemented")
+    }
 }

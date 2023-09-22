@@ -11,9 +11,9 @@ class SettingHeartRateAlerts: AbWmSetting<WmHeartRateAlerts>() {
         TODO("Not yet implemented")
     }
 
-    override var observeSettingChange: Observable<WmHeartRateAlerts>
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override fun observeChange(): Observable<WmHeartRateAlerts> {
+        TODO("Not yet implemented")
+    }
 
     override fun set(obj: WmHeartRateAlerts): Single<WmHeartRateAlerts> {
         TODO("Not yet implemented")

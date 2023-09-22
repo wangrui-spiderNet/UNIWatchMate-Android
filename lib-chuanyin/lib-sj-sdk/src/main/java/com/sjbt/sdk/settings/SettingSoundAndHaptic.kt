@@ -10,9 +10,9 @@ class SettingSoundAndHaptic : AbWmSetting<WmSoundAndHaptic>() {
         TODO("Not yet implemented")
     }
 
-    override var observeSettingChange: Observable<WmSoundAndHaptic>
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override fun observeChange(): Observable<WmSoundAndHaptic> {
+        TODO("Not yet implemented")
+    }
 
     override fun set(obj: WmSoundAndHaptic): Single<WmSoundAndHaptic> {
         TODO("Not yet implemented")

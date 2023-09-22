@@ -10,9 +10,9 @@ class SettingUnitInfo : AbWmSetting<WmUnitInfo>() {
         TODO("Not yet implemented")
     }
 
-    override var observeSettingChange: Observable<WmUnitInfo>
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override fun observeChange(): Observable<WmUnitInfo> {
+        TODO("Not yet implemented")
+    }
 
     override fun set(obj: WmUnitInfo): Single<WmUnitInfo> {
         TODO("Not yet implemented")

@@ -10,9 +10,9 @@ class SettingDateTime: AbWmSetting<WmDateTime>() {
         TODO("Not yet implemented")
     }
 
-    override var observeSettingChange: Observable<WmDateTime>
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override fun observeChange(): Observable<WmDateTime> {
+        TODO("Not yet implemented")
+    }
 
     override fun set(obj: WmDateTime): Single<WmDateTime> {
         TODO("Not yet implemented")

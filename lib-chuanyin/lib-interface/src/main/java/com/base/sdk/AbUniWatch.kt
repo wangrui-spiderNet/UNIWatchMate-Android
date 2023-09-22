@@ -1,16 +1,16 @@
 package com.base.sdk
 
+import android.app.Application
 import android.bluetooth.BluetoothDevice
-import android.content.Context
-import com.base.sdk.entity.WmDevice
-import com.base.sdk.entity.WmDeviceModel
-import com.base.sdk.entity.WmScanDevice
 import com.base.sdk.`interface`.AbWmConnect
 import com.base.sdk.`interface`.WmTransferFile
 import com.base.sdk.`interface`.app.AbWmApps
 import com.base.sdk.`interface`.log.WmLog
 import com.base.sdk.`interface`.setting.AbWmSettings
 import com.base.sdk.`interface`.sync.AbWmSyncs
+import com.base.sdk.entity.WmDevice
+import com.base.sdk.entity.WmDeviceModel
+import com.base.sdk.entity.WmScanDevice
 import io.reactivex.rxjava3.core.Observable
 
 /**
@@ -29,32 +29,32 @@ abstract class AbUniWatch {
     /**
      * 设置模块
      */
-   lateinit var wmSettings: AbWmSettings
+   abstract val wmSettings: AbWmSettings
 
     /**
      * A应用模块
      */
-    lateinit var wmApps: AbWmApps
+    abstract val wmApps: AbWmApps
 
     /**
      * 同步模块
      */
-    lateinit var wmSync: AbWmSyncs
+    abstract val wmSync: AbWmSyncs
 
     /**
      * 连接模块
      */
-    lateinit var wmConnect: AbWmConnect
+    abstract val wmConnect: AbWmConnect
 
     /**
      * 文件传输
      */
-    lateinit var wmTransferFile: WmTransferFile
+    abstract val wmTransferFile: WmTransferFile
 
     /**
      * 初始化方法，需要在所有方法执行前调用,建议在application执行
      */
-    abstract fun init(context: Context, msgTimeOut: Int)
+    abstract fun init(application: Application, msgTimeOut: Int)
 
     /**
      * 根据设备类型返回设备信息

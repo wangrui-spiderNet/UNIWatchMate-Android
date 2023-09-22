@@ -48,6 +48,7 @@ class SJConnect : AbWmConnect() {
         device.isRecognized = deviceMode == WmDeviceModel.SJ_WATCH
 
         if (device.isRecognized) {
+            //TODO 执行连接
             WmLog.e(TAG, " connect:${device}")
             connectEmitter?.onNext(WmConnectState.CONNECTING)
             connectEmitter?.onNext(WmConnectState.PRE_CONNECTED)
@@ -70,13 +71,19 @@ class SJConnect : AbWmConnect() {
         connectEmitter?.onNext(WmConnectState.DISCONNECTED)
     }
 
-    override var observeConnectState: Observable<WmConnectState>
-        get() = Observable.create(object : ObservableOnSubscribe<WmConnectState> {
-            @Throws(Throwable::class)
-            override fun subscribe(emitter: ObservableEmitter<WmConnectState>) {
-                connectEmitter = emitter
-            }
-        })
-        set(value) {}
+    override val observeConnectState: Observable<WmConnectState> = Observable.create {
+        connectEmitter = it
+    }
 
+    override fun getConnectState(): WmConnectState {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * 通过扫描到的二维码，解析mac地址
+     */
+    private fun parseAddress(qrString: String): String {
+        val address = qrString.substring(0, 12)
+        return address
+    }
 }

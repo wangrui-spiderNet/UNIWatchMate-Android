@@ -1,19 +1,18 @@
 package com.base.api
 
-import android.content.Context
-import com.base.sdk.*
-import com.base.sdk.entity.WmDeviceModel
-import com.base.sdk.entity.WmScanDevice
+import android.app.Application
+import com.base.sdk.AbUniWatch
 import com.base.sdk.`interface`.AbWmConnect
 import com.base.sdk.`interface`.WmTransferFile
 import com.base.sdk.`interface`.app.AbWmApps
 import com.base.sdk.`interface`.setting.AbWmSettings
 import com.base.sdk.`interface`.sync.AbWmSyncs
+import com.base.sdk.entity.WmDeviceModel
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 object UNIWatchMate {
-    private lateinit var mContext: Context
+    private lateinit var application: Application
     private val mBaseUNIWatches: MutableList<AbUniWatch> = ArrayList()
     var uniWatchSdk: Observable<AbUniWatch>? = null
     private var mMsgTimeOut = 10000
@@ -24,13 +23,20 @@ object UNIWatchMate {
     var mWmApps: AbWmApps? = null
     var mWmSyncs: AbWmSyncs? = null
 
-    private var sdkSubject = PublishSubject.create<AbUniWatch>()
+    private val watchSubject = BehaviorSubject.create<AbUniWatch>()
+    private val watchObservable = BehaviorObservable<AbUniWatch>(watchSubject)
 
-    fun init(context: Context, msgTimeOut: Int, supportSdks: Array<AbUniWatch>) {
+//    val wmConnect: AbWmConnect = AbWmConnectDelegate(watchSubject)
+//    var wmSettings: AbWmSettings = AbWmSettingsDelegate(watchObservable)
+
+    fun init(application: Application, msgTimeOut: Int, supportSdks: Array<AbUniWatch>) {
+        if (this::application.isInitialized) {
+            return
+        }
+        this.application = application
         mBaseUNIWatches.clear()
-        mContext = context
 
-        uniWatchSdk = sdkSubject
+        uniWatchSdk = watchSubject
         mMsgTimeOut = if (mMsgTimeOut < 5) {
             5
         } else {
@@ -38,7 +44,7 @@ object UNIWatchMate {
         }
 
         for (i in supportSdks.indices) {
-            supportSdks[i].init(mContext, mMsgTimeOut)
+            supportSdks[i].init(application, mMsgTimeOut)
             mBaseUNIWatches.add(supportSdks[i])
         }
 
@@ -55,8 +61,7 @@ object UNIWatchMate {
                 mWmApps = it.wmApps
                 mWmSyncs = it.wmSync
                 mWmTransferFile = it.wmTransferFile
-                sdkSubject.onNext(it)
-
+                watchSubject.onNext(it)
             }
         }
     }
@@ -66,14 +71,11 @@ object UNIWatchMate {
             val scanDevice = it.parseScanQr(qrString)
             scanDevice?.let { device ->
                 if (device.isRecognized) {
-
-                    mWmConnect = it.wmConnect
-                    mWmSettings = it.wmSettings
                     mWmApps = it.wmApps
                     mWmSyncs = it.wmSync
                     mWmTransferFile = it.wmTransferFile
 
-                    sdkSubject.onNext(it)
+                    watchSubject.onNext(it)
                     mWmConnect?.connect(device.address!!, device.mode)
                 }
             }

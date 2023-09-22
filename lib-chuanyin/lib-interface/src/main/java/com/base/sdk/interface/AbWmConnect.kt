@@ -3,7 +3,6 @@ package com.base.sdk.`interface`
 import android.bluetooth.BluetoothDevice
 import com.base.sdk.entity.WmDevice
 import com.base.sdk.entity.WmDeviceModel
-import com.base.sdk.entity.WmScanDevice
 import com.base.sdk.entity.apps.WmConnectState
 import io.reactivex.rxjava3.core.Observable
 
@@ -14,8 +13,8 @@ abstract class AbWmConnect {
     /**
      * 连接方法
      */
-    abstract fun connect(address: String,deviceMode: WmDeviceModel): WmDevice
-    abstract fun connect(address: BluetoothDevice,deviceMode: WmDeviceModel): WmDevice
+    abstract fun connect(address: String, deviceMode: WmDeviceModel): WmDevice
+    abstract fun connect(address: BluetoothDevice, deviceMode: WmDeviceModel): WmDevice
 
     /**
      * 扫描二维码
@@ -35,7 +34,9 @@ abstract class AbWmConnect {
     /**
      * 连接状态监听
      */
-    abstract var observeConnectState : Observable<WmConnectState>
+    abstract val observeConnectState: Observable<WmConnectState>
+
+    abstract fun getConnectState(): WmConnectState
 
     /**
      * 是否准备好进行私有协议通讯

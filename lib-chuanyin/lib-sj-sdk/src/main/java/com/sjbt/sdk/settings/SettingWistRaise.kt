@@ -10,9 +10,9 @@ class SettingWistRaise: AbWmSetting<WmWistRaise>()  {
         TODO("Not yet implemented")
     }
 
-    override var observeSettingChange: Observable<WmWistRaise>
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override fun observeChange(): Observable<WmWistRaise> {
+        TODO("Not yet implemented")
+    }
 
     override fun set(obj: WmWistRaise): Single<WmWistRaise> {
         TODO("Not yet implemented")

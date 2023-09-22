@@ -35,6 +35,7 @@ abstract class AbAppCamera :IWmSupport {
     abstract fun cameraBackSwitch(isBack: WMCameraPosition): Observable<WMCameraPosition>
 
     /**camera preview 相机预览相关**/
+
     /**
      * 是否支持相机预览
      */

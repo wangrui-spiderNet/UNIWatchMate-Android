@@ -11,9 +11,9 @@ class SettingPersonalInfo: AbWmSetting<WmPersonalInfo>(){
         TODO("Not yet implemented")
     }
 
-    override var observeSettingChange: Observable<WmPersonalInfo>
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override fun observeChange(): Observable<WmPersonalInfo> {
+        TODO("Not yet implemented")
+    }
 
     override fun set(obj: WmPersonalInfo): Single<WmPersonalInfo> {
         TODO("Not yet implemented")

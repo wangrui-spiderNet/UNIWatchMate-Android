@@ -1,6 +1,7 @@
 package com.sjbt.sdk
 
 import android.Manifest
+import android.app.Application
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Context
@@ -14,6 +15,11 @@ import com.base.sdk.entity.WmDevice
 import com.base.sdk.entity.WmDeviceModel
 import com.base.sdk.entity.WmScanDevice
 import com.base.sdk.entity.apps.WmConnectState
+import com.base.sdk.`interface`.AbWmConnect
+import com.base.sdk.`interface`.WmTransferFile
+import com.base.sdk.`interface`.app.AbWmApps
+import com.base.sdk.`interface`.setting.AbWmSettings
+import com.base.sdk.`interface`.sync.AbWmSyncs
 import com.sjbt.sdk.app.*
 import com.sjbt.sdk.dfu.SJTransferFile
 import com.sjbt.sdk.entity.CameraFrameInfo
@@ -41,7 +47,7 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
 
     private val TAG = TAG_SJ + "SJUniWatchSdk"
 
-    private var context: Context? = null
+    private var context: Application? = null
     private var msgTimeOut: Int? = null
     private var mBtStateReceiver: BtStateReceiver? = null
     private var mBtEngine = BtEngine.getInstance(this)
@@ -80,6 +86,12 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
     var needNewH264Frame = false
     var continueUpdateFrame: Boolean = false
 
+    override val wmSettings: AbWmSettings = SJSettings()
+    override val wmApps: AbWmApps = SJApps()
+    override val wmSync: AbWmSyncs = SJSyncData()
+    override val wmConnect: AbWmConnect = SJConnect()
+    override val wmTransferFile: WmTransferFile = SJTransferFile()
+
     //同步数据
     private lateinit var sjConnect: SJConnect
     private lateinit var syncActivity: SyncActivityData
@@ -116,14 +128,10 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
     private lateinit var settingUnitInfo: SettingUnitInfo
     private lateinit var settingWistRaise: SettingWistRaise
 
-    override fun init(context: Context, msgTimeOut: Int) {
+
+    override fun init(context: Application, msgTimeOut: Int) {
         this.context = context
         this.msgTimeOut = msgTimeOut
-        wmSettings = SJSettings()
-        wmApps = SJApps()
-        wmSync = SJSyncData()
-        wmConnect = SJConnect()
-        wmTransferFile = SJTransferFile()
 
         sjConnect = wmConnect as SJConnect
 

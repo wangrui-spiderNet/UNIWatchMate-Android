@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     fun settingsSample() {
         //设置运动目标 示例：其他与此类似，都是通过模块实例调用对应的接口方法
         val sportGoal = WmSportGoal(10000, 200.0, 10000.0, 1000)
-        val settingSingle = UNIWatchMate.mWmSettings?.sportGoalSetting?.set(sportGoal)
+        val settingSingle = UNIWatchMate.mWmSettings?.settingSportGoal?.set(sportGoal)
         settingSingle?.subscribe(object : SingleObserver<WmSportGoal> {
             override fun onSubscribe(d: Disposable) {}
             override fun onSuccess(basicInfo: WmSportGoal) {
