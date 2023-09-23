@@ -2,6 +2,7 @@ package com.base.sdk.`interface`.sync
 
 import com.base.sdk.`interface`.IWmSupport
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 /**
  * 同步数据抽象父类
@@ -17,7 +18,7 @@ abstract class AbSyncData<T> : IWmSupport {
     /**
      * 同步数据（最近7日）
      */
-    abstract fun syncData(startTime: Long): Observable<T>
+    abstract fun syncData(startTime: Long): Single<T>
 
     /**
      * 观察数据监听

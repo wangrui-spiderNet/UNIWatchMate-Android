@@ -2,13 +2,12 @@ package com.base.sdk.entity.data
 
 class WmGpsData(
     timestamp: Long,
-    intervalTime: Long,
     /**
      * Which [FcSportData] belongs to
      */
     val sportId: String,
     val items: List<WmGpsItem>
-) : WmBaseSyncData(timestamp, intervalTime)
+) : WmBaseSyncData(timestamp)
 
 class WmGpsItem(
     /**

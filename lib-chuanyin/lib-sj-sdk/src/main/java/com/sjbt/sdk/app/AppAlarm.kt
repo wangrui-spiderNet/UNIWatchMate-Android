@@ -4,15 +4,14 @@ import com.base.sdk.entity.apps.WmAlarm
 import com.base.sdk.`interface`.app.AbAppAlarm
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableEmitter
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
 
 class AppAlarm : AbAppAlarm() {
 
-    var isSupport: Boolean = false
+    private var _isSupport: Boolean = false
     lateinit var alarmListEmitter: ObservableEmitter<List<WmAlarm>>
 
     override fun isSupport(): Boolean {
-        return isSupport
+        return _isSupport
     }
 
     override var syncAlarmList: Observable<List<WmAlarm>> = Observable.create {

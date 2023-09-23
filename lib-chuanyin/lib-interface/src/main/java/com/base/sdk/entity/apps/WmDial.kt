@@ -1,4 +1,7 @@
 package com.base.sdk.entity.apps
 
-data class WmDial(var total: Int, var list: List<DialItem>)
-data class DialItem(var id: String, var using: Int)
+/**
+ * 表盘id
+ * status 是否为内置表盘
+ */
+data class WmDial(var id: String, var status: Int)

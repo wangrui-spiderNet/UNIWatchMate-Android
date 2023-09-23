@@ -1,8 +1,5 @@
 package com.sjbt.sdk.utils;
 
-import com.blankj.utilcode.util.CloseUtils;
-import com.blankj.utilcode.util.StringUtils;
-
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

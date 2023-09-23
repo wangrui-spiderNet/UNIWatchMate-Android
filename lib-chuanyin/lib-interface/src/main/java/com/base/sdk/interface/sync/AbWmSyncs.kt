@@ -10,55 +10,60 @@ abstract class AbWmSyncs {
     /**
      * sync step(同步步数)
      */
-    abstract var syncStepData: AbSyncData<List<WmStepData>>?
+    abstract val syncStepData: AbSyncData<List<WmStepData>>
 
     /**
      * sync oxygen(同步血氧)
      */
-    abstract var syncOxygenData: AbSyncData<List<WmOxygenData>>?
+    abstract val syncOxygenData: AbSyncData<List<WmOxygenData>>
 
     /**
      * syncCalories(同步卡路里)
      */
-    abstract var syncCaloriesData: AbSyncData<List<WmCaloriesData>>?
+    abstract val syncCaloriesData: AbSyncData<List<WmCaloriesData>>
 
     /**
      * syncSleep(同步睡眠)
      */
-    abstract var syncSleepData: AbSyncData<List<WmSleepData>>?
+    abstract val syncSleepData: AbSyncData<List<WmSleepData>>
 
     /**
      * syncRealtimeRate(同步实时心率)
      */
-    abstract var syncRealtimeRateData: AbSyncData<List<WmRealtimeRateData>>?
+    abstract val syncRealtimeRateData: AbSyncData<List<WmRealtimeRateData>>
 
     /**
      * syncAvgHeartRate(同步平均心率)
      */
-    abstract var syncHeartRateData: AbSyncData<List<WmHeartRateData>>?
+    abstract val syncHeartRateData: AbSyncData<List<WmHeartRateData>>
 
     /**
      * syncDistance(同步距离)
      */
-    abstract var syncDistanceData: AbSyncData<List<WmDistanceData>>?
+    abstract val syncDistanceData: AbSyncData<List<WmDistanceData>>
 
     /**
      * syncActivity(同步日常活动)
      */
-    abstract var syncActivityData: AbSyncData<List<WmActivityData>>?
+    abstract val syncActivityData: AbSyncData<List<WmActivityData>>
 
     /**
      * syncSportSummary(同步运动小结)
      */
-    abstract var syncSportSummaryData: AbSyncData<List<WmSportSummaryData>>?
+    abstract val syncSportSummaryData: AbSyncData<List<WmSportSummaryData>>
 
     /**
      * syncDeviceInfo(同步设备信息)
      */
-    abstract var syncDeviceInfoData: AbSyncData<WmDeviceInfo>?
+    abstract val syncDeviceInfoData: AbSyncData<WmDeviceInfo>
 
     /**
      * syncTodayInfo(同步当日数据)
      */
-    abstract var syncTodayInfoData: AbSyncData<WmTodayTotalData>?
+    abstract val syncTodayInfoData: AbSyncData<WmTodayTotalData>
+
+    /**
+     * sync(更新电量)
+     */
+    abstract val syncBatteryInfo: AbSyncData<WmBatteryInfo>
 }

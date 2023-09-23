@@ -79,9 +79,6 @@ class MyApplication : Application() {
 
                     }
 
-                    WmConnectState.CONNECT_FAIL -> {
-
-                    }
                 }
             }
 

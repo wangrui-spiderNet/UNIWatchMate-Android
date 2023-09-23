@@ -9,34 +9,34 @@ internal class AbWmSettingsDelegate(
     watchObservable: BehaviorObservable<AbUniWatch>
 ) : AbWmSettings() {
 
-    override var settingSportGoal: AbWmSetting<WmSportGoal>?
+    override var settingSportGoal: AbWmSetting<WmSportGoal>
         get() = TODO("Not yet implemented")
         set(value) {}
-    override var settingDateTime: AbWmSetting<WmDateTime>?
+    override var settingDateTime: AbWmSetting<WmDateTime>
         get() = TODO("Not yet implemented")
         set(value) {}
-    override var settingPersonalInfo: AbWmSetting<WmPersonalInfo>?
+    override var settingPersonalInfo: AbWmSetting<WmPersonalInfo>
         get() = TODO("Not yet implemented")
         set(value) {}
-    override var settingSedentaryReminder: AbWmSetting<WmSedentaryReminder>?
+    override var settingSedentaryReminder: AbWmSetting<WmSedentaryReminder>
         get() = TODO("Not yet implemented")
         set(value) {}
-    override var settingSoundAndHaptic: AbWmSetting<WmSoundAndHaptic>?
+    override var settingSoundAndHaptic: AbWmSetting<WmSoundAndHaptic>
         get() = TODO("Not yet implemented")
         set(value) {}
-    override var settingUnitInfo: AbWmSetting<WmUnitInfo>?
+    override var settingUnitInfo: AbWmSetting<WmUnitInfo>
         get() = TODO("Not yet implemented")
         set(value) {}
-    override var settingWistRaise: AbWmSetting<WmWistRaise>?
+    override var settingWistRaise: AbWmSetting<WmWistRaise>
         get() = TODO("Not yet implemented")
         set(value) {}
-    override var settingAppView: AbWmSetting<WmAppView>?
+    override var settingAppView: AbWmSetting<WmAppView>
         get() = TODO("Not yet implemented")
         set(value) {}
-    override var settingDrinkWater: AbWmSetting<WmSedentaryReminder>?
+    override var settingDrinkWater: AbWmSetting<WmSedentaryReminder>
         get() = TODO("Not yet implemented")
         set(value) {}
-    override var settingHeartRate: AbWmSetting<WmHeartRateAlerts>?
+    override var settingHeartRate: AbWmSetting<WmHeartRateAlerts>
         get() = TODO("Not yet implemented")
         set(value) {}
 }

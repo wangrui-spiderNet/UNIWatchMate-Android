@@ -7,6 +7,7 @@ import com.base.sdk.entity.WmDevice
 import com.base.sdk.entity.WmDeviceModel
 import com.base.sdk.entity.apps.WmConnectState
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 internal class AbWmConnectDelegate(
@@ -18,6 +19,10 @@ internal class AbWmConnectDelegate(
     }
 
     override fun connect(address: BluetoothDevice, deviceMode: WmDeviceModel): WmDevice {
+        TODO("Not yet implemented")
+    }
+
+    override fun bindDevice(bindInfo: BindInfo): Single<BindInfo> {
         TODO("Not yet implemented")
     }
 

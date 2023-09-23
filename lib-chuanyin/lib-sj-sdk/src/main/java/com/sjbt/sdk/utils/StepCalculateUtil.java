@@ -1,6 +1,6 @@
 package com.sjbt.sdk.utils;
 
-import com.base.sdk.entity.SportInitInfo;
+import com.sjbt.sdk.entity.SportInitInfo;
 
 import java.text.DecimalFormat;
 

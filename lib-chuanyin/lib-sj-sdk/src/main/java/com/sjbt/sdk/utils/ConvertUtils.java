@@ -1,7 +1,5 @@
 package com.sjbt.sdk.utils;
 
-import com.blankj.utilcode.util.CloseUtils;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;

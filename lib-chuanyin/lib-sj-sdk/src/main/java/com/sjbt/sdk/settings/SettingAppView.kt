@@ -9,10 +9,10 @@ class SettingAppView : AbWmSetting<WmAppView>() {
     lateinit var setEmitter: SingleEmitter<WmAppView>
     lateinit var getEmitter: SingleEmitter<WmAppView>
 
-    var isSupport: Boolean = false
+    var is_support: Boolean = false
 
     override fun isSupport(): Boolean {
-       return isSupport
+       return is_support
     }
 
     override fun observeChange(): Observable<WmAppView> {

@@ -1,8 +1,5 @@
 package com.sjbt.sdk.utils;
 
-
-import com.blankj.utilcode.util.CloseUtils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.security.DigestInputStream;
