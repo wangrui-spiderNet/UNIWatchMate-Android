@@ -25,6 +25,7 @@ import com.sjbt.sdk.dfu.SJTransferFile
 import com.sjbt.sdk.entity.CameraFrameInfo
 import com.sjbt.sdk.entity.H264FrameMap
 import com.sjbt.sdk.entity.MsgBean
+import com.sjbt.sdk.entity.OtaCmdInfo
 import com.sjbt.sdk.log.SJLog
 import com.sjbt.sdk.settings.*
 import com.sjbt.sdk.spp.BtStateReceiver
@@ -300,7 +301,7 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
             HEAD_COMMON -> {
                 when (msgBean.cmdIdStr) {
                     CMD_STR_8001_TIME_OUT -> {
-                        syncDeviceInfo.syncTimeOut("get basicInfo timeout!")
+//                        syncDeviceInfo.syncTimeOut("get basicInfo timeout!")
                     }
 
                     CMD_STR_8002_TIME_OUT -> {
@@ -369,56 +370,76 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
 //                        }
 
                     }
-                    CMD_STR_8017_TIME_OUT -> //                        if (mGetDeviceRingStateListener != null) {
+                    CMD_STR_8017_TIME_OUT -> {
+
+                    }
+                    //                        if (mGetDeviceRingStateListener != null) {
 //                            mGetDeviceRingStateListener.onTimeOut(msgBean);
 //                        }
-                        if (shakeEmitterSingle != null) {
-                            shakeEmitterSingle.onError(RuntimeException("shake timeout!"))
-                        }
-                    CMD_STR_8018_TIME_OUT -> //                        if (mSetDeviceRingStateListener != null) {
+//                        if (shakeEmitterSingle != null) {
+//                            shakeEmitterSingle.onError(RuntimeException("shake timeout!"))
+//                        }
+                    CMD_STR_8018_TIME_OUT -> {
+
+                        //                        if (mSetDeviceRingStateListener != null) {
 //                            mSetDeviceRingStateListener.onTimeOut(msgBean);
 //                        }
-                        if (setDeviceEmitter != null) {
-                            setDeviceEmitter.onError(RuntimeException("set state timeout!"))
-                        }
-                    CMD_STR_801C_TIME_OUT -> if (setAlarmEmitter != null) {
-                        setAlarmEmitter.onError(RuntimeException("set alarm timeout!"))
+//                        if (setDeviceEmitter != null) {
+//                            setDeviceEmitter.onError(RuntimeException("set state timeout!"))
+//                        }
                     }
-                    CMD_STR_801E_TIME_OUT -> if (getAlarmEmitter != null) {
-                        getAlarmEmitter.onError(RuntimeException("get alarm timeout!"))
+
+                    CMD_STR_801C_TIME_OUT -> {
+//                        if (setAlarmEmitter != null) {
+//                            setAlarmEmitter.onError(RuntimeException("set alarm timeout!"))
+//                        }
                     }
-                    CMD_STR_8021_TIME_OUT -> if (searchDeviceEmitter != null) {
-                        searchDeviceEmitter.onError(RuntimeException("search device timeout!"))
+
+                    CMD_STR_801E_TIME_OUT -> {
+//                        if (getAlarmEmitter != null) {
+//                            getAlarmEmitter.onError(RuntimeException("get alarm timeout!"))
+//                        }
                     }
-                    CMD_STR_8022_TIME_OUT -> if (contactListEmitter != null) {
-                        contactListEmitter.onError(RuntimeException("get contact list timeout!"))
+                    CMD_STR_8021_TIME_OUT -> {
+//                        if (searchDeviceEmitter != null) {
+//                            searchDeviceEmitter.onError(RuntimeException("search device timeout!"))
+//                        }
                     }
-                    CMD_STR_8023_TIME_OUT -> if (appAddContactEmitter != null) {
-                        appAddContactEmitter.onError(RuntimeException("app add contact time out"))
+                    CMD_STR_8022_TIME_OUT -> {
+//                        if (contactListEmitter != null) {
+//                            contactListEmitter.onError(RuntimeException("get contact list timeout!"))
+//                        }
                     }
-                    CMD_STR_8025_TIME_OUT -> if (appDelContactEmitter != null) {
-                        appDelContactEmitter.onError(RuntimeException("app delete contact timeout"))
+                    CMD_STR_8023_TIME_OUT -> {
+//                        if (appAddContactEmitter != null) {
+//                            appAddContactEmitter.onError(RuntimeException("app add contact time out"))
+//                        }
+                    }
+                    CMD_STR_8025_TIME_OUT -> {
+//                        if (appDelContactEmitter != null) {
+//                            appDelContactEmitter.onError(RuntimeException("app delete contact timeout"))
+//                        }
                     }
                     CMD_STR_8026_TIME_OUT -> {}
                     CMD_STR_8027_TIME_OUT -> {
-                        if (contactActionType == CONTACT_ACTION_LIST) {
-                            contactListEmitter.onError(RuntimeException("get contact list timeout!"))
-                        } else if (contactActionType == CONTACT_ACTION_ADD) {
-                            appAddContactEmitter.onError(RuntimeException("app add contact time out"))
-                        } else if (contactActionType == CONTACT_ACTION_DELETE) {
-                            appDelContactEmitter.onError(RuntimeException("app delete contact timeout"))
-                        }
+//                        if (contactActionType == CONTACT_ACTION_LIST) {
+//                            contactListEmitter.onError(RuntimeException("get contact list timeout!"))
+//                        } else if (contactActionType == CONTACT_ACTION_ADD) {
+//                            appAddContactEmitter.onError(RuntimeException("app add contact time out"))
+//                        } else if (contactActionType == CONTACT_ACTION_DELETE) {
+//                            appDelContactEmitter.onError(RuntimeException("app delete contact timeout"))
+//                        }
                     }
                     CMD_STR_8029_TIME_OUT -> {}
                     CMD_STR_802A_TIME_OUT -> {
-                        if (requestDeviceCameraEmitter != null) {
-                            requestDeviceCameraEmitter.onError(RuntimeException("request device camera timeout!"))
-                        }
+//                        if (requestDeviceCameraEmitter != null) {
+//                            requestDeviceCameraEmitter.onError(RuntimeException("request device camera timeout!"))
+//                        }
                     }
                     CMD_STR_802D_TIME_OUT -> {
-                        if (actionSupportEmitter != null) {
-                            actionSupportEmitter.onError(RuntimeException("action bean error!"))
-                        }
+//                        if (actionSupportEmitter != null) {
+//                            actionSupportEmitter.onError(RuntimeException("action bean error!"))
+//                        }
                     }
                 }
             }
@@ -426,38 +447,55 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
             HEAD_SPORT_HEALTH -> {
                 when (msgBean.cmdIdStr) {
                     CMD_STR_8001_TIME_OUT -> {
-                        if (getSportInfoEmitter != null) {
-                            getSportInfoEmitter.onError(RuntimeException("get sport info timeout"))
-                        }
+
+//                        if (getSportInfoEmitter != null) {
+//                            getSportInfoEmitter.onError(RuntimeException("get sport info timeout"))
+//                        }
 
                         wmApps as SJApps
 
                     }
 
-                    CMD_STR_8002_TIME_OUT -> if (stepEmitter != null) {
-                        stepEmitter.onError(RuntimeException("get step timeout"))
+                    CMD_STR_8002_TIME_OUT -> {
+//                        if (stepEmitter != null) {
+//                            stepEmitter.onError(RuntimeException("get step timeout"))
+//                        }
                     }
 
-                    CMD_STR_8003_TIME_OUT -> if (rateEmitter != null) {
-                        rateEmitter.onError(RuntimeException("get rate timeout"))
+                    CMD_STR_8003_TIME_OUT -> {
+//                        if (rateEmitter != null) {
+//                            rateEmitter.onError(RuntimeException("get rate timeout"))
+//                        }
                     }
-                    CMD_STR_8008_TIME_OUT -> if (sleepRecordEmitter != null) {
-                        sleepRecordEmitter.onError(RuntimeException("get sleep record timeout"))
+                    CMD_STR_8008_TIME_OUT -> {
+//                        if (sleepRecordEmitter != null) {
+//                            sleepRecordEmitter.onError(RuntimeException("get sleep record timeout"))
+//                        }
                     }
-                    CMD_STR_8009_TIME_OUT -> if (getBloodOxEmitter != null) {
-                        getBloodOxEmitter.onError(RuntimeException("get blood ox timeout"))
+                    CMD_STR_8009_TIME_OUT -> {
+//                        if (getBloodOxEmitter != null) {
+//                            getBloodOxEmitter.onError(RuntimeException("get blood ox timeout"))
+//                        }
                     }
-                    CMD_STR_800A_TIME_OUT -> if (getBloodSugarEmitter != null) {
-                        getBloodSugarEmitter.onError(RuntimeException("get blood sugar timeout"))
+                    CMD_STR_800A_TIME_OUT -> {
+//                        if (getBloodSugarEmitter != null) {
+//                            getBloodSugarEmitter.onError(RuntimeException("get blood sugar timeout"))
+//                        }
                     }
-                    CMD_STR_800B_TIME_OUT -> if (getBloodPressEmitter != null) {
-                        getBloodPressEmitter.onError(RuntimeException("get blood press timeout"))
+                    CMD_STR_800B_TIME_OUT -> {
+//                        if (getBloodPressEmitter != null) {
+//                            getBloodPressEmitter.onError(RuntimeException("get blood press timeout"))
+//                        }
                     }
-                    CMD_STR_800C_TIME_OUT -> if (sleepSetEmitter != null) {
-                        sleepSetEmitter.onError(RuntimeException("sleep set timeout"))
+                    CMD_STR_800C_TIME_OUT -> {
+//                        if (sleepSetEmitter != null) {
+//                        sleepSetEmitter.onError(RuntimeException("sleep set timeout"))
+//                        }
                     }
-                    CMD_STR_800D_TIME_OUT -> if (setSleepEmitter != null) {
-                        setSleepEmitter.onError(RuntimeException("set sleep timeout"))
+                    CMD_STR_800D_TIME_OUT -> {
+//                        if (setSleepEmitter != null) {
+//                        setSleepEmitter.onError(RuntimeException("set sleep timeout"))
+//                    }
                     }
                 }
             }
@@ -465,8 +503,10 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
             HEAD_CAMERA_PREVIEW -> {
                 mTransferring = false
                 when (msgBean.cmdIdStr) {
-                    CMD_STR_8001_TIME_OUT -> if (cameraPreviewEmitter != null) {
-                        cameraPreviewEmitter.onError(RuntimeException("camera preview timeout"))
+                    CMD_STR_8001_TIME_OUT -> {
+//                        if (cameraPreviewEmitter != null) {
+//                        cameraPreviewEmitter.onError(RuntimeException("camera preview timeout"))
+//                    }
                     }
                 }
             }
@@ -493,14 +533,16 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
                         sendNormalMsg(
                             CmdHelper.getTransfer03Cmd(
                                 mOtaProcess,
-                                getOtaDataInfoNew(mFileDataArray, mOtaProcess),
+                                getOtaDataInfoNew(mFileDataArray!!, mOtaProcess),
                                 mDivide
                             )
                         )
                     } else {
-                        if (mTransferFileListener != null) {
-                            mTransferFileListener.transferFail(FAIL_TYPE_TIMEOUT, "8003 time out")
-                        }
+//                        if (mTransferFileListener != null) {
+//                            mTransferFileListener.transferFail(FAIL_TYPE_TIMEOUT, "8003 time out")
+//                        }
+
+
                     }
 
                     CMD_STR_8004_TIME_OUT -> if (mTransferRetryCount < MAX_RETRY_COUNT) {
@@ -508,13 +550,63 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
                         val ota_data = CmdHelper.getTransfer04Cmd()
                         sendNormalMsg(ota_data)
                     } else {
-                        if (mTransferFileListener != null) {
-                            mTransferFileListener.transferFail(FAIL_TYPE_TIMEOUT, "8004 time out")
-                        }
+//                        if (mTransferFileListener != null) {
+//                            mTransferFileListener.transferFail(FAIL_TYPE_TIMEOUT, "8004 time out")
+//                        }
                     }
                 }
             }
         }
+    }
+
+    private fun getOtaDataInfoNew(dataArray: ByteArray, otaProcess: Int): OtaCmdInfo {
+        val info = OtaCmdInfo()
+        mDivide = if (otaProcess == 0 && mPackageCount > 1) {
+            DIVIDE_Y_F_2
+        } else {
+            if (otaProcess == mPackageCount - 1) {
+                DIVIDE_Y_E_2
+            } else {
+                DIVIDE_Y_M_2
+            }
+        }
+
+//        LogUtils.logBlueTooth("分包类型：" + mDivide);
+        if (otaProcess != mPackageCount - 1) {
+            info.offSet = otaProcess * mCellLength
+            info.payload = ByteArray(mCellLength)
+            System.arraycopy(
+                dataArray,
+                otaProcess * mCellLength,
+                info.payload,
+                0,
+                info.payload.size
+            )
+        } else {
+//            LogUtils.logBlueTooth("最后一包长度：" + mLastDataLength);
+            if (mLastDataLength == 0) {
+                info.offSet = otaProcess * mCellLength
+                info.payload = ByteArray(mCellLength)
+                System.arraycopy(
+                    dataArray,
+                    otaProcess * mCellLength,
+                    info.payload,
+                    0,
+                    info.payload.size
+                )
+            } else {
+                info.offSet = otaProcess * mCellLength
+                info.payload = ByteArray(mLastDataLength)
+                System.arraycopy(
+                    dataArray,
+                    otaProcess * mCellLength,
+                    info.payload,
+                    0,
+                    info.payload.size
+                )
+            }
+        }
+        return info
     }
 
     private fun transferEnd() {

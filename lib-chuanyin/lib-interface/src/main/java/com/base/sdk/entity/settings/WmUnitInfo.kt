@@ -23,9 +23,15 @@ data class WmUnitInfo(
      * Time format
      * TWELVE_HOUR, TWENTY_FOUR_HOUR
      */
-    val timeFormat: TimeFormat
+    val timeFormat: TimeFormat,
+
+    /**
+     * Distance unit
+     * KM, MILE
+     */
+    val distanceUnit: DistanceUnit
 ) {
-    enum class LengthUnit{
+    enum class LengthUnit {
         CM,
         INCH
     }
@@ -50,6 +56,11 @@ data class WmUnitInfo(
         DD_MM_YYYY, //  20-01-2020
         MM_DD_YYYY,  //  01-20-2020
         DDMMYYYY //  20/01/2020
+    }
+
+    enum class DistanceUnit {
+        KM,
+        MILE
     }
 
     override fun toString(): String {

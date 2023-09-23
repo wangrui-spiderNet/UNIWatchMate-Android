@@ -8,9 +8,9 @@ import io.reactivex.rxjava3.core.ObservableOnSubscribe
 
 class SyncDeviceInfo : AbSyncData<WmDeviceInfo>() {
 
-    private var deviceEmitter: ObservableEmitter<WmDeviceInfo>? = null
-    private var observeDeviceEmitter: ObservableEmitter<WmDeviceInfo>? = null
-    private var lastSyncTime: Long = 0
+    var deviceEmitter: ObservableEmitter<WmDeviceInfo>? = null
+    var observeDeviceEmitter: ObservableEmitter<WmDeviceInfo>? = null
+    var lastSyncTime: Long = 0
 
     override fun isSupport(): Boolean {
         return true
@@ -35,13 +35,5 @@ class SyncDeviceInfo : AbSyncData<WmDeviceInfo>() {
             }
         })
 
-    fun deviceInfoBack(deviceInfo: WmDeviceInfo) {
-        deviceEmitter?.onNext(deviceInfo)
-        observeDeviceEmitter?.onNext(deviceInfo)
-    }
-
-    override fun syncTimeOut(err: String) {
-        deviceEmitter?.onError(java.lang.RuntimeException(err))
-    }
 
 }

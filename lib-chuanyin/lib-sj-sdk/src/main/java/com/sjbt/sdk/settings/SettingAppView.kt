@@ -9,8 +9,10 @@ class SettingAppView : AbWmSetting<WmAppView>() {
     lateinit var setEmitter: SingleEmitter<WmAppView>
     lateinit var getEmitter: SingleEmitter<WmAppView>
 
+    var isSupport: Boolean = false
+
     override fun isSupport(): Boolean {
-        TODO("Not yet implemented")
+       return isSupport
     }
 
     override fun observeChange(): Observable<WmAppView> {

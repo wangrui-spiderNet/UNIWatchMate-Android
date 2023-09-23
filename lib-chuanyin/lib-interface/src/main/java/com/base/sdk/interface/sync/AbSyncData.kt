@@ -24,8 +24,4 @@ abstract class AbSyncData<T> : IWmSupport {
      */
     abstract var observeSyncData: Observable<T>
 
-    /**
-     * 同步消息超时
-     */
-    abstract fun syncTimeOut(obj: String)
 }

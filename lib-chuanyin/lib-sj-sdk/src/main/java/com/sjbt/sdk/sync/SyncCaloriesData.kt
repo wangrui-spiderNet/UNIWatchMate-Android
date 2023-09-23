@@ -3,26 +3,26 @@ package com.sjbt.sdk.sync
 import com.base.sdk.entity.data.WmCaloriesData
 import com.base.sdk.`interface`.sync.AbSyncData
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableEmitter
 
 class SyncCaloriesData : AbSyncData<List<WmCaloriesData>>() {
-
+    var isSupport: Boolean = true
+    var lastSyncTime: Long = 0
+    lateinit var activityObserveEmitter: ObservableEmitter<List<WmCaloriesData>>
+    lateinit var observeChangeEmitter: ObservableEmitter<List<WmCaloriesData>>
     override fun isSupport(): Boolean {
-        TODO("Not yet implemented")
+        return isSupport
     }
 
     override fun latestSyncTime(): Long {
-        TODO("Not yet implemented")
+        return lastSyncTime
     }
 
     override fun syncData(startTime: Long): Observable<List<WmCaloriesData>> {
-        TODO("Not yet implemented")
+        return Observable.create { emitter -> activityObserveEmitter = emitter }
     }
 
-    override var observeSyncData: Observable<List<WmCaloriesData>>
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override var observeSyncData: Observable<List<WmCaloriesData>> =
+        Observable.create { emitter -> observeChangeEmitter = emitter }
 
-    override fun syncTimeOut(obj: String) {
-        TODO("Not yet implemented")
-    }
 }

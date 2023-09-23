@@ -3,25 +3,27 @@ package com.sjbt.sdk.sync
 import com.base.sdk.entity.data.WmOxygenData
 import com.base.sdk.`interface`.sync.AbSyncData
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableEmitter
 
 class SyncOxygenData : AbSyncData<List<WmOxygenData>>() {
+    var isSupport: Boolean = true
+    var lastSyncTime: Long = 0
+    lateinit var activityObserveEmitter: ObservableEmitter<List<WmOxygenData>>
+    lateinit var observeChangeEmitter: ObservableEmitter<List<WmOxygenData>>
     override fun isSupport(): Boolean {
-        TODO("Not yet implemented")
+        return isSupport
     }
 
     override fun latestSyncTime(): Long {
-        TODO("Not yet implemented")
+        return lastSyncTime
     }
 
     override fun syncData(startTime: Long): Observable<List<WmOxygenData>> {
-        TODO("Not yet implemented")
+        return Observable.create { emitter -> activityObserveEmitter = emitter }
     }
 
-    override var observeSyncData: Observable<List<WmOxygenData>>
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override var observeSyncData: Observable<List<WmOxygenData>> =
+        Observable.create { emitter -> observeChangeEmitter = emitter }
 
-    override fun syncTimeOut(obj: String) {
-        TODO("Not yet implemented")
-    }
+
 }
