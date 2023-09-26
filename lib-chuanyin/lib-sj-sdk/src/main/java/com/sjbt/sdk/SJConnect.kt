@@ -19,7 +19,7 @@ class SJConnect(btEngine: BtEngine, mBtAdapter: BluetoothAdapter) : AbWmConnect(
     private val TAG = TAG_SJ + "Connect"
     private var btEngine = btEngine
     private var mBtAdapter = mBtAdapter
-    private var mBindInfo: BindInfo? = null
+    var mBindInfo: BindInfo? = null
 
     /**
      * 通过address 连接

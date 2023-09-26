@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         val btnConnect = findViewById<Button>(R.id.btn_connect)
         val btnExchange = findViewById<Button>(R.id.btn_exchange)
+        val btnBind = findViewById<Button>(R.id.btn_bind)
         checkPermission()
 
         btnConnect.setText("发现设备")
@@ -37,11 +38,12 @@ class MainActivity : AppCompatActivity() {
             startDiscoveryDevice()
         }
 
-        btnExchange.setText("连接：15:7E:78:A2:48:32")
+        btnExchange.setText("连接：15:7E:78:A2:4B:5B")
 
         btnExchange.setOnClickListener {
             connectSample()
         }
+
     }
 
     private fun checkPermission() {
@@ -79,7 +81,7 @@ class MainActivity : AppCompatActivity() {
      * 连接示例
      */
     private fun connectSample() {
-        UNIWatchMate.wmConnect?.connect("15:7E:78:A2:4B:3A",
+        UNIWatchMate.wmConnect?.connect("15:7E:78:A2:4B:5B",
             AbWmConnect.BindInfo(AbWmConnect.BindType.DISCOVERY,AbWmConnect.UserInfo("123456","张三"),""), WmDeviceModel.SJ_WATCH)
     }
 

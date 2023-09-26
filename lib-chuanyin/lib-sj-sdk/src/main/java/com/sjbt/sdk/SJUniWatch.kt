@@ -44,7 +44,7 @@ import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import java.io.File
 import java.nio.ByteBuffer
 
-abstract class SJUniWatch(context: Application, timeout:Int) : AbUniWatch(), Listener {
+abstract class SJUniWatch(context: Application, timeout: Int) : AbUniWatch(), Listener {
 
     private val TAG = TAG_SJ + "SJUniWatch"
 
@@ -238,13 +238,40 @@ abstract class SJUniWatch(context: Application, timeout:Int) : AbUniWatch(), Lis
                     val msg = obj as ByteArray
                     val msgBean: MsgBean = CmdHelper.getPayLoadJson(msg)
 
+                    WmLog.d(TAG, "收到msg:" + msgBean.toString())
+
                     when (msgBean.head) {
                         HEAD_VERIFY -> {
+
+                            when (msgBean.cmdId.toShort()) {
+                                CMD_ID_8001 -> {
+                                    sendNormalMsg(CmdHelper.biuVerifyCmd)
+                                }
+
+                                CMD_ID_8002 -> {
+                                    sjConnect.mBindInfo?.let {
+                                        sendNormalMsg(CmdHelper.getBindCmd(it))
+                                    }
+                                }
+                            }
+
 
                         }
 
                         HEAD_COMMON -> {
 
+                            when (msgBean.cmdId.toShort()) {
+
+                                CMD_ID_802E -> {
+                                    val result = msg[16]
+                                    WmLog.d(TAG, "绑定:$result")
+                                }
+
+                                CMD_ID_802F -> {
+
+                                }
+
+                            }
                         }
 
                         HEAD_SPORT_HEALTH -> {
@@ -278,8 +305,10 @@ abstract class SJUniWatch(context: Application, timeout:Int) : AbUniWatch(), Lis
                 CONNECTED -> {
                     mCurrDevice = obj as BluetoothDevice
                     sjConnect.btStateChange(WmConnectState.CONNECTED)
-                }
 
+                    sendNormalMsg(CmdHelper.biuShakeHandsCmd)
+
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -561,7 +590,7 @@ abstract class SJUniWatch(context: Application, timeout:Int) : AbUniWatch(), Lis
 
                     CMD_STR_8004_TIME_OUT -> if (mTransferRetryCount < MAX_RETRY_COUNT) {
                         mTransferRetryCount++
-                        val ota_data = CmdHelper.getTransfer04Cmd()
+                        val ota_data = CmdHelper.transfer04Cmd
                         sendNormalMsg(ota_data)
                     } else {
 //                        if (mTransferFileListener != null) {

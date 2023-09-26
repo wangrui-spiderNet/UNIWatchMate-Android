@@ -46,9 +46,9 @@ public class CmdConfig {
     /**
      * COMMAND_ID 因为方向原因，发送的时候需要Command_Id 与运算 0x7FFF 携带方向 0X8001 & 0x7FFF = 0X0001
      */
-    public static final byte CMD_ID_8001 =  0X01;
-    public static final byte CMD_ID_8002 =  0X02;
-    public static final byte CMD_ID_8003 =  0X03;
+    public static final short CMD_ID_8001 =  0X01;
+    public static final short CMD_ID_8002 =  0X02;
+    public static final short CMD_ID_8003 =  0X03;
     public static final byte CMD_ID_8004 =  0X04;
     public static final byte CMD_ID_8005 =  0X05;
     public static final byte CMD_ID_8006 =  0X06;
@@ -87,6 +87,8 @@ public class CmdConfig {
     public static final byte CMD_ID_802B =  0x2b;
     public static final byte CMD_ID_802C =  0x2C;
     public static final byte CMD_ID_802D =  0x2D;
+    public static final short CMD_ID_802E =  0x2E;
+    public static final short CMD_ID_802F =  0x2F;
 
     public static final String CMD_STR_8001 = "0180";
     public static final String CMD_STR_8002 = "0280";

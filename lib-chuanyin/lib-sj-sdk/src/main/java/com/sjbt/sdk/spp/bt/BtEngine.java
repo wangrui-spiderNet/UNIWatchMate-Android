@@ -22,6 +22,7 @@ import com.sjbt.sdk.log.SJLog;
 import com.sjbt.sdk.spp.cmd.CmdConfig;
 import com.sjbt.sdk.spp.cmd.CmdHelper;
 import com.sjbt.sdk.utils.BtUtils;
+import com.sjbt.sdk.utils.LogUtils;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -180,7 +181,7 @@ public class BtEngine {
                                 }
 
                                 String msgStr = byte2Hex(result).toUpperCase();
-                                SJLog.INSTANCE.logBt(TAG, "返回消息：" + msgStr);
+                                LogUtils.logBlueTooth("返回消息：" + msgStr);
 
                                 String msgTimeCode = msgStr.substring(0, 8).toUpperCase();
 
@@ -336,7 +337,7 @@ public class BtEngine {
 //            SJLog.INSTANCE.logBt(TAG,"开启子线程读取.容许最大长度Receive:" + mSocket.getMaxReceivePacketSize());
             mSocket.getOutputStream().write(bytes);
             mSocket.getOutputStream().flush();
-            SJLog.INSTANCE.logBt(TAG, "发送消息：" + BtUtils.bytesToHexString(bytes));
+            LogUtils.logBlueTooth("发送消息：" + BtUtils.bytesToHexString(bytes));
 
         } catch (Throwable e) {
 //            closeSocket("发送过程 " + e.getMessage(), true);
