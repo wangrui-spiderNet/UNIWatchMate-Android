@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
             UNIWatchMate.scanQr("www.shenju.watch?mac=00:00:56:78:9A:BC?name=SJ 8020N")
         }
 
+        btnExchange.setText("连接：15:7E:78:A2:48:32")
+
         btnExchange.setOnClickListener {
             connectSample()
         }
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
      * 连接示例
      */
     private fun connectSample() {
-        UNIWatchMate.mWmConnect?.connect("12:34:56:78:9A:BC", WmDeviceModel.SJ_WATCH)
+        UNIWatchMate.mWmConnect?.connect("15:7E:78:A2:4B:3A", WmDeviceModel.SJ_WATCH)
     }
 
     /**

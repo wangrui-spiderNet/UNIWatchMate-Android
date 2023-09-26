@@ -1,6 +1,5 @@
 package com.base.sdk.`interface`.app
 
-import com.base.sdk.entity.apps.DialItem
 import com.base.sdk.entity.apps.WmDial
 import com.base.sdk.`interface`.IWmSupport
 import io.reactivex.rxjava3.core.Observable
@@ -17,5 +16,5 @@ abstract class AbAppDial : IWmSupport {
     /**
      * 删除表盘
      */
-    abstract fun deleteDial(dialItem: DialItem): Observable<DialItem>
+    abstract fun deleteDial(dialItem: WmDial): Observable<WmDial>
 }

@@ -3,23 +3,21 @@ package com.sjbt.sdk.entity
 import java.nio.ByteBuffer
 
 object NodeEncoder {
+    fun buildWriteMsg(payLoad: PayLoad): ByteArray {
+        val byteBuffer: ByteBuffer = ByteBuffer.allocate(payLoad.totalLen)
+        byteBuffer.put(payLoad.requestId)
+        byteBuffer.putInt(payLoad.packageSeq)
+        byteBuffer.put(payLoad.request_type)
+        byteBuffer.put(payLoad.package_limit)
+        byteBuffer.put(payLoad.item_count)
 
-    fun buildReadMsg(node: Node): ByteArray {
-        val byteArray: ByteArray = ByteArray(0)
-
-        val byteBuffer: ByteBuffer = ByteBuffer.wrap(byteArray)
-        byteBuffer
-
-        return byteArray
-    }
-
-    fun buildWriteMsg(node: Node): ByteArray {
-        val byteBuffer: ByteBuffer = ByteBuffer.allocate(byteArray)
-        byteBuffer.put(node.requestId)
-        byteBuffer.putInt(node.packageSeq)
-        byteBuffer.put(node.request_type)
-        byteBuffer.put(node.package_limit)
-        byteBuffer.put(node.item_count)
+        payLoad.nodeItems.forEach {
+            byteBuffer.put(it.nodeId)
+            byteBuffer.put(it.reserved)
+            byteBuffer.put(it.data_fmt)
+            byteBuffer.put(it.data_len)
+            byteBuffer.put(it.data)
+        }
 
         return byteBuffer.array()
     }

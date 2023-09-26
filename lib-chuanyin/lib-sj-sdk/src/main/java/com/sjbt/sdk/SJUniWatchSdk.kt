@@ -18,6 +18,7 @@ import com.base.sdk.entity.apps.WmConnectState
 import com.base.sdk.`interface`.AbWmConnect
 import com.base.sdk.`interface`.WmTransferFile
 import com.base.sdk.`interface`.app.AbWmApps
+import com.base.sdk.`interface`.log.WmLog
 import com.base.sdk.`interface`.setting.AbWmSettings
 import com.base.sdk.`interface`.sync.AbWmSyncs
 import com.sjbt.sdk.app.*
@@ -50,9 +51,9 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
 
     private var context: Application? = null
     private var msgTimeOut: Int? = null
-    private var mBtStateReceiver: BtStateReceiver? = null
+    var mBtStateReceiver: BtStateReceiver? = null
     private var mBtEngine = BtEngine.getInstance(this)
-    private var mBtAdapter: BluetoothAdapter? = null
+    private var mBtAdapter = BluetoothAdapter.getDefaultAdapter()
 
     private lateinit var discoveryObservableEmitter: ObservableEmitter<BluetoothDevice>
 
@@ -90,7 +91,7 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
     override val wmSettings: AbWmSettings = SJSettings()
     override val wmApps: AbWmApps = SJApps()
     override val wmSync: AbWmSyncs = SJSyncData()
-    override val wmConnect: AbWmConnect = SJConnect()
+    override val wmConnect: AbWmConnect = SJConnect(mBtEngine, mBtAdapter)
     override val wmTransferFile: WmTransferFile = SJTransferFile()
 
     private val sjConnect: SJConnect = wmConnect as SJConnect
@@ -133,9 +134,7 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
     override fun init(context: Application, msgTimeOut: Int) {
         this.context = context
         this.msgTimeOut = msgTimeOut
-
-        val mBluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE)
-        mBtAdapter = (mBluetoothManager as (android.bluetooth.BluetoothManager)).adapter
+        mBtEngine.listener = this
 
         mBtStateReceiver = BtStateReceiver(context!!, object : OnBtStateListener {
 
@@ -655,8 +654,23 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
 
     }
 
-    override fun onConnectFailed(device: BluetoothDevice?, msg: String?) {
-        sjConnect.btStateChange(WmConnectState.DISCONNECTED)
+    override fun onConnectFailed(device: BluetoothDevice, msg: String?) {
+
+        WmLog.e(TAG, "onConnectFailed:" + msg)
+
+        if (device!!.address == mCurrAddress) {
+            if (msg!!.contains("read failed, socket might closed or timeout")
+                || msg.contains("Connection reset by peer")
+                || msg.contains("Connect refused")
+            ) {
+                sjConnect.connect(device, WmDeviceModel.SJ_WATCH)
+            } else {
+                mConnectTryCount = 0
+                sjConnect.btStateChange(WmConnectState.DISCONNECTED)
+            }
+        } else {
+            sjConnect.btStateChange(WmConnectState.DISCONNECTED)
+        }
     }
 
     override fun startDiscovery(): Observable<BluetoothDevice> {

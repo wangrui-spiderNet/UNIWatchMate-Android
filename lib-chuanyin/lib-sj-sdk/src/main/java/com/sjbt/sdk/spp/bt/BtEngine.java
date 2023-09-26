@@ -123,7 +123,7 @@ public class BtEngine {
     private static void socketConnectRead() throws IOException {
 
         if (!mSocket.isConnected()) {
-            SJLog.INSTANCE.logBt(TAG, "开始连接-->:" + mDevice);
+            SJLog.INSTANCE.logE(TAG, "开始连接-->:" + mDevice);
 
             mStateMap.put(mDevice.getAddress(), STATE_CONNECTING);
             mSocket.connect();
@@ -603,7 +603,7 @@ public class BtEngine {
                         if (mListener != null) {
                             mListener.onConnectFailed(mDevice, msg);
                         } else {
-                            SJLog.INSTANCE.logBt(TAG, "BtEngine listener 被销毁");
+                            SJLog.INSTANCE.logBt(TAG, "BtEngine listener was destroyed");
                         }
                     } catch (Throwable e) {
                         e.printStackTrace();

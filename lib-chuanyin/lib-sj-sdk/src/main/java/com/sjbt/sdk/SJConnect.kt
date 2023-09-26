@@ -1,5 +1,6 @@
 package com.sjbt.sdk
 
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import com.base.sdk.entity.WmDevice
 import com.base.sdk.entity.WmDeviceModel
@@ -7,17 +8,18 @@ import com.base.sdk.entity.apps.WmConnectState
 import com.base.sdk.`interface`.AbWmConnect
 import com.base.sdk.`interface`.log.WmLog
 import com.sjbt.sdk.log.SJLog
+import com.sjbt.sdk.spp.bt.BtEngine
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableEmitter
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import io.reactivex.rxjava3.core.Single
 
-class SJConnect : AbWmConnect() {
+class SJConnect(btEngine: BtEngine, mBtAdapter: BluetoothAdapter) : AbWmConnect() {
 
     var mConnectTryCount = 0
-
     private var connectEmitter: ObservableEmitter<WmConnectState>? = null
     private val TAG = TAG_SJ + "Connect"
+    private var btEngine = btEngine
+    private var mBtAdapter = mBtAdapter
 
     /**
      * 通过address 连接
@@ -32,9 +34,17 @@ class SJConnect : AbWmConnect() {
         if (device.isRecognized) {
             SJLog.logBt(TAG, " connect:${address}")
             connectEmitter?.onNext(WmConnectState.CONNECTING)
-            connectEmitter?.onNext(WmConnectState.PRE_CONNECTED)
+
+            try {
+                val bluetoothDevice: BluetoothDevice = mBtAdapter.getRemoteDevice(address)
+                btEngine.connect(bluetoothDevice)
+                connectEmitter?.onNext(WmConnectState.PRE_CONNECTED)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                connectEmitter?.onNext(WmConnectState.DISCONNECTED)
+            }
         } else {
-            connectEmitter?.onError(RuntimeException("not recognized device"))
+            connectEmitter?.onNext(WmConnectState.DISCONNECTED)
         }
 
         return device
@@ -43,21 +53,21 @@ class SJConnect : AbWmConnect() {
     /**
      * 通过BluetoothDevice 连接
      */
-    override fun connect(device: BluetoothDevice, deviceMode: WmDeviceModel): WmDevice {
-        val device = WmDevice(deviceMode)
-        device.address = device.address
-        device.isRecognized = deviceMode == WmDeviceModel.SJ_WATCH
+    override fun connect(bluetoothDevice: BluetoothDevice, deviceMode: WmDeviceModel): WmDevice {
+        val wmDevice = WmDevice(deviceMode)
+        wmDevice.address = bluetoothDevice.address
+        wmDevice.isRecognized = deviceMode == WmDeviceModel.SJ_WATCH
 
-        if (device.isRecognized) {
-            //TODO 执行连接
-            WmLog.e(TAG, " connect:${device}")
+        if (wmDevice.isRecognized) {
+            WmLog.e(TAG, " connect:${wmDevice}")
             connectEmitter?.onNext(WmConnectState.CONNECTING)
+            btEngine.connect(bluetoothDevice)
             connectEmitter?.onNext(WmConnectState.PRE_CONNECTED)
         } else {
             connectEmitter?.onError(RuntimeException("not recognized device"))
         }
 
-        return device
+        return wmDevice
     }
 
     fun btStateChange(state: WmConnectState) {
