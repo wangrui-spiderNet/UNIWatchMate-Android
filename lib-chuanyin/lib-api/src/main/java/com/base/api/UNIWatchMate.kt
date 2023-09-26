@@ -15,6 +15,7 @@ object UNIWatchMate {
     private lateinit var application: Application
     private val mBaseUNIWatches: MutableList<AbUniWatch> = ArrayList()
     var uniWatchSdk: Observable<AbUniWatch>? = null
+    var mInstance: AbUniWatch? = null
     private var mMsgTimeOut = 10000
 
     var mWmConnect: AbWmConnect? = null
@@ -61,7 +62,9 @@ object UNIWatchMate {
                 mWmApps = it.wmApps
                 mWmSyncs = it.wmSync
                 mWmTransferFile = it.wmTransferFile
+
                 watchSubject.onNext(it)
+                mInstance = it
             }
         }
     }
@@ -76,6 +79,8 @@ object UNIWatchMate {
                     mWmTransferFile = it.wmTransferFile
 
                     watchSubject.onNext(it)
+                    mInstance = it
+
                     mWmConnect?.connect(device.address!!, device.mode)
                 }
             }

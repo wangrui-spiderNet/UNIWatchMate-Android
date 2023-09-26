@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.text.TextUtils
@@ -678,17 +679,20 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
             override fun subscribe(emitter: ObservableEmitter<BluetoothDevice>) {
                 discoveryObservableEmitter = emitter
 
-                context?.let {
-                    if (ActivityCompat.checkSelfPermission(
-                            it,
-                            Manifest.permission.BLUETOOTH_SCAN
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        return
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    context?.let {
+                        if (ActivityCompat.checkSelfPermission(
+                                it,
+                                Manifest.permission.BLUETOOTH_SCAN
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            discoveryObservableEmitter.onError(RuntimeException("permission denied"))
+                            return
+                        }
                     }
-
-                    mBtAdapter?.startDiscovery()
                 }
+
+                mBtAdapter?.startDiscovery()
             }
         })
     }

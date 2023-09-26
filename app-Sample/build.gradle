@@ -55,6 +55,8 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:$rx_java_version"
     implementation "io.reactivex.rxjava3:rxandroid:$rx_android_version"
 
+    implementation 'com.guolindev.permissionx:permissionx:1.6.4'
+
     implementation project(path: ':lib-chuanyin:lib-interface')
     implementation project(path: ':lib-chuanyin:lib-sj-sdk')
     implementation project(path: ':lib-chuanyin:lib-api')
