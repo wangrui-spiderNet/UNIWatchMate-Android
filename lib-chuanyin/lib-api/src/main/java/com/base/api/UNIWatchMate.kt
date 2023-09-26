@@ -58,7 +58,7 @@ object UNIWatchMate {
         throw RuntimeException("No Sdk Match Exception!")
     }
 
-    fun scanQr(qrString: String) {
+    fun scanQr(qrString: String, bindInfo: AbWmConnect.BindInfo) {
         uniWatches.forEach {
             val scanDevice = it.parseScanQr(qrString)
             scanDevice?.let { device ->
@@ -70,7 +70,7 @@ object UNIWatchMate {
                     mInstance = it
                     uniWatchSubject.onNext(it)
 
-                    wmConnect?.connect(device.address!!, device.mode)
+                    wmConnect?.connect(device.address!!, bindInfo, device.mode)
                 }
             }
         }

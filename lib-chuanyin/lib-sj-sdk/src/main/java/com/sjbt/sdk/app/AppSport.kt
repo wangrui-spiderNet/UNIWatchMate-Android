@@ -14,11 +14,11 @@ class AppSport : AbAppSport() {
         get() = TODO("Not yet implemented")
         set(value) {}
 
-    override fun addSport(sport: WmSport): Observable<WmSport> {
+    override fun addSport(sport: WmSport): Single<WmSport> {
         TODO("Not yet implemented")
     }
 
-    override fun deleteSport(sport: WmSport): Observable<WmSport> {
+    override fun deleteSport(sport: WmSport): Single<WmSport> {
         TODO("Not yet implemented")
     }
 

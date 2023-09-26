@@ -1,27 +1,29 @@
 package com.sjbt.sdk.app
 
 import com.base.sdk.entity.apps.WmContact
+import com.base.sdk.entity.settings.WmEmergencyCall
 import com.base.sdk.`interface`.app.AbAppContact
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 class AppContact : AbAppContact() {
     override fun isSupport(): Boolean {
         TODO("Not yet implemented")
     }
 
-    override var syncContactList: Observable<List<WmContact>>
+    override var observableContactList: Observable<List<WmContact>>
         get() = TODO("Not yet implemented")
         set(value) {}
 
-    override fun addContact(contact: WmContact): Observable<WmContact> {
+    override fun syncContactList(contactList: List<WmContact>): Single<Boolean> {
         TODO("Not yet implemented")
     }
 
-    override fun deleteContact(contact: WmContact): Observable<WmContact> {
+    override fun observableEmergencyContacts(): Observable<WmEmergencyCall> {
         TODO("Not yet implemented")
     }
 
-    override fun setEmergencyContact(contacts: WmContact): Observable<WmContact> {
+    override fun updateEmergencyContact(contacts: WmEmergencyCall): Single<WmEmergencyCall> {
         TODO("Not yet implemented")
     }
 }

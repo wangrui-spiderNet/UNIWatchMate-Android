@@ -1,9 +1,9 @@
 package com.sjbt.sdk.dfu
 
-import android.database.Observable
 import com.base.sdk.`interface`.FileType
 import com.base.sdk.`interface`.WmTransferFile
 import com.base.sdk.`interface`.WmTransferState
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import java.io.File
 

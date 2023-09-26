@@ -68,10 +68,6 @@ class MyApplication : Application() {
 
                     }
 
-                    WmConnectState.PRE_CONNECTED -> {
-
-                    }
-
                     WmConnectState.CONNECTED -> {
 
                     }
