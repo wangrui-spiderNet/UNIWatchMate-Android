@@ -14,8 +14,8 @@ class WmSleepData(
 )
 
 class WmSleepItem(
-    val status: Int,//
-    val startTime: Long
+    val status: Int,//状态
+    val startTime: Long//开始时间
 ) : ICalculateSleepItem {
     companion object {
         /**
@@ -40,14 +40,14 @@ class WmSleepItem(
 
     }
 
+    //计算状态
     override fun getCalculateStatus(): Int {
         return status
     }
 
+    //计算开始时间
     override fun getCalculateStartTime(): Long {
         return startTime
     }
-
-
 
 }

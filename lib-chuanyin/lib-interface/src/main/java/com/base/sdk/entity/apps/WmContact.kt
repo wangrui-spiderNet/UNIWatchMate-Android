@@ -6,7 +6,6 @@ package com.base.sdk.entity.apps
 class WmContact internal constructor(
     val name: String,
     val number: String,
-    val isEmergency: Boolean
 ) {
     companion object {
         internal const val NAME_BYTES_LIMIT = 32
@@ -28,7 +27,7 @@ class WmContact internal constructor(
             return if (resultName.isNullOrEmpty() || resultNumber.isNullOrEmpty()) {
                 null
             } else {
-                WmContact(name, number, isEmergency)
+                WmContact(name, number)
             }
         }
 

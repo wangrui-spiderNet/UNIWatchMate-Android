@@ -5,7 +5,6 @@ enum class WmConnectState {
     BT_ENABLE,
     DISCONNECTED,
     CONNECTING,
-    PRE_CONNECTED,
     CONNECTED,
     VERIFIED,
 }

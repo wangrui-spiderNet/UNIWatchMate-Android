@@ -163,6 +163,7 @@ class WmTemperatureData(
     val wrist: Float
 ) : WmBaseSyncData(timestamp)
 
+
 class WmGameData(
     /**
      * Game start time

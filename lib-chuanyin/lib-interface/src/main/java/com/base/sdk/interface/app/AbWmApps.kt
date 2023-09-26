@@ -7,46 +7,46 @@ abstract class AbWmApps {
     /**
      * 闹钟功能
      */
-    abstract var appAlarm: AbAppAlarm
+    abstract val appAlarm: AbAppAlarm
 
     /**
      * 相机功能
      */
-    abstract var appCamera: AbAppCamera
+    abstract val appCamera: AbAppCamera
 
     /**
      * 通讯录
      */
-    abstract var appContact: AbAppContact
+    abstract val appContact: AbAppContact
 
     /**
      * 查找功能
      */
-    abstract var appFind: AbAppFind
+    abstract val appFind: AbAppFind
 
     /**
      * 天气功能
      */
-    abstract var appWeather: AbAppWeather
+    abstract val appWeather: AbAppWeather
 
     /**
      * 运动功能
      */
-    abstract var appSport: AbAppSport
+    abstract val appSport: AbAppSport
 
     /**
      * 通知功能
      */
-    abstract var appNotification: AbAppNotification
+    abstract val appNotification: AbAppNotification
 
     /**
      * 表盘
      */
-    abstract var appDial: AbAppDial
+    abstract val appDial: AbAppDial
 
     /**
      * 语言
      */
-    abstract var appLanguage: AbAppLanguage
+    abstract val appLanguage: AbAppLanguage
 
 }

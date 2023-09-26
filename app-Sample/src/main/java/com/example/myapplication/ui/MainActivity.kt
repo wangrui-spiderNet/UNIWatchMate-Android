@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.base.api.UNIWatchMate
 import com.base.sdk.entity.WmDeviceModel
 import com.base.sdk.entity.settings.WmSportGoal
+import com.base.sdk.`interface`.AbWmConnect
 import com.base.sdk.`interface`.log.WmLog
 import com.example.myapplication.R
 import com.permissionx.guolindev.PermissionX
@@ -78,7 +79,8 @@ class MainActivity : AppCompatActivity() {
      * 连接示例
      */
     private fun connectSample() {
-        UNIWatchMate.mWmConnect?.connect("15:7E:78:A2:4B:3A", WmDeviceModel.SJ_WATCH)
+        UNIWatchMate.wmConnect?.connect("15:7E:78:A2:4B:3A",
+            AbWmConnect.BindInfo(AbWmConnect.BindType.DISCOVERY,AbWmConnect.UserInfo("123456","张三"),""), WmDeviceModel.SJ_WATCH)
     }
 
     private fun startDiscoveryDevice() {
@@ -113,7 +115,7 @@ class MainActivity : AppCompatActivity() {
     fun settingsSample() {
         //设置运动目标 示例：其他与此类似，都是通过模块实例调用对应的接口方法
         val sportGoal = WmSportGoal(10000, 200.0, 10000.0, 1000)
-        val settingSingle = UNIWatchMate.mWmSettings?.settingSportGoal?.set(sportGoal)
+        val settingSingle = UNIWatchMate.wmSettings.settingSportGoal?.set(sportGoal)
         settingSingle?.subscribe(object : SingleObserver<WmSportGoal> {
             override fun onSubscribe(d: Disposable) {}
             override fun onSuccess(basicInfo: WmSportGoal) {

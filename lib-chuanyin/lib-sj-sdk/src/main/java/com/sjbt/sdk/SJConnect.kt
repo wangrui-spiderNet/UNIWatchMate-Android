@@ -11,7 +11,6 @@ import com.sjbt.sdk.log.SJLog
 import com.sjbt.sdk.spp.bt.BtEngine
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableEmitter
-import io.reactivex.rxjava3.core.Single
 
 class SJConnect(btEngine: BtEngine, mBtAdapter: BluetoothAdapter) : AbWmConnect() {
 
@@ -20,15 +19,16 @@ class SJConnect(btEngine: BtEngine, mBtAdapter: BluetoothAdapter) : AbWmConnect(
     private val TAG = TAG_SJ + "Connect"
     private var btEngine = btEngine
     private var mBtAdapter = mBtAdapter
+    private var mBindInfo: BindInfo? = null
 
     /**
      * 通过address 连接
      */
-    override fun connect(address: String, deviceMode: WmDeviceModel): WmDevice {
+    override fun connect(address: String, bindInfo: BindInfo, deviceMode: WmDeviceModel): WmDevice {
         val device = WmDevice(deviceMode)
         device.address = address
         device.mode = deviceMode
-
+        mBindInfo = bindInfo
         device.isRecognized = deviceMode == WmDeviceModel.SJ_WATCH
 
         if (device.isRecognized) {
@@ -38,7 +38,6 @@ class SJConnect(btEngine: BtEngine, mBtAdapter: BluetoothAdapter) : AbWmConnect(
             try {
                 val bluetoothDevice: BluetoothDevice = mBtAdapter.getRemoteDevice(address)
                 btEngine.connect(bluetoothDevice)
-                connectEmitter?.onNext(WmConnectState.PRE_CONNECTED)
             } catch (e: Exception) {
                 e.printStackTrace()
                 connectEmitter?.onNext(WmConnectState.DISCONNECTED)
@@ -53,7 +52,11 @@ class SJConnect(btEngine: BtEngine, mBtAdapter: BluetoothAdapter) : AbWmConnect(
     /**
      * 通过BluetoothDevice 连接
      */
-    override fun connect(bluetoothDevice: BluetoothDevice, deviceMode: WmDeviceModel): WmDevice {
+    override fun connect(
+        bluetoothDevice: BluetoothDevice,
+        bindInfo: BindInfo,
+        deviceMode: WmDeviceModel
+    ): WmDevice {
         val wmDevice = WmDevice(deviceMode)
         wmDevice.address = bluetoothDevice.address
         wmDevice.isRecognized = deviceMode == WmDeviceModel.SJ_WATCH
@@ -62,12 +65,20 @@ class SJConnect(btEngine: BtEngine, mBtAdapter: BluetoothAdapter) : AbWmConnect(
             WmLog.e(TAG, " connect:${wmDevice}")
             connectEmitter?.onNext(WmConnectState.CONNECTING)
             btEngine.connect(bluetoothDevice)
-            connectEmitter?.onNext(WmConnectState.PRE_CONNECTED)
         } else {
             connectEmitter?.onError(RuntimeException("not recognized device"))
         }
 
         return wmDevice
+    }
+
+    /**
+     * 重连
+     */
+    fun reConnect(device: BluetoothDevice){
+        mBindInfo?.let {
+            connect(device, it, WmDeviceModel.SJ_WATCH)
+        }
     }
 
     fun btStateChange(state: WmConnectState) {
@@ -90,7 +101,4 @@ class SJConnect(btEngine: BtEngine, mBtAdapter: BluetoothAdapter) : AbWmConnect(
         TODO("Not yet implemented")
     }
 
-    override fun bindDevice(bindInfo: BindInfo): Single<BindInfo> {
-        TODO("Not yet implemented")
-    }
 }

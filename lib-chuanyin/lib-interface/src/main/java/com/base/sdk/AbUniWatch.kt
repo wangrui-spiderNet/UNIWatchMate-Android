@@ -1,6 +1,5 @@
 package com.base.sdk
 
-import android.app.Application
 import android.bluetooth.BluetoothDevice
 import com.base.sdk.`interface`.AbWmConnect
 import com.base.sdk.`interface`.WmTransferFile
@@ -8,7 +7,6 @@ import com.base.sdk.`interface`.app.AbWmApps
 import com.base.sdk.`interface`.log.WmLog
 import com.base.sdk.`interface`.setting.AbWmSettings
 import com.base.sdk.`interface`.sync.AbWmSyncs
-import com.base.sdk.entity.WmDevice
 import com.base.sdk.entity.WmDeviceModel
 import com.base.sdk.entity.WmScanDevice
 import io.reactivex.rxjava3.core.Observable
@@ -29,7 +27,7 @@ abstract class AbUniWatch {
     /**
      * 设置模块
      */
-   abstract val wmSettings: AbWmSettings
+    abstract val wmSettings: AbWmSettings
 
     /**
      * A应用模块
@@ -52,24 +50,22 @@ abstract class AbUniWatch {
     abstract val wmTransferFile: WmTransferFile
 
     /**
-     * 初始化方法，需要在所有方法执行前调用,建议在application执行
+     * 获取设备模式。
+     * 可能存在某个SDK支持多种模式的情况。
      */
-    abstract fun init(application: Application, msgTimeOut: Int)
+    abstract fun getDeviceModel(): WmDeviceModel
 
     /**
-     * 根据设备类型返回设备信息
+     * 设置设备模式.
+     * 如果一个SDK支持多个模式，需要保存当前模式，以便在 [getDeviceModel] 获取
+     * @return 设置是否成功
      */
-    abstract fun getDevice(wmDeviceModel: WmDeviceModel): WmDevice?
+    abstract fun setDeviceMode(wmDeviceModel: WmDeviceModel): Boolean
 
     /**
      * 开始扫描设备
      */
     abstract fun startDiscovery(): Observable<BluetoothDevice>
-
-    /**
-     * 停止扫描设备
-     */
-    abstract fun stopDiscovery()
 
     fun setLogEnable(logEnable: Boolean) {
         WmLog.logEnable = logEnable

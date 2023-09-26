@@ -17,10 +17,6 @@ data class WmDeviceInfo(
      */
     val version: String,
     /**
-     * device battery percentage(设备电量百分比)
-     */
-    val batteryPercentage: Int,
-    /**
      * device id(设备id)
      */
     val deviceId: String,
@@ -34,6 +30,6 @@ data class WmDeviceInfo(
     val deviceName: String
 ) {
     override fun toString(): String {
-        return "WmDevice(model='$model', macAddress='$macAddress', version='$version', batteryPercentage=$batteryPercentage, deviceId='$deviceId', bluetoothName='$bluetoothName', deviceName='$deviceName')"
+        return "WmDevice(model='$model', macAddress='$macAddress', version='$version', deviceId='$deviceId', bluetoothName='$bluetoothName', deviceName='$deviceName')"
     }
 }

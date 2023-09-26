@@ -5,16 +5,15 @@ import com.base.api.UNIWatchMate
 import com.base.sdk.entity.WmDeviceModel
 import com.base.sdk.entity.apps.WmConnectState
 import com.base.sdk.`interface`.log.WmLog
-import com.sjbt.sdk.SJUniWatchSdk
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 
 class MyApplication : Application() {
 
-    val TAG: String = "MyApplication"
     companion object {
         @JvmStatic
         lateinit var instance: MyApplication
+        private const val TAG: String = "MyApplication"
     }
 
     override fun onCreate() {
@@ -22,7 +21,7 @@ class MyApplication : Application() {
         instance = this
 
         //第一步：初始化，需要传入支持的sdk实例
-        UNIWatchMate.init(this, 10000, arrayOf(SJUniWatchSdk))
+        uniWatchInit(this)
 
         //第二步：通过setDeviceModel选定SDK(发现设备场景)，如果是扫码场景则用scanQr，二选一
         UNIWatchMate.setDeviceModel(WmDeviceModel.SJ_WATCH)
@@ -32,7 +31,7 @@ class MyApplication : Application() {
         observeState()
 
         //监听sdk变化
-        UNIWatchMate.uniWatchSdk?.subscribe {
+        UNIWatchMate.observeUniWatchChange().subscribe {
             it.setLogEnable(true)
             WmLog.e(TAG, "SDK changed")
         }
@@ -43,9 +42,7 @@ class MyApplication : Application() {
      */
     private fun observeState() {
         //监听连接状态
-        UNIWatchMate.uniWatchSdk?.flatMap {
-            it.wmConnect!!.observeConnectState
-        }?.subscribe(object : Observer<WmConnectState> {
+        UNIWatchMate.wmConnect.observeConnectState.subscribe(object : Observer<WmConnectState> {
             override fun onSubscribe(d: Disposable) {
 
             }
@@ -56,6 +53,10 @@ class MyApplication : Application() {
 
                 when (connectState) {
                     WmConnectState.BT_DISABLE -> {
+
+                    }
+
+                    WmConnectState.BT_ENABLE -> {
 
                     }
 
@@ -78,7 +79,6 @@ class MyApplication : Application() {
                     WmConnectState.VERIFIED -> {
 
                     }
-
                 }
             }
 

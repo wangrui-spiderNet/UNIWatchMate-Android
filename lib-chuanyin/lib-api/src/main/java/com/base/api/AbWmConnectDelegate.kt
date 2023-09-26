@@ -14,17 +14,14 @@ internal class AbWmConnectDelegate(
     private val watchSubject: BehaviorSubject<AbUniWatch>,
 ) : AbWmConnect() {
 
-    override fun connect(address: String, deviceMode: WmDeviceModel): WmDevice {
+    override fun connect(address: String, bindInfo: BindInfo, deviceMode: WmDeviceModel): WmDevice {
         TODO("Not yet implemented")
     }
 
-    override fun connect(address: BluetoothDevice, deviceMode: WmDeviceModel): WmDevice {
+    override fun connect(address: BluetoothDevice, bindInfo: BindInfo, deviceMode: WmDeviceModel): WmDevice {
         TODO("Not yet implemented")
     }
 
-    override fun bindDevice(bindInfo: BindInfo): Single<BindInfo> {
-        TODO("Not yet implemented")
-    }
 
     override fun disconnect() {
         TODO("Not yet implemented")

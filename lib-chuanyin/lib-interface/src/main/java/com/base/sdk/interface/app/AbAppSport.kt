@@ -18,12 +18,12 @@ abstract class AbAppSport : IWmSupport {
     /**
      * addSport 增加运动项目
      */
-    abstract fun addSport(sport: WmSport): Observable<WmSport>
+    abstract fun addSport(sport: WmSport): Single<WmSport>
 
     /**
      * deleteSport 删除运动项目
      */
-    abstract fun deleteSport(sport: WmSport): Observable<WmSport>
+    abstract fun deleteSport(sport: WmSport): Single<WmSport>
 
     /**
      * sortFixedSportList 运动列表排序

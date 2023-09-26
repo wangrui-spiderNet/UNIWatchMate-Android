@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Application
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Handler
@@ -46,12 +45,13 @@ import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import java.io.File
 import java.nio.ByteBuffer
 
-object SJUniWatchSdk : AbUniWatch(), Listener {
+abstract class SJUniWatch : AbUniWatch(), Listener {
 
-    private val TAG = TAG_SJ + "SJUniWatchSdk"
+    private val TAG = TAG_SJ + "SJUniWatch"
 
-    private var context: Application? = null
-    private var msgTimeOut: Int? = null
+    abstract val context: Application?
+    abstract val msgTimeOut: Int?
+
     var mBtStateReceiver: BtStateReceiver? = null
     private var mBtEngine = BtEngine.getInstance(this)
     private var mBtAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -132,9 +132,8 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
     private val settingUnitInfo = wmSettings.settingUnitInfo as SettingUnitInfo
     private val settingWistRaise = wmSettings.settingWistRaise as SettingWistRaise
 
-    override fun init(context: Application, msgTimeOut: Int) {
-        this.context = context
-        this.msgTimeOut = msgTimeOut
+    init {
+        mCameraHandler = Handler(mCameraThread.looper)
         mBtEngine.listener = this
 
         mBtStateReceiver = BtStateReceiver(context!!, object : OnBtStateListener {
@@ -664,7 +663,13 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
                 || msg.contains("Connection reset by peer")
                 || msg.contains("Connect refused")
             ) {
-                sjConnect.connect(device, WmDeviceModel.SJ_WATCH)
+                mConnectTryCount++
+                if (mConnectTryCount < MAX_RETRY_COUNT) {
+                    sjConnect.reConnect(device)
+                } else {
+                    mConnectTryCount = 0
+                    sjConnect.btStateChange(WmConnectState.DISCONNECTED)
+                }
             } else {
                 mConnectTryCount = 0
                 sjConnect.btStateChange(WmConnectState.DISCONNECTED)
@@ -697,23 +702,12 @@ object SJUniWatchSdk : AbUniWatch(), Listener {
         })
     }
 
-    override fun stopDiscovery() {
-        context?.let {
-            if (ActivityCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.BLUETOOTH_SCAN
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return
-            }
-            mBtAdapter?.cancelDiscovery()
-        }
+    override fun getDeviceModel(): WmDeviceModel {
+        return WmDeviceModel.SJ_WATCH
     }
 
-    override fun getDevice(wmDeviceModel: WmDeviceModel): WmDevice? {
-        val wmDevice = WmDevice(WmDeviceModel.SJ_WATCH)
-        wmDevice.isRecognized = wmDeviceModel == WmDeviceModel.SJ_WATCH
-        return wmDevice
+    override fun setDeviceMode(wmDeviceModel: WmDeviceModel): Boolean {
+        return wmDeviceModel == WmDeviceModel.SJ_WATCH
     }
 
     override fun parseScanQr(qrString: String): WmScanDevice {

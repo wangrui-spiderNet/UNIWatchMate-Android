@@ -3,6 +3,7 @@ package com.base.sdk.`interface`.app
 import com.base.sdk.entity.apps.WmFind
 import com.base.sdk.`interface`.IWmSupport
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 /**
  * (app-find)应用模块-查找功能
@@ -25,7 +26,7 @@ abstract class AbAppFind : IWmSupport {
      * find watch(查找手表)
      * @param ring_count 铃声次数
      */
-    abstract fun findWatch(ring_count: WmFind): Observable<Boolean>
+    abstract fun findWatch(ring_count: WmFind): Single<Boolean>
 
     /**
      * stop find watch(停止查找手表)
@@ -33,7 +34,7 @@ abstract class AbAppFind : IWmSupport {
      * @param flag 0:停止声音和关闭界面 1:停止声音 2:关闭界面
      * @return
      */
-    abstract fun stopFindWatch(flag: StopType): Observable<Boolean>
+    abstract fun stopFindWatch(flag: StopType): Single<Boolean>
 }
 
 enum class StopType(val type: Int) {

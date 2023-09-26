@@ -3,7 +3,6 @@ package com.sjbt.sdk.settings
 import com.base.sdk.entity.settings.*
 import com.base.sdk.`interface`.setting.AbWmSetting
 import com.base.sdk.`interface`.setting.AbWmSettings
-import com.sjbt.sdk.SJUniWatchSdk
 
 class SJSettings : AbWmSettings() {
 

@@ -14,13 +14,12 @@ abstract class AbWmConnect {
     /**
      * 连接方法
      */
-    abstract fun connect(address: String, deviceMode: WmDeviceModel): WmDevice
-    abstract fun connect(address: BluetoothDevice, deviceMode: WmDeviceModel): WmDevice
-
-    /**
-     * 绑定设备
-     */
-    abstract fun bindDevice(bindInfo: BindInfo): Single<BindInfo>
+    abstract fun connect(address: String, bindInfo: BindInfo, deviceMode: WmDeviceModel): WmDevice
+    abstract fun connect(
+        address: BluetoothDevice,
+        bindInfo: BindInfo,
+        deviceMode: WmDeviceModel
+    ): WmDevice
 
     /**
      * 断开连接
@@ -38,11 +37,6 @@ abstract class AbWmConnect {
     abstract val observeConnectState: Observable<WmConnectState>
 
     abstract fun getConnectState(): WmConnectState
-
-    /**
-     * 是否准备好进行私有协议通讯
-     */
-    var isReady: Boolean = false
 
     /**
      * 当扫码的时候要传随机码
