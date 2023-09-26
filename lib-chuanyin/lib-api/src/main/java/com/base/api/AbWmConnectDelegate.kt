@@ -7,7 +7,6 @@ import com.base.sdk.entity.WmDevice
 import com.base.sdk.entity.WmDeviceModel
 import com.base.sdk.entity.apps.WmConnectState
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 internal class AbWmConnectDelegate(
@@ -15,13 +14,16 @@ internal class AbWmConnectDelegate(
 ) : AbWmConnect() {
 
     override fun connect(address: String, bindInfo: BindInfo, deviceMode: WmDeviceModel): WmDevice {
-        TODO("Not yet implemented")
+       return watchSubject.value!!.wmConnect.connect(address, bindInfo, deviceMode)
     }
 
-    override fun connect(address: BluetoothDevice, bindInfo: BindInfo, deviceMode: WmDeviceModel): WmDevice {
-        TODO("Not yet implemented")
+    override fun connect(
+        address: BluetoothDevice,
+        bindInfo: BindInfo,
+        deviceMode: WmDeviceModel
+    ): WmDevice {
+        return watchSubject.value!!.wmConnect.connect(address, bindInfo, deviceMode)
     }
-
 
     override fun disconnect() {
         TODO("Not yet implemented")

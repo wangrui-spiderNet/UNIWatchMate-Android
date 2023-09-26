@@ -5,6 +5,7 @@ import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import com.base.api.UNIWatchMate
+import com.base.sdk.`interface`.log.WmLog
 import com.fitcloud.sdk.FcUniWatch
 import com.polidea.rxandroidble3.LogConstants
 import com.polidea.rxandroidble3.LogOptions
@@ -29,20 +30,17 @@ fun uniWatchInit(application: Application) {
     //2.配置支持不同厂商的手表
     UNIWatchMate.init(
         application, listOf(
-            SJUniWatchImpl(10000, application),
+            SJUniWatchImpl(application, 10000),
             FcUniWatchImpl(application)
         )
     )
-
 }
 
-class SJUniWatchImpl(override val msgTimeOut: Int, override val context: Application?):
-    SJUniWatch() {
-
+class SJUniWatchImpl(override var mContext: Application, override var mMsgTimeOut: Int):
+    SJUniWatch(mContext, mMsgTimeOut) {
 }
 
 class FcUniWatchImpl(application: Application) : FcUniWatch(application) {
-
     init {
         //1. FitCloud-SDK 需要知道当前APP的前后台状态
         application.registerActivityLifecycleCallbacks(object :

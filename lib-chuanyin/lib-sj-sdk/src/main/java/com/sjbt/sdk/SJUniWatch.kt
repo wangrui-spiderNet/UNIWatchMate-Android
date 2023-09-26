@@ -11,7 +11,6 @@ import android.os.HandlerThread
 import android.text.TextUtils
 import androidx.core.app.ActivityCompat
 import com.base.sdk.AbUniWatch
-import com.base.sdk.entity.WmDevice
 import com.base.sdk.entity.WmDeviceModel
 import com.base.sdk.entity.WmScanDevice
 import com.base.sdk.entity.apps.WmConnectState
@@ -45,12 +44,12 @@ import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import java.io.File
 import java.nio.ByteBuffer
 
-abstract class SJUniWatch : AbUniWatch(), Listener {
+abstract class SJUniWatch(context: Application, timeout:Int) : AbUniWatch(), Listener {
 
     private val TAG = TAG_SJ + "SJUniWatch"
 
-    abstract val context: Application?
-    abstract val msgTimeOut: Int?
+    abstract var mContext: Application
+    abstract var mMsgTimeOut: Int
 
     var mBtStateReceiver: BtStateReceiver? = null
     private var mBtEngine = BtEngine.getInstance(this)
@@ -84,8 +83,9 @@ abstract class SJUniWatch : AbUniWatch(), Listener {
     var mH264FrameMap: H264FrameMap = H264FrameMap()
     var mLatestIframeId: Long = 0
     var mLatestPframeId: Long = 0
-    val mCameraThread = HandlerThread("camera_send_thread")
-    var mCameraHandler: Handler? = null
+    private lateinit var mCameraThread: HandlerThread
+    private lateinit var mCameraHandler: Handler
+
     var needNewH264Frame = false
     var continueUpdateFrame: Boolean = false
 
@@ -133,10 +133,12 @@ abstract class SJUniWatch : AbUniWatch(), Listener {
     private val settingWistRaise = wmSettings.settingWistRaise as SettingWistRaise
 
     init {
-        mCameraHandler = Handler(mCameraThread.looper)
+        mContext = context
+        mMsgTimeOut = timeout
+        mCameraThread = HandlerThread("camera_send_thread")
         mBtEngine.listener = this
 
-        mBtStateReceiver = BtStateReceiver(context!!, object : OnBtStateListener {
+        mBtStateReceiver = BtStateReceiver(mContext!!, object : OnBtStateListener {
 
             override fun onClassicBtDisConnect(device: BluetoothDevice) {
                 SJLog.logBt(TAG, "onClassicBtDisConnect：" + device.address)
@@ -214,6 +216,19 @@ abstract class SJUniWatch : AbUniWatch(), Listener {
 
             }
         })
+    }
+
+    open fun startCameraThread() {
+        if (!mCameraThread.isAlive) {
+            mCameraThread.start()
+            mCameraHandler = Handler(mCameraThread.looper)
+        }
+    }
+
+    open fun stopCameraThread() {
+        if (mCameraThread.isAlive) {
+            mCameraThread.interrupt()
+        }
     }
 
     override fun socketNotify(state: Int, obj: Any?) {
@@ -685,7 +700,7 @@ abstract class SJUniWatch : AbUniWatch(), Listener {
                 discoveryObservableEmitter = emitter
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    context?.let {
+                    mContext?.let {
                         if (ActivityCompat.checkSelfPermission(
                                 it,
                                 Manifest.permission.BLUETOOTH_SCAN
